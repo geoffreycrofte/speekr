@@ -56,7 +56,7 @@ function speekr_register_post_types() {
 			'editor',
 			'author',
 			'thumbnail',
-			'custom-fields',
+			//'custom-fields',
 			'comments',
 			'revisions',
 			'page-attributes'
