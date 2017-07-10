@@ -100,15 +100,15 @@ function speekr_sanitize_settings( $options ) {
 function speekr_settings_page() {
 ?>
 	<div class="wrap speekr_settings">
-			<h1><i class="dashicons dashicons-nametag" aria-hidden="true"></i><?php echo SPEEKR_PLUGIN_NAME; ?></h1>
+		<h1><i class="dashicons dashicons-nametag" aria-hidden="true"></i><?php echo SPEEKR_PLUGIN_NAME; ?></h1>
 
-			<form method="post" action="options.php">
-			<?php
-				settings_fields( SPEEKR_SETTING_SLUG . '_layout' );
-				do_settings_sections( SPEEKR_SLUG );
-				submit_button();
-			?>
-			</form>
-		</div>
+		<form method="post" action="options.php">
+		<?php
+			settings_fields( SPEEKR_SETTING_SLUG . '_layout' );
+			do_settings_sections( SPEEKR_SLUG );
+			submit_button();
+		?>
+		</form>
+	</div>
 <?php
 }

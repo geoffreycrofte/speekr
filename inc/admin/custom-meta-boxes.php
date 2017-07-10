@@ -44,6 +44,8 @@ function speekr_content_type_mb( $post ) {
 	$outline = '<p>' . __( 'What is the main format of your presentation?', 'speekr' ) . '</p>';
 	$speekr_meta = get_post_meta( $post->ID, 'speekr-meta', true );
 
+	$outline .= '<div class="speekr-mb-block">';
+
 	foreach ( $link_types as $k => $v ) {
 
 		$outline .= '<p class="speekr-mb-line"><label for="speekr-content-type-' . esc_attr( $k ) . '">' . esc_html( $v ) . '</label><br>';
@@ -51,7 +53,9 @@ function speekr_content_type_mb( $post ) {
 		$outline .= '<input type="url" name="speekr-meta[' . esc_attr( $k ) . '-link]" id="speekr-content-type-' . esc_attr( $k ) . '" value="' . esc_attr( isset( $speekr_meta[ esc_attr( $k ) . '-link' ] ) ? $speekr_meta[ esc_attr( $k ) . '-link' ] : '' ) . '" /></p>';
 	}
 
-	echo $outline;
+	$outline .= '</div>';
+
+	echo apply_filters( 'speekr_content_type_mb', $outline, $post );
 
 }
 
