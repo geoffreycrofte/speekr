@@ -1,0 +1,12 @@
+/**
+ * Main Speekr Admin styles.
+ *
+ * Includes: Metaboxes and Option Pages
+ */
+
+.speekr-mb-line label {
+	font-weight: bold;
+}
+.speekr-mb-line input {
+	width: 100%;
+}
