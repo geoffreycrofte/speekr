@@ -4,11 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Get a precise option from Speekr plugin options
+ * Get a precise option from Speekr plugin options.
  *
  * @param  string  $option  The option name
  * @param  string  $default The fallback value if option doesn't exist
  * @return string           The option value
+ *
+ * @since  1.0
+ * @author Geoffrey Crofte
  */
 function speekr_get_option( $option, $default = false) {
 	/**
@@ -28,7 +31,7 @@ function speekr_get_option( $option, $default = false) {
 	$value 	 = isset( $options[ $option ] ) && $options[ $option ] !== '' ? $options[ $option ] : $default;
 	
 	/**
-	 * Filter any Speekr option after read
+	 * Filter any Speekr option after read.
 	 *
 	 * @since 1.0
 	 * @param variant $default The default value
@@ -37,7 +40,7 @@ function speekr_get_option( $option, $default = false) {
 }
 
 /**
- * Get all the Speekr plugin options
+ * Get all the Speekr plugin options.
  *
  * @return array
  * 
@@ -46,7 +49,7 @@ function speekr_get_option( $option, $default = false) {
  */
 function speekr_get_options() {
 	/**
-	 * Pre-filter any Speekr option before read
+	 * Pre-filter any Speekr option before read.
 	 *
 	 * @since 1.0
 	 * @param variant $default The default value
@@ -61,7 +64,7 @@ function speekr_get_options() {
 	$options = isset( $plugins[ SPEEKR_SLUG . '/' . SPEEKR_SLUG . '.php' ] ) ? get_site_option( SPEEKR_SETTING_SLUG ) : get_option( SPEEKR_SETTING_SLUG );
 
 	/**
-	 * Filter any Speekr option after read
+	 * Filter any Speekr option after read.
 	 *
 	 * @since 1.0
 	 * @param variant $default The default value

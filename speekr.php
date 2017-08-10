@@ -47,6 +47,8 @@ add_action( 'init', 'speekr_textdomain' );
 // Admin and Front cases
 require_once( SPEEKR_DIRNAME . '/inc/common/custom-posts.php' );
 require_once( SPEEKR_DIRNAME . '/inc/functions/options.php' );
+require_once( SPEEKR_DIRNAME . '/inc/functions/settings.php' );
+require_once( SPEEKR_DIRNAME . '/inc/common/default-types.php' );
 
 // Only Admin case.
 if ( is_admin() ) {
@@ -58,4 +60,5 @@ if ( is_admin() ) {
 // Only Front case
 else {
 	require_once( SPEEKR_DIRNAME . '/inc/front/enqueues.php' );
+	require_once( SPEEKR_DIRNAME . '/inc/front/lists.php' );
 }

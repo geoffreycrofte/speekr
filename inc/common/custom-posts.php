@@ -53,11 +53,11 @@ function speekr_register_post_types() {
 		//'taxonomies'           => 'speekr_categories' TODO?
 		'supports'             => apply_filters( 'speekr_supports', array(
 			'title',
-			'editor',
+			//'editor',
 			'author',
 			'thumbnail',
 			//'custom-fields',
-			'comments',
+			//'comments',
 			'revisions',
 			'page-attributes'
 		) ),
