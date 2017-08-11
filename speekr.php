@@ -45,6 +45,7 @@ add_action( 'init', 'speekr_textdomain' );
  */
 
 // Admin and Front cases
+require_once( SPEEKR_DIRNAME . '/inc/functions/debug.php' );
 require_once( SPEEKR_DIRNAME . '/inc/common/custom-posts.php' );
 require_once( SPEEKR_DIRNAME . '/inc/functions/options.php' );
 require_once( SPEEKR_DIRNAME . '/inc/functions/settings.php' );
