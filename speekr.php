@@ -61,5 +61,6 @@ if ( is_admin() ) {
 // Only Front case
 else {
 	require_once( SPEEKR_DIRNAME . '/inc/front/enqueues.php' );
+	require_once( SPEEKR_DIRNAME . '/inc/functions/markup.php' );
 	require_once( SPEEKR_DIRNAME . '/inc/front/lists.php' );
 }
