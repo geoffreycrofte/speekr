@@ -235,6 +235,44 @@ function speekr_the_content_mb( $post ) {
 }
 
 /**
+ * Needed to prepare the next function.
+ *
+ * @return void
+ *
+ * @author Geoffrey Crofte
+ * @since  1.0
+ */
+function speekr_prepare_for_sticky() {
+    // Unable to use "post_submitbox_minor_actions" action (/wp-admin/includes/meta-boxes.php) because $post_type is set early.
+    global $post;
+    if ( isset( $post->post_type ) && in_array( $post->post_type, array( 'talks' ) ) ) {
+        $post->post_type_original = $post->post_type;
+        $post->post_type = 'post';
+    }
+}
+add_action( 'submitpost_box', 'speekr_prepare_for_sticky' );
+
+/**
+ * Print checkbox "Featured Post" on Public Statuses metabox.
+ *
+ * @return void
+ * @see /wp-admin/includes/meta-boxes.php
+ *
+ * @author Geoffrey Crofte
+ * @since  1.0
+ */
+function speekr_add_sticky_on_cpt() {
+    global $post;
+    if ( isset( $post->post_type_original ) && in_array( $post->post_type_original, array( 'talks' ) ) ) {
+    	$is_stuck = get_post_meta( $post->ID, 'speekr-is-featured', true );
+        echo '<div class="misc-pub-section misc-pub-post-status curtime misc-pub-speekr"><input type="checkbox" id="speekr-features-post" name="speekr-sticky"' . ( $is_stuck ? ' checked="checked"' : '' ) . '><label for="speekr-features-post">Featured post</label></div>';
+        $post->post_type = $post->post_type_original;
+        unset( $post->post_type_original );
+    }
+}
+add_action( 'post_submitbox_misc_actions', 'speekr_add_sticky_on_cpt' );
+
+/**
  * Save all the datas about Speekr Metaboxes.
  *
  * @param  (int) $post_id The current post ID.
@@ -299,10 +337,18 @@ function speekr_save_mb( $post_id ) {
 			update_post_meta( $post_id, 'speekr-summary', $_POST['speekr_summary'] );
 		}
 
+		// Is post an article too?
 		if ( isset( $_POST['speekr-as-article'] ) && 'on' === $_POST['speekr-as-article'] ) {
 			update_post_meta( $post_id, 'speekr-as-article', 'on' );
 		} else {
 			update_post_meta( $post_id, 'speekr-as-article', 'off' );
+		}
+
+		// Is featured post?
+		if ( isset( $_POST['speekr-sticky'] ) && 'on' === $_POST['speekr-sticky'] ) {
+			update_post_meta( $post_id, 'speekr-is-featured', true );
+		} else {
+			update_post_meta( $post_id, 'speekr-is-featured', false );
 		}
 
 	}  

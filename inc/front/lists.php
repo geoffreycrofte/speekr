@@ -47,8 +47,10 @@ function speekr_get_list_content( $options ) {
 			$is_article = get_post_meta( $id, 'speekr-as-article', true ) === 'on' ? true : false;
 			$is_article = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
 			$medialinks = get_post_meta( $id, 'speekr-media-links', true );
+			$is_stuck   = get_post_meta( $id, 'speekr-is-featured', true );
+			$classes    = $is_stuck ? ' talk-featured' : '';
 
-			$list .= '<article class="' . implode( ' ', get_post_class() ) . '">';
+			$list .= '<article class="' . implode( ' ', get_post_class() ) . $classes . '">';
 			
 			// Image / Embed / Video
 			$media = speekr_get_media_header( $id, $medialinks, $is_article );
