@@ -299,7 +299,7 @@ function speekr_save_mb( $post_id ) {
 
 		if ( isset( $_POST['speekr-media-links'] ) ) {
 			$media_links = speekr_get_content_media_links();
-			$newtypes    = array();
+			$newml       = array();
 
 			// Case of named media links to "sanitize" declared links.
 			foreach ( $media_links as $k => $v ) {
