@@ -47,8 +47,22 @@ function speekr_get_talk_links( $post_id, $meta = null ) {
 		$meta = get_post_meta( $post_id, 'speekr-media-links', true );
 	}
 
-	$output = '';
+	$auth_links = speekr_get_content_media_links();
+	$output     = '';
+	speekr_log($meta);
 
+	foreach ( $auth_links as $slug => $datas ) {
+		if ( 'other' === $slug ) {
+			continue;
+		}
+		if ( isset( $meta[ $slug . '-link' ] ) && ! empty( $meta[ $slug . '-link' ] ) ) {
+			$title  = sprintf( __( 'See this talk on %s', 'speekr' ), $datas['name'] );
+			$target = apply_filters( 'speekr_talk_links_target', '', $slug );
+			$class  = apply_filters( 'speekr-talk_links_classes', 'talk-link talk-link-' . $slug, $slug ); 
+
+			$output .= '<a href="' . esc_url( $meta[ $slug . '-link' ] ) . '" title="' . esc_attr( $title ) . '"' . $target . ' class="' . esc_attr( $class ) . '">' . esc_html( $datas['name'] ) . '</a>';
+		}
+	}
 
 	return apply_filters( 'speekr_get_talk_links', $output, $post_id, $meta );
 }
