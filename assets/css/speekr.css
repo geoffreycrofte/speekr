@@ -1,0 +1,41 @@
+/**
+ * Layouts
+ */
+.speekr-layout-grid {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 1em -20px;
+}
+.speekr-layout-grid .talks {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 50%;
+	border: 0;
+	margin: 0;
+	padding: 20px;
+}
+.speekr-layout-grid .talks .talk-inner {
+	display: flex;
+	flex-direction: column;
+}
+.speekr-layout-mixed {
+
+}
+.speekr-layout-list {
+
+}
+
+/**
+ * Talks list.
+ */
+.speekr-talks-list * {
+	box-sizing: border-box;
+}
+.speekr-talks-list .talk-title {
+	margin: 1em 0 .5em;
+	font-size: 2.4rem;
+}
+.speekr-talks-list .talk-summary {
+	font-size: 1.6rem;
+	margin: 1em 0;
+}

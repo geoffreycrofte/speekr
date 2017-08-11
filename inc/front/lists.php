@@ -14,7 +14,7 @@ function speekr_display_list_content( $content ) {
 
 	$options = speekr_get_options();
 
-	$list = isset( $options['list_page'] ) && $options['list_page'] === $id ? speekr_get_list_content() : '';
+	$list = isset( $options['list_page'] ) && $options['list_page'] === $id ? speekr_get_list_content( $options ) : '';
 
 	return $content . $list;
 }
@@ -25,7 +25,7 @@ add_filter( 'the_content', 'speekr_display_list_content' );
  *
  * @return (string) [description]
  */
-function speekr_get_list_content() {
+function speekr_get_list_content( $options ) {
 	$talks_args = array(
 		'post_type' => 'talks',
 	);
@@ -35,7 +35,6 @@ function speekr_get_list_content() {
 
 	if ( $talks->have_posts() ) {
 
-		$options  = speekr_get_options();
 		$layout   = isset( $options['list_layout'] ) ? $options['list_layout'] : 'mixed';
 		$head_tag = apply_filters( 'speekr_tag_title_in_list', 'h2' );
 
@@ -46,21 +45,26 @@ function speekr_get_list_content() {
 			$id = get_the_ID();
 
 			$is_article = get_post_meta( $id, 'speekr-as-article', true ) === 'on' ? true : false;
+			$is_article = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
 			$medialinks = get_post_meta( $id, 'speekr-media-links', true );
 
 			$list .= '<article class="' . implode( ' ', get_post_class() ) . '">';
 			
 			// Image / Embed / Video
-			$media = speekr_get_media_header( $id, $medialinks );
+			$media = speekr_get_media_header( $id, $medialinks, $is_article );
 			$list .= '<div class="talk-media">' . $media . '</div>';
 
 			// Title.
 			$title = get_the_title();
 			$title = $is_article ? '<a href="' . get_permalink() . '">' . $title . '</a>' : $title;
-			$list .= '<'. $head_tag . '>' . $title . '</' . $head_tag . '>';
+			$list .= '<'. $head_tag . ' class="talk-title">' . $title . '</' . $head_tag . '>';
 
 			// Summary content.
-			$list .= '<div class="talk-content">' . get_post_meta( $id, 'speekr-summary', true )  . '</div>';
+			$list .= '<div class="talk-summary">' . get_post_meta( $id, 'speekr-summary', true )  . '</div>';
+
+			// Links content.
+			$links = speekr_get_talk_links( $id, $medialinks );
+			$list .= '<div class="talk-links">' . $links . '</div>';
 
 			$list .= '</article>';
 		}
