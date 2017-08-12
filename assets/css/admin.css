@@ -10,7 +10,9 @@
 	--primarydark: #5C4B62;
 }
 
-/* Options/Settings page */
+/**
+ * Options/Settings page.
+ */
 .speekr-settings {
 	background: #FFF;
 	box-shadow: inset 0 0 0 1px #E6E6E6;
@@ -22,7 +24,9 @@
 	transition: all .275s;
 }
 
-/* Settings Header */
+/**
+ * Settings Header.
+ */
 .speekr-settings-header {
 	position: relative;
 	padding: 25px 30px;
@@ -66,7 +70,9 @@
 	font-weight: bold;
 }
 
-/* Settings content page */
+/**
+ * Settings content page.
+ */
 .speekr-settings-content {
 	padding: 25px 30px;
 }
@@ -82,6 +88,9 @@ h2 + .speekr-description {
 	border-bottom: 2px solid #F2F2F2;
 	color: #777;
 	font-weight: bold;
+}
+.form-table + h2 {
+	margin-top: 4em;
 }
 .speekr-settings .form-table th {
 	color: var(--primarydark);
@@ -122,7 +131,9 @@ h2 + .speekr-description {
 	box-shadow: 0 2px 2px rgba(0,0,0,.2)
 }
 
-/* Options types */
+/**
+ * Options types.
+ */
 .speekr-square-radio-button {
 	margin: 0 -12px;
 }
@@ -170,7 +181,9 @@ h2 + .speekr-description {
 	border-radius: 4px;
 }
 
-/* Metaboxes */
+/**
+ * Metaboxes.
+ */
 .speekr-mb-divider {
 	height: 3px;
 	background: #F2F2F2;
@@ -242,4 +255,11 @@ h2 + .speekr-description {
 }
 .speekr-big-col {
 	flex-basis: 67%;
+}
+
+/**
+ * Third Parties/Conflitc
+ */
+.speekr-settings-header .updated {
+	color: #444;
 }

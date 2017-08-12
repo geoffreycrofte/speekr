@@ -16,13 +16,17 @@ $speekr_options = speekr_get_options();
  */
 function speekr_plugin_settings() {
 
-	// API Section.
+	// Global Layout Section.
 	add_settings_section( 'speekr_option_layout', __( 'Global Layout', 'speekr' ), 'speekr_layout_section_text', SPEEKR_SLUG );
 	add_settings_field( 'speekr_list_layout', __( 'List Layout' ), 'speekr_get_list_layout', SPEEKR_SLUG, 'speekr_option_layout' );
 	add_settings_field( 'speekr_list_page', __( 'List Page' ), 'speekr_get_list_page', SPEEKR_SLUG, 'speekr_option_layout' );
 
+	// Styles Section.
+	add_settings_section( 'speekr_option_styles', __( 'Painting', 'speekr' ), 'speekr_styles_section_text', SPEEKR_SLUG );
+
 	// Register settings and sanitize them
 	register_setting( SPEEKR_SETTING_SLUG . '_layout', SPEEKR_SETTING_SLUG, 'speekr_sanitize_settings' );
+
 }
 add_filter( 'admin_init', 'speekr_plugin_settings' );
 
@@ -91,6 +95,20 @@ function speekr_get_list_page() {
 	}
 
 	echo '</select>';
+}
+
+/**
+ * Description Section Text.
+ *
+ * @return string
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_styles_section_text() {
+?>
+	<p class="speekr-description"><?php _e( 'Choose more precise styles for your talks list and talk pages.', 'speekr' ); ?></p>
+<?php
 }
 
 /**
