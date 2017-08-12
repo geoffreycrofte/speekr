@@ -20,7 +20,7 @@ function speekr_get_option( $option, $default = false) {
 	 * @since 1.0
 	 * @param variant $default The default value
 	*/
-	$value = apply_filters( 'pre_speekr_get_option_' . $option, NULL, $default );
+	$value = apply_filters( 'speekr_pre_get_option_' . $option, NULL, $default );
 
 	if ( NULL !== $value ) {
 		return $value;
@@ -54,7 +54,7 @@ function speekr_get_options() {
 	 * @since 1.0
 	 * @param variant $default The default value
 	*/
-	$value = apply_filters( 'pre_speekr_get_options', NULL );
+	$value = apply_filters( 'speekr_pre_get_options', NULL );
 
 	if ( NULL !== $value ) {
 		return $value;
