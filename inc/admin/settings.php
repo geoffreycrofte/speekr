@@ -23,6 +23,7 @@ function speekr_plugin_settings() {
 
 	// Styles Section.
 	add_settings_section( 'speekr_option_styles', __( 'Painting', 'speekr' ), 'speekr_styles_section_text', SPEEKR_SLUG );
+	add_settings_field( 'speekr_css_activate', __( 'Use default CSS?', 'speekr' ), 'speekr_get_css_activation', SPEEKR_SLUG, 'speekr_option_styles' );
 
 	// Register settings and sanitize them
 	register_setting( SPEEKR_SETTING_SLUG . '_layout', SPEEKR_SETTING_SLUG, 'speekr_sanitize_settings' );
@@ -122,6 +123,41 @@ function speekr_styles_section_text() {
 	<p class="speekr-description"><?php _e( 'Choose more precise styles for your talks list and talk pages.', 'speekr' ); ?></p>
 <?php
 }
+
+/**
+ * Print CSS files option control.
+ *
+ * @return void
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_get_css_activation() {
+	global $speekr_options;
+
+	$opts = $speekr_options;
+
+	$csss = speekr_get_admin_css_values();
+
+	$css_both = ! isset( $opts['css'] ) ? ' checked="checked"' : '';
+	$css_grid  = $css_list = '';
+
+	if ( isset( $opts['css'] ) ) {
+		${ 'css_' . esc_attr( $opts['css'] ) } = ' checked="checked"';
+	}
+	
+	echo '<p class="speekr-line-radio">';
+
+	foreach ( $csss as $k => $v ) {
+		echo '<span class="speekr-radio-option speekr-css-' . $k . '">
+				<input name="' . SPEEKR_SETTING_SLUG . '[css]" id="speekr-css-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ${ 'c_' . esc_attr( $k ) } . '>
+				<label class="speekr-label" for="speekr-css-' . esc_attr( $k ) . '">' . esc_html( $v ) . '</label>
+			</span>';
+	}
+
+	echo '</p>';
+}
+
 
 /**
  * Sanitize Options.

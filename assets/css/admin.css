@@ -154,6 +154,11 @@ h2 + .speekr-description {
 /**
  * Options types.
  */
+.speekr-radio-option {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 25px;
+}
 .speekr-square-radio-button {
 	margin: 0 -12px;
 }

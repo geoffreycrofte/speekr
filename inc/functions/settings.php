@@ -14,3 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 function speekr_get_content_media_links() {
 	return apply_filters( 'speekr_media_links', array() );
 }
+
+/**
+ * Get the list of CSS values.
+ *
+ * @return (array) The list of CSS values.
+ *
+ * @since 1.0
+ * @author Geoffrey Crofte
+ */
+function speekr_get_admin_css_values() {
+	return apply_filters( 'speekr_css_values', array() );
+}
