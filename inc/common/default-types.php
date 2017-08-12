@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Set the default list of content media links.
  *
+ * @param (array)  $links Array of existing links.
  * @return (array) The list of content media links.
  *
  * @since 1.0
@@ -18,6 +19,12 @@ function speekr_add_default_media_links( $links ) {
 		),
 		'vimeo'       => array(
 			'name' => __( 'Vimeo', 'speekr' ),
+		),
+		'dailymotion' => array(
+			'name' => __( 'Dailymotion', 'speekr' ),
+		),
+		'slides' => array(
+			'name' => __( 'Slides', 'speekr' ),
 		),
 		'speakerdeck' => array(
 			'name' => __( 'SpeakerDeck', 'speekr' ),
