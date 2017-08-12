@@ -5,9 +5,11 @@
  */
 
 :root{
-	--primary: #9768A7;
+	--primary: #9768A7; /* 30aabc */
 	--primarylight: #D0BAD7;
 	--primarydark: #5C4B62;
+
+	--lightgray: #E6E6E6;
 }
 
 /**
@@ -89,7 +91,7 @@ h2 + .speekr-description {
 	color: #777;
 	font-weight: bold;
 }
-.form-table + h2 {
+.speekr-settings .form-table + h2 {
 	margin-top: 4em;
 }
 .speekr-settings .form-table th {
@@ -103,6 +105,19 @@ h2 + .speekr-description {
 	padding-bottom: 25px;
 }
 
+.speekr-button.speekr-button,
+.speekr-settings-content .button-secondary {
+	padding: 10px 15px;
+	margin-right: 15px;
+	vertical-align: middle;
+	border: 0 none;
+	font-weight: bold;
+	color: var(--primarydark);
+	background: var(--lightgray);
+	border-radius: 3px;
+	cursor: pointer;
+}
+
 .speekr-settings-content .submit {
 	margin: 25px -30px -25px -30px;
 	padding: 25px 30px!important;
@@ -111,7 +126,8 @@ h2 + .speekr-description {
 	background: #F6F6F6;
 }
 
-.speekr-settings-content .button-primary {
+.speekr-settings-content .button-primary,
+.speekr-button-primary.speekr-button-primary {
 	padding: 10px 20px;
 	height: auto;
 	border: 0;
@@ -122,10 +138,14 @@ h2 + .speekr-description {
 }
 .speekr-settings-content .button-primary:hover,
 .speekr-settings-content .button-primary:focus,
-.speekr-settings-content .button-primary:active {
+.speekr-settings-content .button-primary:active,
+.speekr-button-primary.speekr-button-primary:hover,
+.speekr-button-primary.speekr-button-primary:focus,
+.speekr-button-primary.speekr-button-primary:active {
 	background: var(--primarydark);
 }
-.speekr-settings-content .button-primary:active {
+.speekr-settings-content .button-primary:active,
+.speekr-button-primary.speekr-button-primary:active {
 	border: 0;
 	transform: scale(0.98);
 	box-shadow: 0 2px 2px rgba(0,0,0,.2)
@@ -162,7 +182,7 @@ h2 + .speekr-description {
 	font-weight: bold;
 	text-align: center;
 	border-radius: 5px;
-	background: #E6E6E6;
+	background: var(--lightgray);
 	transition: all .275s;
 }
 .speekr-square-radio-button label:hover,
@@ -177,6 +197,7 @@ h2 + .speekr-description {
 .speekr-settings select {
 	height: auto;
 	padding: 8px 12px;
+	margin-right: 15px;
 	border: 2px solid #DDD;
 	border-radius: 4px;
 }

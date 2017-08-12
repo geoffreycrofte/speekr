@@ -18,8 +18,8 @@ function speekr_plugin_settings() {
 
 	// Global Layout Section.
 	add_settings_section( 'speekr_option_layout', __( 'Global Layout', 'speekr' ), 'speekr_layout_section_text', SPEEKR_SLUG );
-	add_settings_field( 'speekr_list_layout', __( 'List Layout' ), 'speekr_get_list_layout', SPEEKR_SLUG, 'speekr_option_layout' );
-	add_settings_field( 'speekr_list_page', __( 'List Page' ), 'speekr_get_list_page', SPEEKR_SLUG, 'speekr_option_layout' );
+	add_settings_field( 'speekr_list_layout', __( 'List Layout', 'speekr' ), 'speekr_get_list_layout', SPEEKR_SLUG, 'speekr_option_layout' );
+	add_settings_field( 'speekr_list_page', '<label for="speekr-list-page">' . __( 'List Page', 'speekr' ) . '</label>', 'speekr_get_list_page', SPEEKR_SLUG, 'speekr_option_layout' );
 
 	// Styles Section.
 	add_settings_section( 'speekr_option_styles', __( 'Painting', 'speekr' ), 'speekr_styles_section_text', SPEEKR_SLUG );
@@ -82,19 +82,31 @@ function speekr_get_list_layout() {
 	echo '</p>';
 }
 
+/**
+ * Get the select option to select main list page.
+ *
+ * @return string
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
 function speekr_get_list_page() {
 	global $speekr_options;
 
 	$opts  = $speekr_options;
 	$pages = get_pages();
 
-	echo '<select name="' . SPEEKR_SETTING_SLUG . '[list_page]" id="speekr-list-page">';
+	$output = '<select name="' . SPEEKR_SETTING_SLUG . '[list_page]" id="speekr-list-page">';
 	
 	foreach( $pages as $p ) {
-		echo '<option value="' . $p->ID . '"' . ( isset( $opts['list_page'] ) && $p->ID === $opts['list_page'] ? ' selected="selected"' : '' ) . '>' . esc_html( $p->post_title ) . '</option>';
+		$output .='<option value="' . $p->ID . '"' . ( isset( $opts['list_page'] ) && $p->ID === $opts['list_page'] ? ' selected="selected"' : '' ) . '>' . esc_html( $p->post_title ) . '</option>';
 	}
 
-	echo '</select>';
+	$output .= '</select>';
+
+	$output .= '<button type="submit" name="" class="hide-if-no-js speekr-button speekr-button-secondary" aria-hidden="true" data-ajax-action="speekr_create_default_page">' . _x( 'Create a page', 'admin option', 'speekr' ) . '</button>';
+
+	echo apply_filters( 'speekr_get_list_page', $output, $opts );
 }
 
 /**
@@ -126,6 +138,10 @@ function speekr_sanitize_settings( $options ) {
 	// TODO: should be sanitized.
 	$newoptions['list_layout'] = $options['list_layout'];
 	$newoptions['list_page'] = (int) $options['list_page'];
+
+	// Authorized values.
+	$css_auth = speekr_get_admin_css_values();
+	$newoptions['css'] = in_array( $options['css'], $css_auth ) ? $options['css'] : 'both';
 
 	return $newoptions;
 }

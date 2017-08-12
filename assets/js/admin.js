@@ -1,6 +1,11 @@
 ;( function( $, window, document, undefined ) {
 	
 	/**
+	 * Accessibility Improvement.
+	 */
+	$( '.speekr-settings .hide-if-no-js' ).attr( 'aria-hidden', 'false' );
+
+	/**
 	 * Move cover replacement (embedded) below Featured Image link.
 	 */
 	$( '#speekr-cover-replacement' ).insertAfter( $( '#postimagediv' ).find( '.inside' ) );
@@ -78,6 +83,22 @@
 
 	$c_editor.on( 'change.speekr', function() {
 		check_editor( $(this) );
+	} );
+
+	/**
+	 * AJAX Actions on some buttons.
+	 */
+	$( '.speekr-button[data-ajax-action]' ).on( 'click.speekr', function() {
+		var $_this = $(this);
+
+		$.post(
+			ajaxurl,
+			{ action: $_this.data( 'ajax-action' ) }
+		).done( function( data ) {
+			console.log( data );
+		});
+
+		return false;
 	} );
 
 } )( jQuery, window, document );
