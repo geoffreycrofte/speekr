@@ -1,0 +1,80 @@
+/**
+ * Layouts
+ */
+.speekr-layout-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 1em -20px;
+}
+.speekr-layout-grid .talks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  border: 0;
+  margin: 0;
+  padding: 20px;
+}
+.speekr-layout-grid .talks .talk-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+/**
+ * Talks list.
+ */
+.speekr-talks-list * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.speekr-talks-list .talk-title {
+  margin: 1em 0 .5em;
+  font-size: 2.4rem;
+}
+.speekr-talks-list .talk-summary {
+  font-size: 1.6rem;
+  margin: 1em 0;
+}
+/**
+ * Talks links
+ */
+.talk-links .talk-link {
+  display: inline-block;
+  padding: 8px 15px;
+  border: 0 none;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #FFF;
+  text-decoration: none;
+  background: #444;
+  border-radius: 3px;
+  -webkit-transition: all .275s;
+  transition: all .275s;
+}
+.talk-links .talk-link:hover,
+.talk-links .talk-link:focus {
+  background: #000;
+  color: #F6F6F6;
+}
+.talk-link.talk-link-youtube,
+.talk-link[href^="https://youtube.com/"],
+.talk-link[href^="http://youtube.com/"] {
+  background: #cd201f;
+}
+.talk-link.talk-link-vimeo,
+.talk-link[href^="https://vimeo.com/"],
+.talk-link[href^="http://vimeo.com/"] {
+  background: #1ab7ea;
+}

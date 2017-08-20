@@ -140,7 +140,7 @@ function speekr_get_css_activation() {
 	$csss = speekr_get_admin_css_values();
 
 	$css_both = ! isset( $opts['css'] ) ? ' checked="checked"' : '';
-	$css_grid  = $css_list = '';
+	$css_layout = $css_nope = '';
 
 	if ( isset( $opts['css'] ) ) {
 		${ 'css_' . esc_attr( $opts['css'] ) } = ' checked="checked"';
@@ -150,7 +150,7 @@ function speekr_get_css_activation() {
 
 	foreach ( $csss as $k => $v ) {
 		echo '<span class="speekr-radio-option speekr-css-' . $k . '">
-				<input name="' . SPEEKR_SETTING_SLUG . '[css]" id="speekr-css-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ${ 'c_' . esc_attr( $k ) } . '>
+				<input name="' . SPEEKR_SETTING_SLUG . '[css]" id="speekr-css-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ${ 'css_' . esc_attr( $k ) } . '>
 				<label class="speekr-label" for="speekr-css-' . esc_attr( $k ) . '">' . esc_html( $v ) . '</label>
 			</span>';
 	}

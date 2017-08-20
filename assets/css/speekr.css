@@ -60,3 +60,14 @@
 	background: #000;
 	color: #F6F6F6;
 }
+
+.talk-link.talk-link-youtube,
+.talk-link[href^="https://youtube.com/"],
+.talk-link[href^="http://youtube.com/"] {
+	background: #cd201f;
+}
+.talk-link.talk-link-vimeo,
+.talk-link[href^="https://vimeo.com/"],
+.talk-link[href^="http://vimeo.com/"] {
+	background: #1ab7ea;
+}

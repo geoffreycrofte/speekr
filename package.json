@@ -1,0 +1,30 @@
+{
+  "name": "speekr-wp-plugin",
+  "version": "1.0.0",
+  "description": "Speekr Plugin for WordPress",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://geoffrey_crofte@bitbucket.org/ninja_n_kitten/speekr-wordpress-plugin.git"
+  },
+  "author": "Geoffrey Crofte",
+  "license": "GPL-2.0",
+  "homepage": "https://bitbucket.org/ninja_n_kitten/speekr-wordpress-plugin",
+  "devDependencies": {
+    "browser-sync": "^2.9.11",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "latest",
+    "gulp-less": "latest",
+    "gulp-livereload": "latest",
+    "gulp-load-plugins": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "latest",
+    "gulp-server-livereload": "latest",
+    "gulp-uglify": "^1.5.1"
+  },
+  "dependencies": {}
+}
