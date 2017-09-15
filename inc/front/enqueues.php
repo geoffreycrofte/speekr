@@ -14,7 +14,7 @@ function speekr_enqueues_infront() {
 	$options = speekr_get_options();
 
 	if ( isset( $options['list_page'] ) && $options['list_page'] == $current->ID ) {
-		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/speekr.css', array(), SPEEKR_VERSION, 'all' );
+		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/speekr.min.css', array(), SPEEKR_VERSION, 'all' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'speekr_enqueues_infront' );

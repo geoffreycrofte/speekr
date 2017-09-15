@@ -48,9 +48,10 @@ cssfiles.forEach( function( name ) {
 			.pipe( autoprefixer( { browsers: ['last 2 versions'], cascade: false } ) ) 
 
 			// Rename the file with suffix
-			.pipe(rename({
-				suffix: '.min'
-			}))
+			.pipe( rename( { suffix: '.min'} ) )
+
+			// Minify CSS
+			.pipe( minifycss() )
 
 			// The folder
 			.pipe( gulp.dest( csspath ) );
@@ -62,16 +63,16 @@ cssfiles.forEach( function( name ) {
 
 gulp.task('js', function () {
 
-return gulp.src( jspath + 'src/*.js' ) 
+	return gulp.src( jspath + 'src/*.js' ) 
 
-	// Will minify the JS
-	.pipe( uglify() )      
+		// Will minify the JS
+		.pipe( uglify() )      
 
-		// Rename the file with suffix
-		.pipe(rename({
-			 suffix: '.min'
-		}))
-	.pipe( gulp.dest( jspath ) ); 
+			// Rename the file with suffix
+			.pipe(rename({
+				 suffix: '.min'
+			}))
+		.pipe( gulp.dest( jspath ) ); 
 
 });
 
@@ -95,6 +96,6 @@ gulp.task('watch', function () {
 
 
 // working task
-gulp.task( 'css', csss );
+gulp.task( 'css', ['cssadmin', 'cssspeekr'] );
 gulp.task( 'work', ['css', 'watch'] );
 gulp.task( 'default', ['css'] );

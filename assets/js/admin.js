@@ -32,7 +32,7 @@
 	/**
 	 * Add a new "Other" link.
 	 */
-	$( '#speekr-new-other-links' ).html( '<p class="speekr-increment"><button type="button" class="button speekr-button" id="speekr-add-item"><i class="dashicons dashicons-plus" aria-hidden="true"></i>&nbsp;' + speekr.add_other_item + '</button>' );
+	$( '#speekr-new-other-links' ).html( '<p class="speekr-increment"><button type="button" class="button speekr-button speekr-button-mini" id="speekr-add-item"><i class="dashicons dashicons-plus" aria-hidden="true"></i>&nbsp;' + speekr.add_other_item + '</button>' );
 
 	var $place = $( '.speekr-increment' );
 
@@ -43,16 +43,16 @@
 			cname  = 'speekr-content-media-links-other-l-',
 			cname2 = 'speekr-content-media-links-other-u-';
 
-		$line.removeClass('speekr-to-duplicate');
+		$line.removeClass( 'speekr-to-duplicate' );
 
 		id = parseInt( id.split( cname )[1] );
 
 
-		$clone.find('label[for=' + ( cname + id ) + ']').attr( 'for', cname + ( id + 1 ) );
-		$clone.find('input[id=' + ( cname + id ) + ']').attr( 'id', cname + ( id + 1 ) );
-		$clone.find('label[for=' + ( cname2 + id ) + ']').attr( 'for', cname2 + ( id + 1 ) );
-		$clone.find('input[id=' + ( cname2 + id ) + ']').attr( 'id', cname2 + ( id + 1 ) );
-		$clone.find('input').val('');
+		$clone.find( 'label[for=' + ( cname + id ) + ']' ).attr( 'for', cname + ( id + 1 ) );
+		$clone.find( 'input[id=' + ( cname + id ) + ']' ).attr( 'id', cname + ( id + 1 ) );
+		$clone.find( 'label[for=' + ( cname2 + id ) + ']' ).attr( 'for', cname2 + ( id + 1 ) );
+		$clone.find( 'input[id=' + ( cname2 + id ) + ']' ).attr( 'id', cname2 + ( id + 1 ) );
+		$clone.find( 'input' ).val('');
 		
 		$line.after( $clone );
 		
