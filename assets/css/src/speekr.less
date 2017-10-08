@@ -1,27 +1,49 @@
 /**
  * Layouts
  */
-.speekr-layout-grid {
+.speekr-layout-grid,
+.speekr-layout-mixed {
 	display: flex;
 	flex-wrap: wrap;
 	margin: 1em -20px;
 
-	.talks {
+	.talks.talks {
 		display: flex;
 		flex-direction: column;
 		flex-basis: 50%;
 		border: 0;
-		margin: 0;
+		margin: 1em 0;
 		padding: 20px;
+		box-shadow: none;
 
 		.talk-inner {
 			display: flex;
 			flex-direction: column;
 		}
 	}
+
+	.talk-links {
+		margin-top: auto;
+	}
 }
 .speekr-layout-mixed {
-
+	.talks.talk-featured {
+		display: block;
+		flex-basis: 100%;
+		
+		.talk-media {
+			float: left;
+			width: 50%;
+			margin: 0 1em .5em 0;
+		}
+		.talk-title {
+			clear: none;
+			margin-top: 0;
+		}
+		.talk-links {
+			clear: left;
+		}
+	}
 }
 .speekr-layout-list {
 

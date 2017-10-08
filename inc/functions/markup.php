@@ -52,18 +52,23 @@ if ( ! function_exists( 'speekr_get_talk_links' ) ) {
 
 		$auth_links = speekr_get_content_media_links();
 		$output     = '';
-		speekr_log($meta);
 
 		foreach ( $auth_links as $slug => $datas ) {
-			if ( 'other' === $slug ) {
-				continue;
-			}
-			if ( isset( $meta[ $slug . '-link' ] ) && ! empty( $meta[ $slug . '-link' ] ) ) {
-				$title  = sprintf( __( 'See this talk on %s', 'speekr' ), $datas['name'] );
-				$target = apply_filters( 'speekr_talk_links_target', '', $slug );
-				$class  = apply_filters( 'speekr-talk_links_classes', 'talk-link talk-link-' . $slug, $slug ); 
 
-				$output .= '<a href="' . esc_url( $meta[ $slug . '-link' ] ) . '" title="' . esc_attr( $title ) . '"' . $target . ' class="' . esc_attr( $class ) . '">' . esc_html( $datas['name'] ) . '</a>';
+			$target = apply_filters( 'speekr_talk_links_target', '', $slug );
+			$title  = sprintf( __( 'See this talk on %s', 'speekr' ), $datas['name'] );
+			$class  = apply_filters( 'speekr_talk_links_classes', 'talk-link talk-link-' . $slug, $slug ); 
+
+			if ( 'other' === $slug && is_array( $meta['other-link'] ) && ! empty( $meta['other-link'] ) ) {
+				foreach ( $meta['other-link'] as $link ) {
+					
+					$more_class = apply_filters( 'speekr_talk_links_other_classes', 'talk-link-' . sanitize_key( $link['label'] ), $link );
+
+					$output .= '<a href="' . esc_url( $link['url'] ) . '" title="' . esc_attr( $title ) . '"' . $target . ' class="' . esc_attr( $class ) . ' ' . esc_attr( $more_class ) . '">' . esc_html( $link['label'] ) . '</a>' . "\n";
+				}
+			}
+			if ( 'other' !== $slug && isset( $meta[ $slug . '-link' ] ) && ! empty( $meta[ $slug . '-link' ] ) ) {
+				$output .= '<a href="' . esc_url( $meta[ $slug . '-link' ] ) . '" title="' . esc_attr( $title ) . '"' . $target . ' class="' . esc_attr( $class ) . '">' . esc_html( $datas['name'] ) . '</a>' . "\n";
 			}
 		}
 
