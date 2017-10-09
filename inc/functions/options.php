@@ -80,7 +80,7 @@ function speekr_get_options() {
  * @author Geoffrey Crofte
  * @since 1.0
  */
-function speekr_update_option( $options ) {
+function speekr_update_options( $options ) {
 
 	if ( ! is_array( $options ) ) {
 		die( '$options has to be an array' );
@@ -97,4 +97,23 @@ function speekr_update_option( $options ) {
 	}
 
 	return $options;
+}
+
+/**
+ * Updating a specific option.
+ * Multisite compatibility.
+ *
+ * @param (string) $the_option The option to update.
+ * @param (string) $the_value  The value of the option.
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_update_option( $the_option, $the_value ) {
+
+	$options = speekr_get_options();
+
+	$options[ $the_option ] = $the_value;
+
+	speekr_update_options( $options );
+
 }
