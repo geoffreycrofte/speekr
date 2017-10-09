@@ -95,12 +95,14 @@ function speekr_get_list_page() {
 	global $speekr_options;
 
 	$opts  = $speekr_options;
-	$pages = get_pages();
+	$pages = get_pages( array(
+		'post_status' => array( 'publish', 'draft' ),
+	) );
 
 	$output = '<select name="' . SPEEKR_SETTING_SLUG . '[list_page]" id="speekr-list-page">';
 	
 	foreach( $pages as $p ) {
-		$output .='<option value="' . $p->ID . '"' . ( isset( $opts['list_page'] ) && $p->ID === $opts['list_page'] ? ' selected="selected"' : '' ) . '>' . esc_html( $p->post_title ) . '</option>';
+		$output .='<option value="' . $p->ID . '"' . ( isset( $opts['list_page'] ) && $p->ID === $opts['list_page'] ? ' selected="selected"' : '' ) . '>' . esc_html( $p->post_title ) . ( $p->post_status === 'draft' ? ' (' . __( 'draft' ) . ')' : '' ) . '</option>';
 	}
 
 	$output .= '</select>';
