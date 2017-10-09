@@ -53,7 +53,7 @@ class Speekr {
 	 * @author Geoffrey Crofte
 	 */
 	public function includes() {
-		add_action( 'speekr_before_includes' );
+		do_action( 'speekr_before_includes' );
 
 		require_once( SPEEKR_DIRNAME . '/inc/functions/debug.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/custom-posts.php' );
@@ -61,7 +61,7 @@ class Speekr {
 		require_once( SPEEKR_DIRNAME . '/inc/functions/settings.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/default-types.php' );
 
-		add_action( 'speekr_after_includes' );
+		do_action( 'speekr_after_includes' );
 	}
 
 	/**
@@ -72,14 +72,14 @@ class Speekr {
 	 * @author Geoffrey Crofte
 	 */
 	public function includes_admin() {
-		add_action( 'speekr_before_includes_admin' );
+		do_action( 'speekr_before_includes_admin' );
 
 		require_once( SPEEKR_DIRNAME . '/inc/admin/enqueues.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/settings.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/menus.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/custom-meta-boxes.php' );
 
-		add_action( 'speekr_after_includes_admin' );
+		do_action( 'speekr_after_includes_admin' );
 	}
 
 	/**
@@ -90,13 +90,13 @@ class Speekr {
 	 * @author Geoffrey Crofte
 	 */
 	public function includes_front() {
-		add_action( 'speekr_before_includes_front' );
+		do_action( 'speekr_before_includes_front' );
 
 		require_once( SPEEKR_DIRNAME . '/inc/front/enqueues.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/markup.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/lists.php' );
 
-		add_action( 'speekr_after_includes_front' );
+		do_action( 'speekr_after_includes_front' );
 	}
 
 }
