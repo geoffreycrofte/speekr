@@ -17,6 +17,8 @@ class Speekr {
 		} else {
 			$this->includes_front();
 		}
+
+		register_activation_hook( SPEEKR_FILE, array( $this, 'install' ) );
 	}
 
 
@@ -44,6 +46,34 @@ class Speekr {
 		load_plugin_textdomain( 'speekr', false, SPEEKR_DIRBASENAME . '/languages' );
 	}
 
+	/**
+	 * Generate needed datas.
+	 *
+	 * @return void
+	 * @since  1.0
+	 * @author Geoffrey Crofte
+	 */
+	public function install() {
+		$speekr_options = speekr_get_options();
+
+		if (
+			! isset( $speekr_options['list_page'] )
+			||
+			( isset( $speekr_options['list_page'] ) && ! get_post( $speekr_options['list_page'] ) )
+		) {
+			$talks_page = wp_insert_post( array(
+				'post_type'      => 'page',
+				'post_title'     => __( 'My Talks', 'speekr' ),
+				'post_status'    => 'draft',
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+			), true );
+
+			if ( ! is_wp_error( $talks_page ) ) {
+				speekr_update_option( 'list_page', (int) $talks_page );
+			}
+		}
+	}
 
 	/**
 	 * Includes front and admin components.
