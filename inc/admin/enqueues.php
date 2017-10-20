@@ -22,7 +22,8 @@ function speekr_enqueues() {
 		wp_enqueue_script( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery' ), SPEEKR_VERSION, true );
 
 		$loc_datas = array(
-			'add_other_item' => __( 'Add a new link', 'speekr' ),
+			'add_other_item'  => __( 'Add a new link', 'speekr' ),
+			'confirm_rm_item' => __( 'Are you sure you want to remove this link?', 'speekr' ),
 		);
 		wp_localize_script( 'speekr-main', 'speekr', $loc_datas );
 	}

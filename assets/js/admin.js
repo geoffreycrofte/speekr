@@ -34,19 +34,21 @@
 	 */
 	$( '#speekr-new-other-links' ).html( '<p class="speekr-increment"><button type="button" class="button speekr-button speekr-button-mini" id="speekr-add-item"><i class="dashicons dashicons-plus" aria-hidden="true"></i>&nbsp;' + speekr.add_other_item + '</button>' );
 
-	var $place = $( '.speekr-increment' );
+	var $place     = $( '.speekr-increment' ),
+		$container = $( '.speekr-other-links' );
 
 	$( '#speekr-add-item' ).on( 'click.speekr', function() {
-		var $line  = $( '.speekr-to-duplicate' ),
-			id     = $line.find( 'label' ).attr( 'for' ),
-			$clone = $line.clone(),
-			cname  = 'speekr-content-media-links-other-l-',
-			cname2 = 'speekr-content-media-links-other-u-';
+		var $line   = $( '.speekr-to-duplicate' ),
+			id      = $line.find( 'label' ).attr( 'for' ),
+			$clone  = $line.clone(),
+			cname   = 'speekr-content-media-links-other-l-',
+			cname2  = 'speekr-content-media-links-other-u-',
+			$delbtn = $( '#speekr-del-btn' ).html(),
+			nbitems = $container.find( '.speekr-mb-line' ).length;
 
 		$line.removeClass( 'speekr-to-duplicate' );
 
 		id = parseInt( id.split( cname )[1] );
-
 
 		$clone.find( 'label[for=' + ( cname + id ) + ']' ).attr( 'for', cname + ( id + 1 ) );
 		$clone.find( 'input[id=' + ( cname + id ) + ']' ).attr( 'id', cname + ( id + 1 ) );
@@ -55,11 +57,42 @@
 		$clone.find( 'input' ).val('');
 		
 		$line.after( $clone );
-		
-		// get the last line
-		// get the # of the line (to change value/for/id)
-		// clone it and change the #
-		// insert it at the last place
+
+		// If we just added a second line, adding del btn too
+		if ( nbitems === 1 ) {
+			$container.find( '.speekr-mb-line' ).each( function(){
+				$(this).find( '.speekr-remove-link' ).html( $delbtn );
+			} );
+		}
+
+		return false;
+	} );
+
+	/**
+	 * Remove a metabox Other Link line
+	 */
+	$container.on( 'click.speekr', '.speekr-remove-link-btn', function() {
+
+		if ( confirm( speekr.confirm_rm_item ) ) {
+			var $_this  = $(this),
+				$parent = $_this.closest( '.speekr-mb-line' ),
+				nbitems = $container.find( '.speekr-mb-line' ).length;
+
+			$parent.addClass( 'to-remove' );
+			setTimeout(function(){
+				$parent.remove();
+
+				// If we remove the model to duplicate, attribute another model.
+				if ( $parent.hasClass( 'speekr-to-duplicate' ) ) {
+					$container.find( '.speekr-mb-line:last' ).addClass( 'speekr-to-duplicate' );
+				}
+				// If we remove the before-the-last item, remove the del button.
+				if ( nbitems === 2 ) {
+					$container.find( '.speekr-mb-line:first' ).find( '.speekr-remove-link-btn' ).remove();
+				}
+			}, 400 );
+		}
+
 		return false;
 	} );
 

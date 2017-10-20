@@ -113,7 +113,13 @@ function speekr_content_media_links_mb( $post ) {
 					</p>';
 		} else {
 			$output .= $divider;
-			$output .= '<p class="speekr-mb-description">' . __( 'Add custom links to your talk.', 'speekr' ) . '</p>'; 
+			$output .= '<p class="speekr-mb-description">' . __( 'Add custom links to your talk.', 'speekr' ) . '</p>';
+
+			$output .= '<div class="speekr-other-links" id="speekr-other-links" role="region" aria-live="polite" aria-relevant="additions removals">';
+
+			$delbtn = '<button type="button" class="speekr-remove-link-btn speekr-button speekr-button-mini" aria-controls="speekr-other-links"><span class="screen-reader-text">' . __( '', 'speekr' ) . '</span><i class="dashicons dashicons-no-alt" aria-hidden="true"></i></button>';
+
+			$output .= '<script id="speekr-del-btn" type="text/template">' . $delbtn . '</script>';
 
 			if ( ! isset( $speekr_ml[ 'other-link' ] ) ||  ( isset( $speekr_ml[ 'other-link' ] ) && ! is_array( $speekr_ml[ 'other-link' ] ) ) ) {
 				// Empty other link.
@@ -126,6 +132,7 @@ function speekr_content_media_links_mb( $post ) {
 							<label for="speekr-content-media-links-other-u-1">' . __( 'URL of the Link', 'speekr' ) . '</label><br>
 							<input type="url" name="speekr-media-links[other-link-url][]" id="speekr-content-media-links-other-u-1" value="" />
 						</span>
+						<span class="speekr-remove-link"></span>
 				</p>';
 			} else {
 				// Build list of other custom links.
@@ -133,6 +140,7 @@ function speekr_content_media_links_mb( $post ) {
 				$c = count( $speekr_ml[ 'other-link' ] );
 
 				foreach ( $speekr_ml[ 'other-link' ] as $link ) {
+					$del_btn = $c > 1 ? $delbtn : '';
 					$output .= '<p class="speekr-mb-line speekr-inlined-inputs' . ( $c === $i ? ' speekr-to-duplicate' : '' ) . '">
 							<span class="speekr-small-col">
 								<label for="speekr-content-media-links-other-l-' . $i . '">' . __( 'Label of the link', 'speekr' ) . '</label><br>
@@ -142,13 +150,14 @@ function speekr_content_media_links_mb( $post ) {
 								<label for="speekr-content-media-links-other-u-' . $i . '">' . __( 'URL of the Link', 'speekr' ) . '</label><br>
 								<input type="url" name="speekr-media-links[other-link-url][]" id="speekr-content-media-links-other-u-' . $i . '" value="' . esc_attr( isset( $link[ 'url' ] ) ? $link[ 'url' ] : '' ) . '" />
 							</span>
+							<span class="speekr-remove-link">' . $del_btn . '</span>
 					</p>';
 					$i++;
 				}
 			}
 
 			// Prepare JS scripting.
-			$output .= '<div id="speekr-new-other-links"></div>';
+			$output .= '<div id="speekr-new-other-links"></div></div><!-- .other-links -->';
 		}
 
 	}

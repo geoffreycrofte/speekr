@@ -235,6 +235,8 @@ h2 + .speekr-description {
 	margin: 2em auto;
 }
 .speekr-mb-line {
+	transition: all .375s;
+
 	label {
 		font-weight: bold;
 	}
@@ -247,6 +249,17 @@ h2 + .speekr-description {
 	[type="checkbox"] {
 		width: auto;
 	}
+
+	&.to-remove {
+		transform: translateX(-50px);
+		opacity: 0;
+	}
+}
+
+.speekr-remove-link {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 
 .speekr-checkbox-line {
