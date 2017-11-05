@@ -98,8 +98,8 @@ function speekr_get_list_page() {
 	}
 
 	$output .= '</select>';
-
-	$output .= '<button type="submit" name="" class="hide-if-no-js speekr-button speekr-button-secondary" aria-hidden="true" data-ajax-action="speekr_create_default_page">' . _x( 'Create a page', 'admin option', 'speekr' ) . '</button>';
+	$output .= '<span class="speekr-or">or</span>';
+	$output .= '<button type="submit" name="" class="hide-if-no-js speekr-button speekr-button-secondary" aria-hidden="true" data-ajax-action="speekr_create_default_page">' . _x( 'Create a page', 'admin option', 'speekr' ) . speekr_get_loader() . '</button>';
 
 	echo apply_filters( 'speekr_get_list_page', $output, $opts );
 }

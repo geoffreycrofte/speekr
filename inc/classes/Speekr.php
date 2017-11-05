@@ -87,6 +87,7 @@ class Speekr {
 
 		require_once( SPEEKR_DIRNAME . '/inc/functions/debug.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/custom-posts.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/functions/markup.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/options.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/settings.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/default-types.php' );
@@ -123,7 +124,6 @@ class Speekr {
 		do_action( 'speekr_before_includes_front' );
 
 		require_once( SPEEKR_DIRNAME . '/inc/front/enqueues.php' );
-		require_once( SPEEKR_DIRNAME . '/inc/functions/markup.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/lists.php' );
 
 		do_action( 'speekr_after_includes_front' );
