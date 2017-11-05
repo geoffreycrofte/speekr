@@ -14,14 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Text Domain: speekr
  */
 
-define( 'SPEEKR_PLUGIN_NAME',	 'Speekr' );
-define( 'SPEEKR_VERSION',      '1.0' );
-define( 'SPEEKR_FILE',		 __FILE__ );
-define( 'SPEEKR_DIRNAME',		 dirname( SPEEKR_FILE ) );
-define( 'SPEEKR_CLASSES_DIR',	 SPEEKR_DIRNAME . '/inc/classes/' );
-define( 'SPEEKR_DIRBASENAME',	 basename( dirname( SPEEKR_FILE ) ) );
-define( 'SPEEKR_PLUGIN_URL',	 plugin_dir_url( SPEEKR_FILE ));
-define( 'SPEEKR_SLUG',		 'speekr' );
+define( 'SPEEKR_PLUGIN_NAME',   'Speekr' );
+define( 'SPEEKR_VERSION',       '1.0' );
+define( 'SPEEKR_FILE',          __FILE__ );
+define( 'SPEEKR_DIRNAME',       dirname( SPEEKR_FILE ) );
+define( 'SPEEKR_CLASSES_DIR',   SPEEKR_DIRNAME . '/inc/classes/' );
+define( 'SPEEKR_DIRBASENAME',   basename( dirname( SPEEKR_FILE ) ) );
+define( 'SPEEKR_PLUGIN_URL',    plugin_dir_url( SPEEKR_FILE ));
+define( 'SPEEKR_SLUG',          'speekr' );
 define( 'SPEEKR_SETTING_SLUG', 'speekr_settings' );
 
 require_once( SPEEKR_CLASSES_DIR . 'Speekr.php' );
