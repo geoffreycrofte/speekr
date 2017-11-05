@@ -58,19 +58,12 @@ function speekr_get_list_layout() {
 
 	$opts = $speekr_options;
 
-	$layouts = array(
-		'grid'  => __( 'Grid', 'speekr' ),
-		'list'  => __( 'List', 'speekr' ),
-	);
+	$layouts = speekr_get_admin_layout_values();
 
 	$c_grid = ! isset( $opts['list_layout'] ) ? ' checked="checked"' : '';
-	$c_list = '';
-
-	if ( isset( $opts['list_layout'] ) ) {
-		${ 'c_' . esc_attr( $opts['list_layout'] ) } = ' checked="checked"';
-	}
+	${ 'c_' . ( isset( $opts['list_layout'] ) ? esc_attr( $opts['list_layout'] ) : '' ) } = ' checked="checked"';
 	
-	echo '<p class="speekr-square-radio-button">';
+	echo '<p class="speekr-radios speekr-square-radio-button">';
 
 	foreach ( $layouts as $k => $v ) {
 		echo '<span class="speekr-layout-' . $k . '">
@@ -147,7 +140,7 @@ function speekr_get_css_activation() {
 		${ 'css_' . esc_attr( $opts['css'] ) } = ' checked="checked"';
 	}
 	
-	echo '<p class="speekr-line-radio">';
+	echo '<p class="speekr-line-radio speekr-radios speekr-vertical-radios">';
 
 	foreach ( $csss as $k => $v ) {
 		echo '<span class="speekr-radio-option speekr-css-' . $k . '">

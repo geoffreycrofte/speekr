@@ -26,3 +26,15 @@ function speekr_get_content_media_links() {
 function speekr_get_admin_css_values() {
 	return apply_filters( 'speekr_css_values', array() );
 }
+
+/**
+ * Get the list of Layout values.
+ *
+ * @return (array) The list of Layout values.
+ *
+ * @since 1.0
+ * @author Geoffrey Crofte
+ */
+function speekr_get_admin_layout_values() {
+	return apply_filters( 'speekr_layout_values', array() );
+}

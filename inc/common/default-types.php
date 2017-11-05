@@ -46,7 +46,7 @@ add_filter( 'speekr_media_links', 'speekr_add_default_media_links' );
 /**
  * Set the default list of CSS values.
  *
- * @param (array)  $links Array of existing values.
+ * @param (array)  $css   Array of existing values.
  * @return (array)        The list of CSS values.
  *
  * @since 1.0
@@ -64,3 +64,24 @@ function speekr_add_default_css_values( $css ) {
 	return $css;
 }
 add_filter( 'speekr_css_values', 'speekr_add_default_css_values' );
+
+/**
+ * Set the default list of Layouts.
+ *
+ * @param (array)  $layout Array of existing values.
+ * @return (array)         The list of CSS values.
+ *
+ * @since 1.0
+ * @author Geoffrey Crofte
+ */
+function speekr_add_default_layout_values( $layout ) {
+	$default = array(
+		'grid'  => __( 'Grid', 'speekr' ),
+		'list'  => __( 'List', 'speekr' ),
+	);
+
+	$layout = array_merge( $layout, $default );
+
+	return $layout;
+}
+add_filter( 'speekr_layout_values', 'speekr_add_default_layout_values' );
