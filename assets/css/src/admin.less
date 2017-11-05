@@ -37,6 +37,9 @@
 .speekr-main-content {
 	flex-basis: 100%;
 	margin-right: 20px;
+}
+.speekr-main-content,
+.speekr-sidebar-widget {
 	background: #FFF;
 	box-shadow: inset 0 0 0 1px #E6E6E6;
 }
@@ -49,6 +52,20 @@
 .speekr-settings .button,
 .speekr-button {
 	transition: all .275s;
+}
+
+/**
+ * Generic elements.
+ */
+.speekr-settings {
+	a {
+		color: var(--primary);
+
+		&:hover,
+		&:focus {
+			color: var(--primarydark);
+		}
+	}
 }
 
 /**
@@ -521,6 +538,85 @@ h2 + .speekr-description {
 }
 .speekr-big-col {
 	flex-basis: 67%;
+}
+
+/**
+ * Sidebar
+ */
+.speekr-sidebar-widget  {
+	& + & {
+		margin-top: 3em;
+	}
+}
+.speekr-sw-title {
+	padding: 12px 25px;
+	background: var(--primarylighter);
+
+	p {
+		margin: 0;
+		font-size: 18px;
+		font-weight: bold;
+		color: var(--primarydark);
+	}
+}
+.speekr-sw-content {
+	padding: 12px 25px 18px;
+
+	p,
+	dt,
+	dd {
+		font-size: 14px;
+	}
+}
+
+.speekr-social {
+	li {
+		display: inline;
+	}
+	a {
+		display: inline-block;
+		padding: 5px 15px;
+		font-weight: bold;
+		border-radius: 3px;
+		text-decoration: none;
+		color: #FFF;
+		box-shadow: 0 0 0 rgba(0,0,0,0);
+
+		&:hover,
+		&:focus {
+			color: #FFF;
+			transform: translateY(-3px);
+			box-shadow: 0 4px 4px rgba(0,0,0,.2);
+		}
+	}
+
+	a[href*="twitter"] {
+		background: #1da1f2;
+	}
+	a[href*="wordpress"] {
+		background: #21759b;
+	}
+}
+a.speekr-rate {
+	font-size: 18px;
+	text-decoration: none;
+	color: #D6AF04;
+}
+
+.speekr-dl {
+	margin: 1.5em 0;
+
+	dt {
+		margin-bottom: .4em;
+		font-weight: bold;
+	}
+	dd {
+		margin: 0;
+		padding: 0;
+	}
+	dd + dt {
+		margin-top: 2em;
+	}
 }
 
 /**

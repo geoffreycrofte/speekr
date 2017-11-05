@@ -214,7 +214,45 @@ function speekr_settings_page() {
 		</div>
 
 		<div class="speekr-sidebar">
-			Plop
+			<div class="speekr-sidebar-widget">
+				<div class="speekr-sw-title">
+					<p><?php _e( 'Be social!', 'speekr' ); ?></p>
+				</div>
+				<div class="speekr-sw-content">
+					<p><?php _e( 'Find us on:', 'speekr' ); ?></p>
+					<ul class="speekr-social">
+						<li><a href="https://twitter.com/speekr_plugin">Twitter</a></li>
+						<li><a href="https://wordpress.org/plugins/<?php echo SPEEKR_SLUG; ?>">WordPress</a></li>
+					</ul>
+
+					<div class="speekr-mb-divider"></div>
+
+					<p><?php _e( 'You like the plugin? Rate it on WordPress.org!' ) ?></p>
+					<p><a class="speekr-rate" href="https://wordpress.org/support/plugin/<?php echo SPEEKR_SLUG; ?>/reviews/#new-post">★★★★★</a></p>
+				</div>
+			</div>
+
+			<div class="speekr-sidebar-widget">
+				<div class="speekr-sw-title">
+					<p><?php _e( 'Contributors', 'speekr' ); ?></p>
+				</div>
+				<div class="speekr-sw-content">
+					<p><?php _e( 'This plugin is crafted with love and freely by several awesome folks.', 'speekr' ); ?></p>
+					<dl class="speekr-dl">
+						<dt><?php _e( 'Original Idea', 'speekr' ); ?></dt>
+						<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a> &amp; <a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+
+						<dt><?php _e( 'Admin &amp; Front Design', 'speekr' ); ?></dt>
+						<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a> &amp; <a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+
+						<dt><?php _e( 'Front &amp; Back Developments', 'speekr' ); ?></dt>
+						<dd><a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+
+						<dt><?php _e( 'Icon Design', 'speekr' ); ?></dt>
+						<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a>. Find the Icon Set on <a href="https://thenounproject.com/stephaniewalter/collection/speaker" target="_blank">The Noun Project</a>.</dd>
+					</dl>
+				</div>
+			</div>
 		</div>
 
 	</div><!-- .speekr-settings.wrap -->
