@@ -18,8 +18,8 @@ function speekr_plugin_settings() {
 
 	// Global Layout Section.
 	add_settings_section( 'speekr_option_layout', __( 'Global Layout', 'speekr' ), 'speekr_layout_section_text', SPEEKR_SLUG );
-	add_settings_field( 'speekr_list_layout', __( 'List Layout', 'speekr' ), 'speekr_get_list_layout', SPEEKR_SLUG, 'speekr_option_layout' );
-	add_settings_field( 'speekr_list_page', '<label for="speekr-list-page">' . __( 'List Page', 'speekr' ) . '</label>', 'speekr_get_list_page', SPEEKR_SLUG, 'speekr_option_layout' );
+	add_settings_field( 'speekr_list_layout', __( '“My Talks” Layout', 'speekr' ), 'speekr_get_list_layout', SPEEKR_SLUG, 'speekr_option_layout' );
+	add_settings_field( 'speekr_list_page', '<label for="speekr-list-page">' . __( '“My Talks” Page', 'speekr' ) . '</label>', 'speekr_get_list_page', SPEEKR_SLUG, 'speekr_option_layout' );
 
 	// Styles Section.
 	add_settings_section( 'speekr_option_styles', __( 'Painting', 'speekr' ), 'speekr_styles_section_text', SPEEKR_SLUG );
@@ -91,15 +91,17 @@ function speekr_get_list_page() {
 		'post_status' => array( 'publish', 'draft' ),
 	) );
 
-	$output = '<select name="' . SPEEKR_SETTING_SLUG . '[list_page]" id="speekr-list-page">';
+	$output = '<select name="' . SPEEKR_SETTING_SLUG . '[list_page]" id="speekr-list-page" required>';
 	
+	$output .= '<option value="">(' . __( 'Select a page', 'speekr' ) . ')</option>';
+
 	foreach( $pages as $p ) {
 		$output .='<option value="' . $p->ID . '"' . ( isset( $opts['list_page'] ) && $p->ID === $opts['list_page'] ? ' selected="selected"' : '' ) . '>' . esc_html( $p->post_title ) . ( $p->post_status === 'draft' ? ' (' . __( 'draft' ) . ')' : '' ) . '</option>';
 	}
 
 	$output .= '</select>';
 	$output .= '<span class="speekr-or">or</span>';
-	$output .= '<button type="submit" name="" class="hide-if-no-js speekr-button speekr-button-secondary" aria-hidden="true" data-ajax-action="speekr_create_default_page">' . _x( 'Create a page', 'admin option', 'speekr' ) . speekr_get_loader() . '</button>';
+	$output .= '<button type="submit" name="" class="hide-if-no-js speekr-button speekr-button-secondary" aria-hidden="true" data-nonce="' . wp_create_nonce( 'create_default_page' ) . '" data-ajax-action="speekr_create_default_page">' . _x( 'Create a page', 'admin option', 'speekr' ) . speekr_get_loader() . '</button>';
 
 	echo apply_filters( 'speekr_get_list_page', $output, $opts );
 }

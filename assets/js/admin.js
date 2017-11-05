@@ -122,16 +122,40 @@
 	 * AJAX Actions on some buttons.
 	 */
 	$( '.speekr-button[data-ajax-action]' ).on( 'click.speekr', function() {
-		var $_this = $(this);
+		var $_this = $(this),
+			action = $_this.data( 'ajax-action' );
+
+		$_this.addClass( 'speekr-loading' );
 
 		$.post(
 			ajaxurl,
-			{ action: $_this.data( 'ajax-action' ) }
+			{ action: action, _wpnonce: $_this.data( 'nonce' ) }
 		).done( function( data ) {
-			console.log( data );
+			
+			$_this.removeClass( 'speekr-loading' );
+			$_this.next( '.speekr-success, .speekr-error' ).remove();
+
+			if ( data.success === true ) {
+				$_this.after( '<p class="speekr-success">' + data.data.message + '</p>' );
+				$_this.trigger( 'speekr-success', data.data );
+			} else {
+				$_this.after( '<p class="speekr-error">' + data.data.message + '</p>' );
+				$_this.trigger( 'speekr-error', data.data );
+			}
 		});
 
 		return false;
+	} )
+
+	// AJAX Actions on specific buttons.
+	.on( 'speekr-success', function( e, data ) {
+		var action = $( e.target ).data('ajax-action');
+
+		if ( action === 'speekr_create_default_page' ) {
+			var $select = $( '#speekr-list-page' );
+			$select.find( 'option[selected]' ).removeAttr( 'selected' );
+			$select.append( '<option value="' + data.item_id + '" selected="selected">' + data.item_title + '</option>' );
+		}
 	} );
 
 } )( jQuery, window, document );

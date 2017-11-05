@@ -61,13 +61,7 @@ class Speekr {
 			||
 			( isset( $speekr_options['list_page'] ) && ! get_post( $speekr_options['list_page'] ) )
 		) {
-			$talks_page = wp_insert_post( array(
-				'post_type'      => 'page',
-				'post_title'     => __( 'My Talks', 'speekr' ),
-				'post_status'    => 'draft',
-				'comment_status' => 'closed',
-				'ping_status'    => 'closed',
-			), true );
+			$talks_page = wp_insert_post( speekr_get_my_talks_page_args(), true );
 
 			if ( ! is_wp_error( $talks_page ) ) {
 				speekr_update_option( 'list_page', (int) $talks_page );
@@ -105,6 +99,7 @@ class Speekr {
 	public function includes_admin() {
 		do_action( 'speekr_before_includes_admin' );
 
+		require_once( SPEEKR_DIRNAME . '/inc/admin/ajax.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/enqueues.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/settings.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/menus.php' );

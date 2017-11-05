@@ -10,6 +10,22 @@
 	--primarylighter: #EADAF0;
 	--primarydark: #5C4B62;
 	--lightgray: #E6E6E6;
+
+	--success: #84A768;
+	--successdark: #5B7F3D;
+	--successbg: #F0F3ED;
+	--error: #D56060;
+	--errordark: #A63333;
+	--errorbg: #F8ECEC;
+}
+
+.speekr-settings ::-moz-selection {
+	background: var(--primary);
+	color: #FFF;
+}
+.speekr-settings ::selection {
+	background: var(--primary);
+	color: #FFF;
 }
 
 /**
@@ -179,6 +195,10 @@ h2 + .speekr-description {
 		background: var(--primarydark);	
 	}
 
+	&:focus {
+		outline: none;
+	}
+
 	&:active {
 		border: 0;
 		transform: scale(0.98);
@@ -197,6 +217,7 @@ h2 + .speekr-description {
 [class*="speekr"] .button-secondary:hover,
 [class*="speekr"] .button-secondary:focus {
 	background-color: #F2F2F2;
+	outline: none;
 }
 
 .speekr-button.speekr-loading,
@@ -212,6 +233,38 @@ h2 + .speekr-description {
 	color: #FFF;
 	background: var(--primarylight);
 	cursor: default;
+}
+
+// Ajax action response.
+[data-ajax-action] + .speekr-success,
+[data-ajax-action] + .speekr-error {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 13px;
+	font-weight: bold;
+}
+[data-ajax-action] + .speekr-success {
+	color: var(--success);
+
+	a {
+		color: var(--successdark);
+
+		&:hover,
+		&:focus {
+			color: #444;
+		}
+	}
+}
+[data-ajax-action] + .speekr-error {
+	color: var(--error);
+
+	a {
+		color: var(--errordark);
+		&:hover,
+		&:focus {
+			color: #444;
+		}
+	}
 }
 
 /**
@@ -431,7 +484,7 @@ h2 + .speekr-description {
 .speekr-loader {
 	display: none;
 	vertical-align: middle;
-	margin-left: 10px;
+	margin: -2px 0 -2px 10px;
 
 	.speekr-loading & {
 		display: inline-block;

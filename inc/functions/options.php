@@ -77,6 +77,8 @@ function speekr_get_options() {
  * Multisite compatibility.
  *
  * @param (array) $options The array of option for Speekr
+ * @return (string) update_option() function return.
+ *
  * @author Geoffrey Crofte
  * @since 1.0
  */
@@ -105,6 +107,8 @@ function speekr_update_options( $options ) {
  *
  * @param (string) $the_option The option to update.
  * @param (string) $the_value  The value of the option.
+ * @return (string) update_option() function return.
+ *
  * @author Geoffrey Crofte
  * @since 1.0
  */
@@ -116,4 +120,23 @@ function speekr_update_option( $the_option, $the_value ) {
 
 	speekr_update_options( $options );
 
+}
+
+/**
+ * Get arguments used to create My Talks page (during plugin activation and in options page).
+ *
+ * @return  (array) The arguments for wp_insert_post().
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_get_my_talks_page_args() {
+	return array(
+		'post_type'      => 'page',
+		'post_author'    => get_current_user_id(),
+		'post_title'     => __( 'My Talks', 'speekr' ),
+		'post_status'    => apply_filters( 'speekr_default_talks_page_status', 'draft' ),
+		'comment_status' => 'closed',
+		'ping_status'    => 'closed',
+	);
 }
