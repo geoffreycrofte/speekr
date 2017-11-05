@@ -59,13 +59,12 @@ function speekr_get_list_layout() {
 	$opts = $speekr_options;
 
 	$layouts = array(
-		'mixed' => __( 'Mixed', 'speekr' ),
 		'grid'  => __( 'Grid', 'speekr' ),
 		'list'  => __( 'List', 'speekr' ),
 	);
 
-	$c_mixed = ! isset( $opts['list_layout'] ) ? ' checked="checked"' : '';
-	$c_grid  = $c_list = '';
+	$c_grid = ! isset( $opts['list_layout'] ) ? ' checked="checked"' : '';
+	$c_list = '';
 
 	if ( isset( $opts['list_layout'] ) ) {
 		${ 'c_' . esc_attr( $opts['list_layout'] ) } = ' checked="checked"';
