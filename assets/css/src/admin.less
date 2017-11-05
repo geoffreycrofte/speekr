@@ -7,6 +7,7 @@
 :root{
 	--primary: #9768A7; /* 30aabc */
 	--primarylight: #D0BAD7;
+	--primarylighter: #EADAF0;
 	--primarydark: #5C4B62;
 	--lightgray: #E6E6E6;
 }
@@ -15,8 +16,17 @@
  * Options/Settings page.
  */
 .speekr-settings {
+	display: flex;
+}
+.speekr-main-content {
+	flex-basis: 100%;
+	margin-right: 20px;
 	background: #FFF;
 	box-shadow: inset 0 0 0 1px #E6E6E6;
+}
+.speekr-sidebar {
+	flex-basis: 300px;
+	flex-shrink: 0;
 }
 
 .speekr-settings a,
@@ -78,38 +88,51 @@
 	padding: 25px 30px;
 
 	h2 {
-		font-size: 18px;
+		font-size: 24px;
 		font-weight: bold;
 		color: var(--primarydark);
 	}
 }
 h2 + .speekr-description {
-	margin-top: -8px;
+	margin-top: -11px;
 	margin-bottom: 15px;
 	padding-bottom: 15px;
 	border-bottom: 2px solid #F2F2F2;
 	color: #777;
-	font-weight: bold;
+	font-weight: 600;
+	font-size: 15px;
 }
 .speekr-settings {
-	.form-table + h2 {
-		margin-top: 4em;
-	}
-	.form-table th {
-		color: var(--primarydark);
-		font-weight: bold;
-		vertical-align: middle;
-	}
-
 	.form-table {
+		 + h2 {
+			margin-top: 4em;
+		}
+
 		th,
 		td {
 			padding-top: 25px;
 			padding-bottom: 25px;
 		}
+
+
+		th {
+			padding-top: 32px;
+			font-size: 15px;
+			color: var(--primarydark);
+			font-weight: bold;
+		}
 	}
 }
 
+.speekr-or {
+	display: inline-block;
+	margin: 0 2.5em 0 1.8em;
+	font-weight: bold;
+}
+
+/**
+ * Buttons
+ */
 .speekr-button.speekr-button,
 .speekr-settings-content .button-secondary {
 	height: auto;
@@ -163,6 +186,34 @@ h2 + .speekr-description {
 	}
 }
 
+.speekr-button-primary:hover,
+.speekr-button-primary:focus,
+[class*="speekr"] .button-primary:hover,
+[class*="speekr"] .button-primary:focus {
+	background-color: var(--primarydark);
+}
+.speekr-button-secondary:hover,
+.speekr-button-secondary:focus,
+[class*="speekr"] .button-secondary:hover,
+[class*="speekr"] .button-secondary:focus {
+	background-color: #F2F2F2;
+}
+
+.speekr-button.speekr-loading,
+.speekr-button.speekr-loading:hover,
+.speekr-button.speekr-loading:focus {
+	color: #888;
+	background: #F2F2F2;
+	cursor: default;
+}
+.speekr-button-primary.speekr-loading,
+.speekr-button-primary.speekr-loading:hover,
+.speekr-button-primary.speekr-loading:focus {
+	color: #FFF;
+	background: var(--primarylight);
+	cursor: default;
+}
+
 /**
  * Options types.
  */
@@ -171,15 +222,19 @@ h2 + .speekr-description {
 	vertical-align: middle;
 	margin-right: 25px;
 }
+.speekr-vertical-radios {
+	.speekr-radio-option {
+		display: block;
+	}
+	.speekr-radio-option + .speekr-radio-option {
+		margin-top: .75em;
+	}
+}
 .speekr-square-radio-button {
 	margin: 0 -12px;
 }
-.speekr-square-radio-button {
-    &,
-    > span {
-		display: flex;
-	}
-
+.speekr-radios,
+.speekr-checkboxes {
 	input {
 		position: absolute !important;
 		height: 1px !important;
@@ -191,11 +246,76 @@ h2 + .speekr-description {
 		overflow: hidden !important;
 		padding: 0 !important;
 		white-space: nowrap !important;
+
+		&:not(:checked),
+		&:checked {
+			+ label {
+				position: relative;
+				padding-left: 2em;
+
+				&:before,
+				&:after {
+					position: absolute;
+					content: '';
+					border-radius: 50%;
+					line-height: 1;
+					left: 0;
+					top: -0.05em;
+					width: 1.2em;
+					height: 1.2em;
+				}
+				&:before {
+					border: 1px solid #666;
+				}
+				&:after {					
+					background: var(--primary);
+					opacity: 0;
+					transform: translateY(0) translateX(0) scale(0);
+					transform-origin: 50%;
+					transition: all .275s;
+				}
+			}
+		}
+
+		&:checked + label {
+			font-weight: bold;
+			
+			&:before {
+				animation-name: radio;
+				animation-duration: .375s;
+				animation-count: 1;
+				animation-delay: .2s;
+			}
+			&:after {
+				opacity: 1;
+				transform: translateY(1px) translateX(1px) scale(.7);
+			}
+		}
+	}
+	label {
+		transition: all .275s;
+	}
+}
+@keyframes radio {
+	0% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+	}
+	50% {
+		box-shadow: 0 0 0 10px var(--primarylighter);
+	}
+	100% {
+		box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+	}
+}
+.speekr-square-radio-button {
+    &,
+    > span {
+		display: flex;
 	}
 
 	label {
 		width: 88px;
-		padding: 15px 10px;
+		padding: 15px 10px !important;
 		margin: 0 12px;
 		color: var(--primarydark);
 		font-weight: bold;
@@ -203,6 +323,11 @@ h2 + .speekr-description {
 		border-radius: 5px;
 		background: var(--lightgray);
 		transition: all .275s;
+
+		&:before,
+		&:after {
+			display: none;
+		}
 	}
 
 	label:hover,
@@ -213,7 +338,7 @@ h2 + .speekr-description {
 	input:checked + label {
 		background: var(--primary);
 		color: #FFF;
-	}	
+	}
 }
 
 .speekr-settings {
@@ -301,6 +426,24 @@ h2 + .speekr-description {
 .speekr-button i {
 	vertical-align: middle;
 	margin-left: -3px;
+}
+
+.speekr-loader {
+	display: none;
+	vertical-align: middle;
+	margin-left: 10px;
+
+	.speekr-loading & {
+		display: inline-block;
+	}
+
+	svg {
+		height: 1em;
+	}
+	
+	rect {
+		fill: var(--primary);
+	}
 }
 
 /**

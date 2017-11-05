@@ -188,26 +188,32 @@ function speekr_settings_page() {
 ?>
 	<div class="wrap speekr-settings">
 		
-		<div class="speekr-settings-header">
-			<h1 class="speerk-settings-h1">
-				<i class="dashicons dashicons-nametag" aria-hidden="true"></i>
-				<span>
-					<span class="speekr-title"><?php echo SPEEKR_PLUGIN_NAME; ?></span>
-					<span class="speekr-subtitle"><?php _e( 'Customize your experience', 'speekr' ); ?></span>
-				</span>
-			</h1>
-			<p class="speekr-version-number"><?php echo SPEEKR_PLUGIN_NAME . '&nbsp;v.' . SPEEKR_VERSION; ?></p>
-		</div><!-- .speekr-settings-header -->
-		
-		<div class="speekr-settings-content">
-			<form method="post" action="options.php">
-			<?php
-				settings_fields( SPEEKR_SETTING_SLUG . '_layout' );
-				do_settings_sections( SPEEKR_SLUG );
-				submit_button();
-			?>
-			</form>
-		</div><!-- .speekr-settings-content -->
+		<div class="speekr-main-content">
+			<div class="speekr-settings-header">
+				<h1 class="speerk-settings-h1">
+					<i class="dashicons dashicons-nametag" aria-hidden="true"></i>
+					<span>
+						<span class="speekr-title"><?php echo SPEEKR_PLUGIN_NAME; ?></span>
+						<span class="speekr-subtitle"><?php _e( 'Customize your experience', 'speekr' ); ?></span>
+					</span>
+				</h1>
+				<p class="speekr-version-number"><?php echo SPEEKR_PLUGIN_NAME . '&nbsp;v.' . SPEEKR_VERSION; ?></p>
+			</div><!-- .speekr-settings-header -->
+			
+			<div class="speekr-settings-content">
+				<form method="post" action="options.php">
+				<?php
+					settings_fields( SPEEKR_SETTING_SLUG . '_layout' );
+					do_settings_sections( SPEEKR_SLUG );
+					submit_button();
+				?>
+				</form>
+			</div><!-- .speekr-settings-content -->
+		</div>
+
+		<div class="speekr-sidebar">
+			Plop
+		</div>
 
 	</div><!-- .speekr-settings.wrap -->
 <?php
