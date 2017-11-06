@@ -30,25 +30,29 @@ function speekr_enqueues() {
 }
 add_action( 'admin_enqueue_scripts', 'speekr_enqueues' );
 
-function speekr_crappy_styles() {
-	echo '<style>
 /**
- * Icons
+ * Add icon menu on the WP Admin main menu.
+ * @return void
+ *
+ * @author Geoffrey Crofte
+ * @since  1.0
  */
+function speekr_crappy_admin_styles() {
+	$font = SPEEKR_PLUGIN_URL . 'assets/fonts/speekr';
+
+	echo '<style>
 @font-face {
 	font-family: "speekr";
-	src:  url("' . SPEEKR_PLUGIN_URL . 'assets/fonts/speekr.eot?l880m3");
-	src:  url("' . SPEEKR_PLUGIN_URL . 'assets/fonts/speekr.eot?l880m3#iefix") format("embedded-opentype"),
-		url("' . SPEEKR_PLUGIN_URL . 'assets/fonts/speekr.ttf?l880m3") format("truetype"),
-		url("' . SPEEKR_PLUGIN_URL . 'assets/fonts/speekr.woff?l880m3") format("woff"),
-		url("' . SPEEKR_PLUGIN_URL . 'assets/fonts/speekr.svg?l880m3#speekr") format("svg");
+	src:  url("' . $font . '.eot?l880m3");
+	src:  url("' . $font . '.eot?l880m3#iefix") format("embedded-opentype"),
+		  url("' . $font . '.ttf?l880m3") format("truetype"),
+		  url("' . $font . '.woff?l880m3") format("woff"),
+		  url("' . $font . '.svg?l880m3#speekr") format("svg");
 	font-weight: normal;
 	font-style: normal;
 }
-
 .dashicons-speekr,
 .dashicons-speekr:before {
-	/* use !important to prevent issues with browser extensions that change fonts */
 	font-family: "speekr" !important;
 	speak: none;
 	font-style: normal;
@@ -56,15 +60,12 @@ function speekr_crappy_styles() {
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
-
-	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-
 .dashicons-speekr:before {
 	content: "\e900";
 }
 </style>';
 }
-add_action( 'admin_head', 'speekr_crappy_styles' );
+add_action( 'admin_head', 'speekr_crappy_admin_styles' );
