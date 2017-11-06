@@ -10,6 +10,7 @@
 	--primarylighter: #EADAF0;
 	--primarydark: #5C4B62;
 	--lightgray: #E6E6E6;
+	--gray: #A59EA7;
 
 	--success: #84A768;
 	--successdark: #5B7F3D;
@@ -126,10 +127,19 @@
 		font-size: 24px;
 		font-weight: bold;
 		color: var(--primarydark);
+
+		i {
+			color: var(--primary);
+			font-size: 1.2em;
+			width: 1em;
+			height: 1em;
+			margin-right: .15em;
+			vertical-align: middle;
+		}
 	}
 }
 h2 + .speekr-description {
-	margin-top: -11px;
+	margin-top: -15px;
 	margin-bottom: 15px;
 	padding-bottom: 15px;
 	border-bottom: 2px solid #F2F2F2;
@@ -163,6 +173,22 @@ h2 + .speekr-description {
 	display: inline-block;
 	margin: 0 2.5em 0 1.8em;
 	font-weight: bold;
+}
+
+.speekr-list-page-block {
+	display: inline-block;
+	vertical-align: middle;
+
+	select {
+		width: 100%;
+	}
+
+	.speekr-settings & p {
+		margin: 0;
+		font-size: 12px;
+		font-weight: bold;
+		text-align: center;
+	}
 }
 
 /**
@@ -387,7 +413,7 @@ h2 + .speekr-description {
 
 	label {
 		width: 88px;
-		padding: 15px 10px !important;
+		padding: 12px 15px 15px!important;
 		margin: 0 12px;
 		color: var(--primarydark);
 		font-weight: bold;
@@ -395,6 +421,11 @@ h2 + .speekr-description {
 		border-radius: 5px;
 		background: var(--lightgray);
 		transition: all .275s;
+
+		path {
+			fill: var(--gray);
+			transition: all .275s;
+		}
 
 		&:before,
 		&:after {
@@ -410,7 +441,18 @@ h2 + .speekr-description {
 	input:checked + label {
 		background: var(--primary);
 		color: #FFF;
+
+		path {
+			fill: var(--primarylight);
+		}
 	}
+}
+
+.speekr-layout-icon {
+	display: block;
+	width: 65px;
+	height: 60px;
+	margin: 0 auto .5em auto;
 }
 
 .speekr-settings {
@@ -559,6 +601,15 @@ h2 + .speekr-description {
 		font-size: 18px;
 		font-weight: bold;
 		color: var(--primarydark);
+	}
+
+	i {
+		color: var(--primary);
+		font-size: 1.2em;
+		width: 1em;
+		height: 1em;
+		margin-right: .15em;
+		vertical-align: middle;
 	}
 }
 .speekr-sw-content {

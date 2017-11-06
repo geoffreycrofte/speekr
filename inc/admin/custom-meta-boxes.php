@@ -117,7 +117,7 @@ function speekr_content_media_links_mb( $post ) {
 
 			$output .= '<div class="speekr-other-links" id="speekr-other-links" role="region" aria-live="polite" aria-relevant="additions removals">';
 
-			$delbtn = '<button type="button" class="speekr-remove-link-btn speekr-button speekr-button-mini" aria-controls="speekr-other-links"><span class="screen-reader-text">' . __( '', 'speekr' ) . '</span><i class="dashicons dashicons-no-alt" aria-hidden="true"></i></button>';
+			$delbtn = '<button type="button" class="speekr-remove-link-btn speekr-button speekr-button-mini" aria-controls="speekr-other-links"><span class="screen-reader-text">' . __( 'Remove this link', 'speekr' ) . '</span><i class="dashicons dashicons-no-alt" aria-hidden="true"></i></button>';
 
 			$output .= '<script id="speekr-del-btn" type="text/template">' . $delbtn . '</script>';
 
