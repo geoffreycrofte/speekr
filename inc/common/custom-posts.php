@@ -45,7 +45,7 @@ function speekr_register_post_types() {
 		'show_in_menu'         => true, // or 'something.php' to put this menu item as submenu
 		'show_in_admin_bar'    => apply_filters( 'speekr_show_in_admin_bar', false ),
 		'menu_position'        => apply_filters( 'speekr_menu_position', 6 ),
-		'menu_icon'            => 'dashicons-nametag',
+		'menu_icon'            => 'dashicons-speekr',
 		'capability_type'      => apply_filters( 'speekr_capability_types', 'post' ),
 		'register_meta_box_cb' => 'speekr_custom_meta_boxes',
 		'query_var'            => 'talks',
