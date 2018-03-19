@@ -26,5 +26,7 @@
     "gulp-server-livereload": "latest",
     "gulp-uglify": "^1.5.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "gulp-install": "^1.1.0"
+  }
 }

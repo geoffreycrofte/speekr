@@ -38,7 +38,7 @@ add_action( 'admin_enqueue_scripts', 'speekr_enqueues' );
  * @since  1.0
  */
 function speekr_crappy_admin_styles() {
-	$font = SPEEKR_PLUGIN_URL . 'assets/fonts/speekr';
+	$font = SPEEKR_PLUGIN_URL . 'assets/fonts/admin/speekr';
 
 	echo '<style>
 @font-face {

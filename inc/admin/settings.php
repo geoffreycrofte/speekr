@@ -60,6 +60,7 @@ function speekr_get_list_layout() {
 
 	$layouts = speekr_get_admin_layout_values();
 
+
 	$c_grid = ! isset( $opts['list_layout'] ) ? ' checked="checked"' : '';
 	${ 'c_' . ( isset( $opts['list_layout'] ) ? esc_attr( $opts['list_layout'] ) : '' ) } = ' checked="checked"';
 
@@ -73,7 +74,7 @@ function speekr_get_list_layout() {
 
 	foreach ( $layouts as $k => $v ) {
 		$layout = '<span class="speekr-layout-' . $k . '">
-				<input name="' . SPEEKR_SETTING_SLUG . '[list_layout]" id="speekr-global-layout-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ${ 'c_' . esc_attr( $k ) } . '>
+				<input name="' . SPEEKR_SETTING_SLUG . '[list_layout]" id="speekr-global-layout-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ( isset( ${ 'c_' . esc_attr( $k ) } ) ? ${ 'c_' . esc_attr( $k ) } : '' ) . '>
 				<label class="speekr-label" for="speekr-global-layout-' . esc_attr( $k ) . '">
 					<span class="speekr-layout-icon">' . ( isset( ${ 'svg_' . esc_attr( $k ) } ) ? ${ 'svg_' . esc_attr( $k ) } : '' ) . '</span>
 					<span class="speekr-layout-text">' . esc_html( $v ) . '</span>
@@ -160,7 +161,7 @@ function speekr_get_css_activation() {
 
 	foreach ( $csss as $k => $v ) {
 		echo '<span class="speekr-radio-option speekr-css-' . $k . '">
-				<input name="' . SPEEKR_SETTING_SLUG . '[css]" id="speekr-css-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ${ 'css_' . esc_attr( $k ) } . '>
+				<input name="' . SPEEKR_SETTING_SLUG . '[css]" id="speekr-css-' . esc_attr( $k ) . '" type="radio" value="' . esc_attr( $k ) . '"' . ( isset( ${ 'css_' . esc_attr( $k ) } ) ? ${ 'css_' . esc_attr( $k ) } : '' ) . '>
 				<label class="speekr-label" for="speekr-css-' . esc_attr( $k ) . '">' . esc_html( $v ) . '</label>
 			</span>';
 	}

@@ -43,28 +43,49 @@ function speekr_get_list_content( $options ) {
 		while ( $talks->have_posts() ) {
 			$talks->the_post();
 			$id = get_the_ID();
+			$metas = get_post_meta( $id );
 
-			$is_article = get_post_meta( $id, 'speekr-as-article', true ) === 'on' ? true : false;
+			$conf       = unserialize( $metas['speekr-conf'][0] );
+			$is_article = $metas['speekr-as-article'][0] === 'on' ? true : false;
 			$is_article = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
-			$medialinks = get_post_meta( $id, 'speekr-media-links', true );
-			$is_stuck   = get_post_meta( $id, 'speekr-is-featured', true );
+			$medialinks = unserialize( $metas['speekr-media-links'][0] );
+			$is_stuck   = $metas['speekr-is-featured'][0];
 			$classes    = $is_stuck ? ' talk-featured' : '';
 
-			$list .= '<article class="' . implode( ' ', get_post_class() ) . $classes . '">';
+			$list .= '<article class="' . implode( ' ', get_post_class() ) . $classes . '" itemscope itemtype="http://schema.org/CreativeWork">';
 			
 			// Image / Embed / Video
 			$media = speekr_get_media_header( $id, $medialinks, $is_article );
-			$list .= '<div class="talk-media">' . $media . '</div>';
+			$list .= '<div class="talk-media-container">' . $media . '</div>';
 
 			// Title.
 			$title = get_the_title();
-			$title = $is_article ? '<a href="' . get_permalink() . '">' . $title . '</a>' : $title;
-			$list .= '<'. $head_tag . ' class="talk-title">' . $title . '</' . $head_tag . '>';
+			$title = $is_article ? '<a itemprop="url" href="' . get_permalink() . '">' . $title . '</a>' : $title;
+			$list .= '<'. $head_tag . ' class="talk-title" itemprop="name">' . $title . '</' . $head_tag . '>';
+
+			// Metadata begins
+			$list .= '<div class="talk-metadatas">';
+
+			// Place of the conference.
+			if ( ! empty( $conf['name'] ) ) {
+				$nofollow = apply_filters( 'speekr_nofollow_policy', ' rel="nofollow"' );
+				$targetbk = apply_filters( 'speekr_targetblank_policy', ' target="_blank"' );
+
+				$confname = empty( $conf['url'] ) ? $conf['name'] : '<a href="' . esc_url( $conf['url'] ) . '" itemprop="url"' . $targetbk . $nofollow . '><span itemprop="name">' . esc_html( $conf['name'] ) . '</span></a>';
+				$list .= '<p class="talk-place" itemprop="subjectOf" itemscope itemtype="http://schema.org/Event">' . $confname . '</p>';
+			}
+
+			// Date
+			$list .= ! empty( $conf['name'] ) ? '<span class="talk-sep">&nbsp;–&nbsp;</span>' : '';
+			$list .= '<time class="talk-time" itemprop="datePublished" datetime="' . date( DATE_ISO8601, get_the_time( 'U' ) ) . '">' . get_the_date() . '</time>';
+
+			// Metadata ends
+			$list .= '</div><!-- .talk-metadatas -->';
 
 			// Summary content.
-			$list .= '<div class="talk-summary">' . get_post_meta( $id, 'speekr-summary', true )  . '</div>';
+			$list .= '<div class="talk-summary" itemprop="description">' . $metas['speekr-summary'][0]  . '</div>';
 
-			// Links content.
+			// Links.
 			$links = speekr_get_talk_links( $id, $medialinks );
 			$list .= '<div class="talk-links">' . $links . '</div>';
 

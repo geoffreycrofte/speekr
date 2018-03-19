@@ -13,8 +13,12 @@ function speekr_enqueues_infront() {
 	$current = get_queried_object();
 	$options = speekr_get_options();
 
+	if ( ! is_object( $current ) ) {
+		return;
+	}
 	if ( isset( $options['list_page'] ) && $options['list_page'] == $current->ID ) {
 		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/speekr.min.css', array(), SPEEKR_VERSION, 'all' );
+		wp_enqueue_script( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/js/speekr.js', array( '' ), SPEEKR_VERSION, true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'speekr_enqueues_infront' );

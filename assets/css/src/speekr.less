@@ -63,46 +63,126 @@
 	}
 
 	.talk-summary {
-			font-size: 1.6rem;
-			margin: 1em 0;
-		}
+		font-size: 1.6rem;
+		margin: 1em 0 1.5em;
+	}
+}
+
+/**
+ * Talks Medias
+ */
+.talk-media-container {
+	line-height: 0.8;
+}
+.talk-media {
+	&.talk-iframe {
+		position: relative;
+		width: 100%;
+		height: 0;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	iframe {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+	}
+}
+
+/**
+ * Talks Metadata
+ */
+.talk-metadatas {
+	.talk-place,
+	.talk-sep,
+	.talk-time {
+		display: inline-block;
+		font-size: 1.6rem;
+		margin: 0;
+	}
 }
 
 /**
  * Talks links
  */
 .talk-links {
+	padding-top: .75em;
+	border-top: 1px solid #DDD;
+
 	.talk-link {
 		display: inline-block;
 		padding: 8px 15px;
 		border: 0 none;
 		font-weight: bold;
-		font-size: 1.4rem;
-		color: #FFF;
+		font-size: 1.5rem;
+		color: inherit;
 		text-decoration: none;
-		background: #444;
 		border-radius: 3px;
 		transition: all .275s;
 
 		&:hover,
 		&:focus {
-			background: #000;
-			color: #F6F6F6;
+			background: rgba(0,0,0,.05);
+		}
+
+		&:before {
+			vertical-align: middle;
+			margin-right: 10px;
+			font-size: 1.5em;
+			font-weight: normal;
 		}
 	}
 }
 
-.talk-link {
-	&.talk-link-youtube,
-	&[href^="https://youtube.com/"],
-	&[href^="http://youtube.com/"] {
-		background: #cd201f;
-	}
+@font-face {
+	font-family: 'speekr';
+	src: url('../fonts/front/speekr.eot?pguas6');
+	src: url('../fonts/front/speekr.eot?pguas6#iefix') format('embedded-opentype'),
+		 url('../fonts/front/speekr.ttf?pguas6') format('truetype'),
+		 url('../fonts/front/speekr.woff?pguas6') format('woff'),
+		 url('../fonts/front/speekr.svg?pguas6#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
-.talk-link {
-	&.talk-link-vimeo,
-	&[href^="https://vimeo.com/"],
-	&[href^="http://vimeo.com/"] {
-		background: #1ab7ea;
-	}
+
+[class^="speekr-icon-"],
+[class*=" speekr-icon-"],
+.talk-link:before {
+	font-family: 'speekr' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.speekr-icon-link:before,
+.talk-link-other:before {
+	content: "\e900";
+}
+.speekr-icon-next-circle:before {
+	content: "\e901";
+}
+.speekr-icon-presentation:before,
+.talk-link-speakerdeck:before,
+.talk-link-slideshare:before,
+.talk-link-slides:before {
+	content: "\e902";
+}
+.speekr-icon-video:before,
+.talk-link-youtube:before,
+.talk-link-vimeo:before,
+.talk-link-dailymotion:before {
+	content: "\e903";
 }

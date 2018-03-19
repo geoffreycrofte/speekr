@@ -81,6 +81,8 @@ class Speekr {
 
 		require_once( SPEEKR_DIRNAME . '/inc/functions/debug.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/custom-posts.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/common/custom-image-sizes.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/functions/helpers.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/markup.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/options.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/settings.php' );
