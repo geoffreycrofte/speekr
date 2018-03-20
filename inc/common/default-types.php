@@ -16,24 +16,31 @@ function speekr_add_default_media_links( $links ) {
 	$default = array(
 		'youtube'     => array(
 			'name' => __( 'Youtube', 'speekr' ),
+			'type' => 'video',
 		),
 		'vimeo'       => array(
 			'name' => __( 'Vimeo', 'speekr' ),
+			'type' => 'video',
 		),
 		'dailymotion' => array(
 			'name' => __( 'Dailymotion', 'speekr' ),
+			'type' => 'video',
 		),
 		'slides' => array(
 			'name' => __( 'Slides', 'speekr' ),
+			'type' => 'presentation',
 		),
 		'speakerdeck' => array(
 			'name' => __( 'SpeakerDeck', 'speekr' ),
+			'type' => 'presentation',
 		),
 		'slideshare'  => array(
 			'name' => __( 'Slideshare', 'speekr' ),
+			'type' => 'presentation',
 		),
 		'other'       => array(
 			'name' => __( 'Other', 'speekr' ),
+			'type' => 'misc',
 		),
 	);
 	

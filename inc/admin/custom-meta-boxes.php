@@ -99,6 +99,7 @@ function speekr_content_media_links_mb( $post ) {
 	$select  = '<select name="speekr-media-links[embeded-media]" id="speekr-main-type">';
 
 	$output .= '<div class="speekr-mb-block">';
+	$prez = $videos = $others = '';
 
 	foreach ( $media_links as $k => $v ) {
 
@@ -107,23 +108,27 @@ function speekr_content_media_links_mb( $post ) {
 		if ( $k !== 'other' ) {
 			$select .= '<option value="' . $k . '"' . ( isset( $speekr_ml[ 'embeded-media' ] ) && $speekr_ml[ 'embeded-media' ] === $k ? ' selected="selected"' : '' ) . '>' . esc_html( $v['name'] ) . '</option>';
 
-			$output .= '<p class="speekr-mb-line">
+			$item = '<p class="speekr-mb-line">
 						<label for="speekr-content-media-links-' . $k . '">' . esc_html( $v['name'] ) . '</label><br>
 						<input type="url" name="speekr-media-links[' . $k . '-link]" id="speekr-content-media-links-' . $k . '" value="' . esc_attr( isset( $speekr_ml[ $k . '-link' ] ) ? $speekr_ml[ $k . '-link' ] : '' ) . '" />
 					</p>';
-		} else {
-			$output .= $divider;
-			$output .= '<p class="speekr-mb-description">' . __( 'Add custom links to your talk.', 'speekr' ) . '</p>';
 
-			$output .= '<div class="speekr-other-links" id="speekr-other-links" role="region" aria-live="polite" aria-relevant="additions removals">';
+			// Concatenate item into video or prez depending on type.
+			$v['type'] === 'video' ? $videos .= $item : $prez .= $item;
+
+		} else {
+			$others .= $divider;
+			$others .= '<h3 class="speekr-h3">' . __( 'Add custom links to your talk.', 'speekr' ) . '</h3>';
+
+			$others .= '<div class="speekr-other-links" id="speekr-other-links" role="region" aria-live="polite" aria-relevant="additions removals">';
 
 			$delbtn = '<button type="button" class="speekr-remove-link-btn speekr-button speekr-button-mini" aria-controls="speekr-other-links"><span class="screen-reader-text">' . __( 'Remove this link', 'speekr' ) . '</span><i class="dashicons dashicons-no-alt" aria-hidden="true"></i></button>';
 
-			$output .= '<script id="speekr-del-btn" type="text/template">' . $delbtn . '</script>';
+			$others .= '<script id="speekr-del-btn" type="text/template">' . $delbtn . '</script>';
 
 			if ( ! isset( $speekr_ml[ 'other-link' ] ) ||  ( isset( $speekr_ml[ 'other-link' ] ) && ! is_array( $speekr_ml[ 'other-link' ] ) ) ) {
 				// Empty other link.
-				$output .= '<p class="speekr-mb-line speekr-inlined-inputs">
+				$others .= '<p class="speekr-mb-line speekr-inlined-inputs">
 						<span class="speekr-small-col">
 							<label for="speekr-content-media-links-other-l-1">' . __( 'Label of the link', 'speekr' ) . '</label><br>
 							<input type="text" name="speekr-media-links[other-link-label][]" id="speekr-content-media-links-other-l-1" value="" />
@@ -141,7 +146,7 @@ function speekr_content_media_links_mb( $post ) {
 
 				foreach ( $speekr_ml[ 'other-link' ] as $link ) {
 					$del_btn = $c > 1 ? $delbtn : '';
-					$output .= '<p class="speekr-mb-line speekr-inlined-inputs' . ( $c === $i ? ' speekr-to-duplicate' : '' ) . '">
+					$others .= '<p class="speekr-mb-line speekr-inlined-inputs' . ( $c === $i ? ' speekr-to-duplicate' : '' ) . '">
 							<span class="speekr-small-col">
 								<label for="speekr-content-media-links-other-l-' . $i . '">' . __( 'Label of the link', 'speekr' ) . '</label><br>
 								<input type="text" name="speekr-media-links[other-link-label][]" id="speekr-content-media-links-other-l-' . $i . '" value="' . esc_attr( isset( $link[ 'label' ] ) ? $link[ 'label' ] : '' ) . '" />
@@ -156,6 +161,19 @@ function speekr_content_media_links_mb( $post ) {
 				}
 			}
 
+			// Prepare 2 Cols and other links
+			$output .= '<div class="speekr-row">
+							<div class="speekr-col">
+								<h3 class="speekr-h3">' . __('Video Providers', 'speekr' ) . '</h3>
+								' . $videos . '
+							</div>
+							<div class="speekr-col">
+								<h3 class="speekr-h3">' . __('Presentation Providers', 'speekr' ) . '</h3>
+								' . $prez . '
+							</div>
+						</div>';
+			$output .= $others;
+
 			// Prepare JS scripting.
 			$output .= '<div id="speekr-new-other-links"></div></div><!-- .other-links -->';
 		}
@@ -163,8 +181,7 @@ function speekr_content_media_links_mb( $post ) {
 	}
 
 	$output .= '<div id="speekr-cover-replacement">';
-	$output .= $divider . '
-				<p class="speekr-mb-line speekr-checkbox-line">
+	$output .= '<p class="speekr-mb-line speekr-checkbox-line">
 					<input type="checkbox" name="speekr-media-links[embeded]" id="speekr-is-embeded"' . ( isset( $speekr_ml[ 'embeded' ] ) && $speekr_ml[ 'embeded' ] === true ? ' checked="checked"' : '' ) . '>&nbsp;<label for="speekr-is-embeded">' . __( 'Replace with embeded media?', 'speekr' ) . '</label>
 				</p>';
 

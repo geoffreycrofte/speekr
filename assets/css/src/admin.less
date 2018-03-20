@@ -20,13 +20,40 @@
 	--errorbg: #F8ECEC;
 }
 
-.speekr-settings ::-moz-selection {
+.speekr-settings ::-moz-selection,
+[value="talks"] ~ #poststuff ::-moz-selection {
 	background: var(--primary);
 	color: #FFF;
 }
-.speekr-settings ::selection {
+.speekr-settings ::selection,
+[value="talks"] ~ #poststuff ::selection {
 	background: var(--primary);
 	color: #FFF;
+}
+
+/**
+ * Cols system
+ */
+.speekr-row {
+	display: flex;
+	margin: 0 -20px;
+}
+.speekr-col {
+	padding: 0 20px;
+	flex-basis: 50%;
+}
+
+/**
+ * Typography
+ */
+.speekr-h3 {
+	font-size: 18px;
+	font-weight: 400;
+	color: var(--primarydark);
+}
+
+[value="talks"] ~ #poststuff a {
+	color: var(--primary);
 }
 
 /**
@@ -203,7 +230,7 @@ h2 + .speekr-description {
 	vertical-align: middle;
 	font-weight: bold;
 	color: var(--primarydark);
-	background: var(--lightgray);
+	background: #EEE;
 	border-radius: 3px;
 	cursor: pointer;
 }
@@ -278,6 +305,17 @@ h2 + .speekr-description {
 	color: #FFF;
 	background: var(--primarylight);
 	cursor: default;
+}
+
+[value="talks"] ~ #poststuff .button-primary {
+	height: auto;
+	padding: 4px 15px 5px;
+	line-height: 1.7;
+	background: var(--primary);
+	color: #FFF;
+	box-shadow: none;
+	text-shadow: none;
+	border: 0 none;
 }
 
 // Ajax action response.
@@ -499,6 +537,18 @@ h2 + .speekr-description {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
+
+	.speekr-button {
+		margin-right: 0;
+		padding: 9px 9px 8px 12px;
+
+		.dashicons,
+		.dashicons:before {
+			width: 22px;
+			height: 22px;
+			font-size: 22px;
+		}
+	}
 }
 
 .speekr-checkbox-line {
@@ -522,7 +572,9 @@ h2 + .speekr-description {
 .inside {
 	+ [id="speekr-cover-replacement"] {
 		padding: 12px;
-		margin: 0;
+		margin: 10px 0 0 0;
+		background: var(--primary);
+		color: #FFF;
 
 		.speekr-mb-divider {
 			margin-top: 0;
@@ -670,6 +722,64 @@ a.speekr-rate {
 	dd + dt {
 		margin-top: 2em;
 	}
+}
+
+/**
+ * Edition page metaboxes
+ */
+#speekr-media-links {
+	.hndle {
+		border-bottom: 0;
+		padding: 20px 30px 8px 30px;
+
+		span {
+			font-size: 24px;
+			font-weight: 700;
+			color: var(--primarydark);
+		}
+	}
+	.speekr-mb-description {
+		margin-top: -15px;
+		margin-bottom: 15px;
+		padding-bottom: 15px;
+		border-bottom: 2px solid #F2F2F2;
+		color: #777;
+		font-weight: 600;
+		font-size: 15px;
+	}
+
+	.inside {
+		padding: 0 30px 15px;
+	}
+
+	.speekr-mb-line {
+		margin: 1.5em 0;
+	}
+	
+	label {
+		margin: .3em 0;
+		font-size: 16px;
+		color: var(--primarydark);
+	}
+	input[type="text"],
+	input[type="url"] {
+		padding: 8px;
+		border: 2px solid #bbb;
+		border-radius: 3px;
+		box-shadow: none;
+	}
+}
+
+/**
+ * Save Metabox
+ */
+.misc-pub-speekr {
+	padding: 12px 10px;
+	background: var(--primary);
+	color: #FFF;
+}
+#post-body .misc-pub-post-status.misc-pub-speekr::before {
+	color: rgba(255,255,255,.7);
 }
 
 /**
