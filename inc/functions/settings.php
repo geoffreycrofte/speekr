@@ -38,3 +38,15 @@ function speekr_get_admin_css_values() {
 function speekr_get_admin_layout_values() {
 	return apply_filters( 'speekr_layout_values', array() );
 }
+
+/**
+ * Get the CPT slug for talks.
+ *
+ * @return (string) The slug used for CPT.
+ *
+ * @since 1.0
+ * @author Geoffrey Crofte
+ */
+function speekr_get_cpt_slug() {
+	return apply_filters( 'speekr_cpt_talks_slug', 'talks' );
+}

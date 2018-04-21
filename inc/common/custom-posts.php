@@ -69,7 +69,7 @@ function speekr_register_post_types() {
 		),
 	);
 
-	register_post_type( 'talks', $args );
+	register_post_type( speekr_get_cpt_slug(), $args );
 
 }
 add_action( 'init', 'speekr_register_post_types' );

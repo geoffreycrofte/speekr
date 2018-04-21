@@ -32,7 +32,7 @@ add_action( 'admin_menu', 'speekr_add_settings_menu' );
  * @since 1.0
  */
 function speekr_plugin_action_links( $links, $file ) {
-	$links[] = '<a href="' . admin_url( 'options-general.php?page=' . SPEEKR_FILE ) . '">' . __( 'Settings' ) . '</a>';
+	$links[] = '<a href="' . speekr_get_option_page_url() . '">' . __( 'Settings' ) . '</a>';
 	return $links;
 }
 add_filter( 'plugin_action_links_' . plugin_basename( SPEEKR_FILE ), 'speekr_plugin_action_links',  10, 2 );
