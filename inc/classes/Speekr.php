@@ -101,9 +101,12 @@ class Speekr {
 	public function includes_admin() {
 		do_action( 'speekr_before_includes_admin' );
 
+		require_once( SPEEKR_DIRNAME . '/inc/functions/urls.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/admin/notices.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/ajax.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/enqueues.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/settings.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/admin/importer.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/menus.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/custom-meta-boxes.php' );
 

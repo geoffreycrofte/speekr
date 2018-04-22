@@ -152,3 +152,81 @@ if ( ! function_exists( 'speekr_get_loader' ) ) {
 		return apply_filters( 'speekr_get_loader', $loader );
 	}
 }
+
+
+if ( ! function_exists( 'speekr_get_logo_title' ) ) {
+	/**
+	 * Get the markup for the Logo header part in setting pages.
+	 *
+	 * @param  (string) $subtitle The subtitle below the plugin name.
+	 * @return (string)           The entir markupt.
+	 *
+	 * @since  1.0
+	 * @author Geoffrey Crofte
+	 */
+	function speekr_get_logo_title( $subtitle = '' ) {
+		$header = '
+		<h1 class="speerk-settings-h1">
+			<i class="speekr-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path d="M75,2H5A5,5,0,0,0,0,7v4a5,5,0,0,0,4,4.9V55a6,6,0,0,0,6,6H38v6.86l-10.33,8.4a2,2,0,1,0,2.52,3.1l9.43-7.66,9.93,8.15a2,2,0,0,0,1.27.46,2,2,0,0,0,1.27-3.55L42,68.48V61H70a6,6,0,0,0,6-6V15.9A5,5,0,0,0,80,11V7A5,5,0,0,0,75,2ZM72,55a2,2,0,0,1-2,2H10a2,2,0,0,1-2-2V16H72Zm4-44a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V7A1,1,0,0,1,5,6H75a1,1,0,0,1,1,1Z"/><path d="M22.67,34.5a2,2,0,0,0,2-2,2.5,2.5,0,0,1,5,0,2,2,0,0,0,4,0,6.5,6.5,0,0,0-13,0A2,2,0,0,0,22.67,34.5Z"/><path d="M48.67,34.5a2,2,0,0,0,2-2,2.5,2.5,0,0,1,5,0,2,2,0,0,0,4,0,6.5,6.5,0,0,0-13,0A2,2,0,0,0,48.67,34.5Z"/><path d="M31.67,42c0,3.91,5.11,6.5,8.5,6.5s8.5-2.59,8.5-6.5a2,2,0,0,0-4,0c0,.91-2.6,2.5-4.5,2.5s-4.5-1.59-4.5-2.5a2,2,0,0,0-4,0Z"/></svg></i>
+			<span>
+				<span class="speekr-title">' . SPEEKR_PLUGIN_NAME . '</span>
+				<span class="speekr-subtitle">' . esc_html( $subtitle ) . '</span>
+			</span>
+		</h1>';
+
+		return apply_filters( 'speekr_get_logo_title', $header );
+	}
+}
+
+/**
+ * Print the Admin Sidebar.
+ *
+ * @return void
+ *
+ * @author Geoffrey Crofte
+ * @since  1.0
+ */
+function speekr_print_sidebar() {
+	do_action( 'speekr_before_sidebar_content' ); ?>
+	<div class="speekr-sidebar-widget">
+		<div class="speekr-sw-title">
+			<p><i class="dashicons dashicons-format-chat" aria-hidden="true"></i>&nbsp;<?php _e( 'Be social!', 'speekr' ); ?></p>
+		</div>
+		<div class="speekr-sw-content">
+			<p><?php _e( 'Find us on:', 'speekr' ); ?></p>
+			<ul class="speekr-social">
+				<li><a href="https://twitter.com/speekr_plugin">Twitter</a></li>
+				<li><a href="https://wordpress.org/plugins/<?php echo SPEEKR_SLUG; ?>">WordPress</a></li>
+			</ul>
+
+			<div class="speekr-mb-divider"></div>
+
+			<p><?php _e( 'You like the plugin? Rate it on WordPress.org!' ) ?></p>
+			<p><a class="speekr-rate" href="https://wordpress.org/support/plugin/<?php echo SPEEKR_SLUG; ?>/reviews/#new-post">★★★★★</a></p>
+		</div>
+	</div>
+
+	<div class="speekr-sidebar-widget">
+		<div class="speekr-sw-title">
+			<p><i class="dashicons dashicons-art" aria-hidden="true"></i>&nbsp;<?php _e( 'Contributors', 'speekr' ); ?></p>
+		</div>
+		<div class="speekr-sw-content">
+			<p><?php _e( 'This plugin is crafted with love and freely by several awesome folks.', 'speekr' ); ?></p>
+			<dl class="speekr-dl">
+				<dt><?php _e( 'Original Idea', 'speekr' ); ?></dt>
+				<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a> &amp; <a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+
+				<dt><?php _e( 'Admin &amp; Front Design', 'speekr' ); ?></dt>
+				<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a> &amp; <a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+
+				<dt><?php _e( 'Front &amp; Back Developments', 'speekr' ); ?></dt>
+				<dd><a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+
+				<dt><?php _e( 'Icon Design', 'speekr' ); ?></dt>
+				<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a>. Find the Icon Set on <a href="https://thenounproject.com/stephaniewalter/collection/speaker" target="_blank">The Noun Project</a>.</dd>
+			</dl>
+		</div>
+	</div>
+<?php
+	do_action( 'speekr_after_sidebar_content' );
+}

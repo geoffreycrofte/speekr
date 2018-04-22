@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author Geoffrey Crofte
  */
 function speekr_enqueues() {
+	global $pagenow;
 
 	if ( 
 		( isset( $_GET['page'] ) && $_GET['page'] === 'speekr' )
@@ -17,6 +18,8 @@ function speekr_enqueues() {
 		( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'talks' )
 		||
 		( isset( $_GET['post'] ) && get_post_type( (int) $_GET['post'] ) === 'talks' )
+		||
+		( 'plugins.php' === $pagenow)
 	) {
 		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/admin.min.css', array(), SPEEKR_VERSION, 'all' );
 		wp_enqueue_script( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery' ), SPEEKR_VERSION, true );

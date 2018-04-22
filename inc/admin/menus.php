@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Add an options page in the Settings menu
+ * Add an options page in the Settings menu.
  * 
  * @return void
  *
@@ -20,11 +20,20 @@ function speekr_add_settings_menu(){
 		SPEEKR_SLUG,
 		'speekr_settings_page'
 	);
+
+	add_submenu_page(
+		'edit.php?post_type=talks',
+		__( 'Speekr Importer', 'speekr'),
+		__( 'Import', 'speekr'),
+		apply_filters( 'speekr_importer_page_capabilities', 'publish_posts' ),
+		'speekr-importer',
+		'speekr_importer_page'
+	);
 }
 add_action( 'admin_menu', 'speekr_add_settings_menu' );
 
 /**
- * Add a link to the plugin description in the plugin list
+ * Add a link to the plugin description in the plugin list.
  *
  * @return void
  *

@@ -140,14 +140,3 @@ function speekr_get_my_talks_page_args() {
 		'ping_status'    => 'closed',
 	);
 }
-
-/**
- * Get option Page URL.
- * @return (string) The option page URL.
- *
- * @author Geoffrey Crofte
- * @since  1.0
- */
-function speekr_get_option_page_url() {
-	return admin_url( 'edit.php?post_type=' .speekr_get_cpt_slug() . '&page=' . SPEEKR_SLUG );
-}
