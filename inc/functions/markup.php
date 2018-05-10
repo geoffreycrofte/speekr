@@ -56,6 +56,11 @@ if ( ! function_exists( 'speekr_get_media_header' ) ) {
 					$classes = ' talk-iframe';
 					break;
 
+				case 'custom':
+					$embed = ! empty( $meta['embed-code'] ) ? $meta['embed-code'] : false;
+					$classes = ' talk-iframe';
+					break;
+
 				default:
 					$embed = '';
 					break;

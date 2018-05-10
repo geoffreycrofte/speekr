@@ -96,7 +96,7 @@ function speekr_content_media_links_mb( $post ) {
 
 	$output  = '<p class="speekr-mb-description">' . __( 'You can provide your talk in several formats.', 'speekr' ) . '</p>';
 	$divider = '<div class="speekr-mb-divider"></div>';
-	$select  = '<select name="speekr-media-links[embeded-media]" id="speekr-main-type">';
+	$select  = '<select name="speekr-media-links[embeded-media]" id="speekr-embed-type">';
 
 	$output .= '<div class="speekr-mb-block">';
 	$prez = $videos = $others = '';
@@ -180,6 +180,17 @@ function speekr_content_media_links_mb( $post ) {
 
 	}
 
+	$is_custom = isset( $speekr_ml[ 'embeded-media' ] ) && $speekr_ml[ 'embeded-media' ] === 'custom' ? true : false;
+
+	$select .= apply_filters( 'speekr_talk_has_custom_embed', true ) ? '<option value="custom"' . ( $is_custom ? ' selected="selected"' : '' ) . '>' . __( 'Custom Embed', 'speekr' ) . '</option>' : '';
+
+	$select .= '</select>';
+
+	$custom_embed = apply_filters( 'speekr_talk_has_custom_embed', true ) ? '<div class="speekr-custom-embed" id="speekr-custom-embed">
+			<label for="speekr-embed-code">' . __( 'Custom Embed Code', 'speekr' ) . '</label>
+			<textarea name="speekr-media-links[embed-code]" id="speekr-embed-code">' . ( isset( $speekr_ml[ 'embed-code' ] ) ? $speekr_ml[ 'embed-code' ] : '' ) . '</textarea>
+		</div>' : '';
+
 	$output .= '<div id="speekr-cover-replacement">';
 	$output .= '<p class="speekr-mb-line speekr-checkbox-line">
 					<input type="checkbox" name="speekr-media-links[embeded]" id="speekr-is-embeded"' . ( isset( $speekr_ml[ 'embeded' ] ) && $speekr_ml[ 'embeded' ] === true ? ' checked="checked"' : '' ) . '>&nbsp;<label for="speekr-is-embeded">' . __( 'Replace with embeded media?', 'speekr' ) . '</label>
@@ -187,9 +198,10 @@ function speekr_content_media_links_mb( $post ) {
 
 	$output .= '<div class="speekr-mb-line speekr-main-embeded-media">
 					<p class="speekr-mb-description">
-						<label for="speekr-main-type">' . __( 'Replace with:', 'speekr' ) . '</label>
+						<label for="speekr-embed-type">' . __( 'Replace with:', 'speekr' ) . '</label>
 					</p>
-					' . $select . '</select>
+					' . $select . '
+					' . $custom_embed . '
 				</div><!-- .speekr-main-embeded-media -->';
 	$output .= '</div><!-- #speekr-cover-replacement -->';
 
@@ -349,6 +361,8 @@ function speekr_save_mb( $post_id ) {
 
 			$newml['embeded'] = isset( $_POST['speekr-media-links']['embeded'] ) && $_POST['speekr-media-links']['embeded'] === 'on' ? true : false;
 			$newml['embeded-media'] = isset( $_POST['speekr-media-links']['embeded-media'] ) ? $_POST['speekr-media-links']['embeded-media'] : '';
+
+			$newml['embed-code'] = isset( $_POST['speekr-media-links']['embed-code'] ) ? $_POST['speekr-media-links']['embed-code'] : '';
 
 			update_post_meta( $post_id, 'speekr-media-links', $newml );
 		}

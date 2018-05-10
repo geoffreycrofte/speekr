@@ -250,7 +250,7 @@ h2 + .speekr-description {
 }
 
 .speekr-button-mini.speekr-button-mini {
-	padding: 6px 10px;
+	padding: 6px 15px;
 }
 
 .speekr-settings-content {
@@ -788,6 +788,7 @@ a.speekr-rate {
 	}
 	
 	label {
+		display: inline-block;
 		margin: .5em 0;
 		font-size: 15px;
 		color: var(--primarydark);
@@ -811,6 +812,25 @@ a.speekr-rate {
 }
 #post-body .misc-pub-post-status.misc-pub-speekr::before {
 	color: rgba(255,255,255,.7);
+}
+
+/**
+ * Custom Embed MB
+ */
+.speekr-custom-embed {
+	padding-top: 15px;
+}
+.speekr-custom-embed label {
+	display: inline-block;
+	margin-bottom: .5em;
+}
+
+.speekr-custom-embed textarea {
+	width: 100%;
+	height: 6em;
+}
+[id="speekr-embed-type"] {
+	margin-top: -.5em;
 }
 
 /**
