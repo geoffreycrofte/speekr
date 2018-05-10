@@ -604,8 +604,11 @@ h2 + .speekr-description {
 	+ [id="speekr-cover-replacement"] {
 		padding: 12px;
 		margin: 10px 0 0 0;
-		background: var(--primary);
-		color: #FFF;
+		background: var(--primarylighter);
+
+		label {
+			color: var(--primarydark);
+		}
 
 		.speekr-mb-divider {
 			margin-top: 0;
@@ -788,6 +791,7 @@ a.speekr-rate {
 	}
 	
 	label {
+		position: relative;
 		display: inline-block;
 		margin: .5em 0;
 		font-size: 15px;
@@ -795,23 +799,40 @@ a.speekr-rate {
 	}
 	input[type="text"],
 	input[type="url"] {
-		padding: 8px;
+		padding: 8px 8px 8px 34px;
 		border: 2px solid #bbb;
 		border-radius: var(--radius-small);
 		box-shadow: none;
 	}
+
+	.speekr-network-logo {
+		position: absolute;
+		top: 100%;
+		left: 10px;
+		margin-top: 18px;
+		filter: grayscale(100%);
+		transition: all .275s;
+	}
+
+	.is-filled .speekr-network-logo {
+		filter: grayscale(0);
+	}
 }
+
 
 /**
  * Save Metabox
  */
 .misc-pub-speekr {
 	padding: 12px 10px;
-	background: var(--primary);
-	color: #FFF;
+	background: var(--primarylighter);
+
+	label {
+		color: var(--primarydark);
+	}
 }
 #post-body .misc-pub-post-status.misc-pub-speekr::before {
-	color: rgba(255,255,255,.7);
+	color: var(--primary);
 }
 
 /**

@@ -109,7 +109,10 @@ function speekr_content_media_links_mb( $post ) {
 			$select .= '<option value="' . $k . '"' . ( isset( $speekr_ml[ 'embeded-media' ] ) && $speekr_ml[ 'embeded-media' ] === $k ? ' selected="selected"' : '' ) . '>' . esc_html( $v['name'] ) . '</option>';
 
 			$item = '<p class="speekr-mb-line">
-						<label for="speekr-content-media-links-' . $k . '">' . esc_html( $v['name'] ) . '</label><br>
+						<label for="speekr-content-media-links-' . $k . '">
+							<img src="' . SPEEKR_PLUGIN_URL . '/assets/img/' . $k . '.svg" width="20" height="20" alt="" class="speekr-network-logo">
+							' . esc_html( $v['name'] ) . '
+						</label><br>
 						<input type="url" name="speekr-media-links[' . $k . '-link]" id="speekr-content-media-links-' . $k . '" value="' . esc_attr( isset( $speekr_ml[ $k . '-link' ] ) ? $speekr_ml[ $k . '-link' ] : '' ) . '" />
 					</p>';
 
@@ -186,7 +189,7 @@ function speekr_content_media_links_mb( $post ) {
 
 	$select .= '</select>';
 
-	$custom_embed = apply_filters( 'speekr_talk_has_custom_embed', true ) ? '<div class="speekr-custom-embed" id="speekr-custom-embed">
+	$custom_embed = apply_filters( 'speekr_talk_has_custom_embed', true ) ? '<div class="speekr-custom-embed' . ( $is_custom ? '' : ' hide-if-js' ) . '" id="speekr-custom-embed">
 			<label for="speekr-embed-code">' . __( 'Custom Embed Code', 'speekr' ) . '</label>
 			<textarea name="speekr-media-links[embed-code]" id="speekr-embed-code">' . ( isset( $speekr_ml[ 'embed-code' ] ) ? $speekr_ml[ 'embed-code' ] : '' ) . '</textarea>
 		</div>' : '';

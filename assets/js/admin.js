@@ -120,6 +120,17 @@
 	} );
 
 	/**
+	 * Filter gray on logo.
+	 */
+	$( '[id^="speekr-content-media-links-"]' ).on( 'blur.speekr', function() {
+		if ( $(this).val() ) {
+			$(this).closest( '.speekr-mb-line' ).find( 'label' ).addClass( 'is-filled' );
+		} else {
+			$(this).closest( '.speekr-mb-line' ).find( 'label' ).removeClass( 'is-filled' );
+		}
+	} ).trigger( 'blur.speekr' );
+
+	/**
 	 * Embed Custom Selection
 	 */
 	$( '#speekr-embed-type' ).attr( 'aria-controls', 'speekr-custom-embed' )
