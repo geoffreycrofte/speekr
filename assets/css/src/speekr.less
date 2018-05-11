@@ -32,6 +32,10 @@
 		flex-basis: 100%;
 		
 		.talk-media {
+			img {
+				width: 100%;
+				height: auto;
+			}
 		}
 		.talk-title {
 		}
@@ -55,9 +59,11 @@
 			margin-top: 0;
 			flex-basis: 30%;
 		}
-
+		.talk-link {
+			margin-right: auto;
+		}
 		.talk-link-more {
-			order: 2;
+			margin-left: 0;
 			margin-top: 1em;
 		}
 	}
@@ -135,6 +141,8 @@
  * Talks links
  */
 .talk-links {
+	display: flex;
+	flex-wrap: wrap;
 	margin-left: -.2em;
 	margin-right: -.2em;
 	padding-top: .75em;
@@ -163,6 +171,10 @@
 			font-size: 1.5em;
 			font-weight: normal;
 		}
+	}
+
+	.talk-link-more {
+		margin-left: auto;
 	}
 }
 

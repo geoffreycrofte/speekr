@@ -91,7 +91,7 @@ function speekr_get_list_content( $options ) {
 			// Links.
 			$links = speekr_get_talk_links( $id, $medialinks );
 			$full  = $is_linked ? '<a href="' . get_permalink() . '" title="' . sprintf( __( 'Read more about %s', 'speekr' ), '&quot;' . get_the_title() . '&quot;') . '" class="talk-link talk-link-more" rel="nofollow">' . __( 'Read More', '' ) . '</a>' : '';
-			$list .= '<div class="talk-links">' . $full . $links . '</div><!-- .talk-links -->';
+			$list .= '<div class="talk-links">' . $links . $full . '</div><!-- .talk-links -->';
 			$list .= $is_feat ? '</div><!-- .talk-summ-container -->' : '';
 
 			$list .= '</article>';
