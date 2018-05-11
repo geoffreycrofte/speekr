@@ -15,7 +15,7 @@ if ( ! function_exists( 'speekr_get_media_header' ) ) {
 	 * @author Geoffrey Crofte
 	 * @since  1.0
 	 */
-	function speekr_get_media_header( $post_id, $meta = null, $is_linked = false ) {
+	function speekr_get_media_header( $post_id, $meta = null, $is_linked = false, $is_feat = false ) {
 		if ( $meta === null ) {
 			$meta = get_post_meta( $post_id, 'speekr-media-links', true );
 		}
@@ -76,7 +76,8 @@ if ( ! function_exists( 'speekr_get_media_header' ) ) {
 			$output  .= $embed ? $embed : '';
 
 		} else {
-			$thumbnail = get_the_post_thumbnail( $post_id, speekr_get_media_name( 'list' ) );
+			$img_size  = $is_feat ? 'big' : 'list';
+			$thumbnail = get_the_post_thumbnail( $post_id, speekr_get_media_name( $img_size ) );
 			$thumbnail = $is_linked ? '<a href="' . get_permalink( $post_id ) . '">' . $thumbnail . '</a>' : $thumbnail;
 			$output .= $thumbnail;
 		}
@@ -216,19 +217,29 @@ function speekr_print_sidebar() {
 			<p><i class="dashicons dashicons-art" aria-hidden="true"></i>&nbsp;<?php _e( 'Contributors', 'speekr' ); ?></p>
 		</div>
 		<div class="speekr-sw-content">
-			<p><?php _e( 'This plugin is crafted with love and freely by several awesome folks.', 'speekr' ); ?></p>
+			<p><?php _e( 'This plugin is freely crafted with love by several awesome folks.', 'speekr' ); ?></p>
 			<dl class="speekr-dl">
+				<?php 
+				$lang = get_locale();
+				$lang = $lang === 'fr_FR' ? '' : 'en/';
+
+				$contrib = array(
+					'stef'  => '<a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a>',
+					'geoff' => '<a href="https://geoffrey.crofte.fr/' . $lang . '" target="_blank">Geoffrey Crofte</a>',
+					'noun'  => '<a href="https://thenounproject.com/stephaniewalter/collection/speaker-icons/" target="_blank">The Noun Project</a>',
+				);
+				?>
 				<dt><?php _e( 'Original Idea', 'speekr' ); ?></dt>
-				<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a> &amp; <a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+				<dd><?php echo $contrib['stef']; ?> &amp; <?php echo $contrib['geoff']; ?></dd>
 
 				<dt><?php _e( 'Admin &amp; Front Design', 'speekr' ); ?></dt>
-				<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a> &amp; <a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+				<dd><?php echo $contrib['stef']; ?> &amp; <?php echo $contrib['geoff']; ?></dd>
 
 				<dt><?php _e( 'Front &amp; Back Developments', 'speekr' ); ?></dt>
-				<dd><a href="https://geoffrey.crofte.fr/en/" target="_blank">Geoffrey Crofte</a></dd>
+				<dd><?php echo $contrib['geoff']; ?></dd>
 
 				<dt><?php _e( 'Icon Design', 'speekr' ); ?></dt>
-				<dd><a href="https://stephaniewalter.fr/" target="_blank">Stéphanie Walter</a>. Find the Icon Set on <a href="https://thenounproject.com/stephaniewalter/collection/speaker" target="_blank">The Noun Project</a>.</dd>
+				<dd><?php echo $contrib['stef']; ?>. Find the Icon Set on <?php echo $contrib['noun']; ?>.</dd>
 			</dl>
 		</div>
 	</div>

@@ -47,23 +47,25 @@ function speekr_get_list_content( $options ) {
 
 			$conf       = unserialize( $metas['speekr-conf'][0] );
 			$is_article = $metas['speekr-as-article'][0] === 'on' ? true : false;
-			$is_article = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
+			$is_linked  = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
 			$medialinks = unserialize( $metas['speekr-media-links'][0] );
-			$is_stuck   = $metas['speekr-is-featured'][0];
-			$classes    = $is_stuck ? ' talk-featured' : '';
+			$is_feat    = $metas['speekr-is-featured'][0];
+			$classes    = $is_feat ? ' talk-featured' : '';
 
 			$list .= '<article class="' . implode( ' ', get_post_class() ) . $classes . '" itemscope itemtype="http://schema.org/CreativeWork">';
 			
 			// Image / Embed / Video
-			$media = speekr_get_media_header( $id, $medialinks, $is_article );
+			$media = speekr_get_media_header( $id, $medialinks, $is_linked, $is_feat );
 			$list .= '<div class="talk-media-container">' . $media . '</div>';
 
 			// Title.
 			$title = get_the_title();
-			$title = $is_article ? '<a itemprop="url" href="' . get_permalink() . '">' . $title . '</a>' : $title;
+			$title = $is_linked ? '<a itemprop="url" href="' . get_permalink() . '">' . $title . '</a>' : $title;
 			$list .= '<'. $head_tag . ' class="talk-title" itemprop="name">' . $title . '</' . $head_tag . '>';
 
 			// Metadata begins
+			$list .= $is_feat ? '<div class="talk-summ-container">' : '';
+			$list .= $is_feat ? '<div class="talk-meta-n-summ">' : '';
 			$list .= '<div class="talk-metadatas">';
 
 			// Place of the conference.
@@ -83,11 +85,14 @@ function speekr_get_list_content( $options ) {
 			$list .= '</div><!-- .talk-metadatas -->';
 
 			// Summary content.
-			$list .= '<div class="talk-summary" itemprop="description">' . wpautop( $metas['speekr-summary'][0] )  . '</div>';
+			$list .= '<div class="talk-summary" itemprop="description">' . wpautop( $metas['speekr-summary'][0] )  . '</div><!-- .talk-summary -->';
+			$list .= $is_feat ? '</div><!-- .talk-meta-n-summ -->' : '';
 
 			// Links.
 			$links = speekr_get_talk_links( $id, $medialinks );
-			$list .= '<div class="talk-links">' . $links . '</div>';
+			$full  = $is_linked ? '<a href="' . get_permalink() . '" title="' . sprintf( __( 'Read more about %s', 'speekr' ), '&quot;' . get_the_title() . '&quot;') . '" class="talk-link talk-link-more" rel="nofollow">' . __( 'Read More', '' ) . '</a>' : '';
+			$list .= '<div class="talk-links">' . $full . $links . '</div><!-- .talk-links -->';
+			$list .= $is_feat ? '</div><!-- .talk-summ-container -->' : '';
 
 			$list .= '</article>';
 		}

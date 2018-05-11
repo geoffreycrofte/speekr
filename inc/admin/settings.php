@@ -117,7 +117,7 @@ function speekr_get_list_page() {
 	$output .= '</select>
 		<p>' . sprintf( __( 'Edit your %stalks page%s' ), '<a href="' . get_edit_post_link( (int) $curr_id ) . '" target="_blank">', '</a>' ) . '</p>
 	</span><!-- .speekr-list-page-block -->
-	<span class="speekr-or">or</span>';
+	<span class="speekr-or hide-if-no-js">or</span>';
 	$output .= '<button type="submit" name="" class="hide-if-no-js speekr-button speekr-button-secondary" aria-hidden="true" data-nonce="' . wp_create_nonce( 'create_default_page' ) . '" data-ajax-action="speekr_create_default_page"><i class="dashicons dashicons-welcome-add-page" aria-hidden="true"></i>&nbsp;' . _x( 'Create a page', 'admin option', 'speekr' ) . speekr_get_loader() . '</button>';
 
 	echo apply_filters( 'speekr_get_list_page', $output, $opts );
