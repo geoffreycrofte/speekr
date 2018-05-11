@@ -83,7 +83,7 @@ function speekr_get_list_content( $options ) {
 			$list .= '</div><!-- .talk-metadatas -->';
 
 			// Summary content.
-			$list .= '<div class="talk-summary" itemprop="description">' . $metas['speekr-summary'][0]  . '</div>';
+			$list .= '<div class="talk-summary" itemprop="description">' . wpautop( $metas['speekr-summary'][0] )  . '</div>';
 
 			// Links.
 			$links = speekr_get_talk_links( $id, $medialinks );
