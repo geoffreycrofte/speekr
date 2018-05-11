@@ -97,3 +97,25 @@ function speekr_get_list_content( $options ) {
 
 	return apply_filters( 'speekr_get_list_content', $list, $talks_args, $options );
 }
+
+/**
+ * Edit body_class depending on Speekr page you are on.
+ *
+ * @param (array) $classes  The existing body classes.
+ * @return (array) 			The new array of classes.
+ *
+ * @since 1.0
+ * @author Geoffrey Crofte
+ */
+function speekr_edit_body_class( $classes ) {
+	global $post;
+
+	$options = speekr_get_options();
+
+	if ( isset( $options['list_page'] ) && $options['list_page'] === $post->ID ) {
+		$classes[] = apply_filters( 'speekr_talks_page_classes', 'speekr-talks-page talks-list' );
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'speekr_edit_body_class' );
