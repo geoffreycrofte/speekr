@@ -132,33 +132,41 @@ function speekr_import_posts() {
 		}
 		// …else get posts. 
 		else {
+			$tags_arr = $cats_arr = array();
+
 			// Get posts from Tags,			
-			$posts_arr = $_POST['posts']['posts'];
+			$posts_arr = $_POST['posts']['posts'] ? $_POST['posts']['posts'] : array();
 
 			// Get posts from Tags,
-			$tags = $_POST['posts']['tags'];
+			$tags = $_POST['posts']['tags'] ? $_POST['posts']['tags'] : array();
 
-			$tags_query = new WP_Query( array(
-				'post_type'      => 'post',
-				'posts_per_page' => -1,
-				'tag__in'		 => $tags,
-				'post__not_in'	 => $posts_arr,
-				'fields'         => 'ids',
-			) );
-			$tags_arr = $tags_query->posts;
+			if ( ! empty( $tags ) ) {
+				$tags_query = new WP_Query( array(
+					'post_type'      => 'post',
+					'posts_per_page' => -1,
+					'tag__in'		 => $tags,
+					'post__not_in'	 => $posts_arr,
+					'fields'         => 'ids',
+				) );
+				$tags_arr = $tags_query->posts;
+			}
+
 			$tags_arr = array_merge( $posts_arr, $tags_arr );
 			
 			// Get posts from Cats,
-			$cats = $_POST['posts']['cats'];
+			$cats = $_POST['posts']['cats'] ? $_POST['posts']['cats'] : array();
 
-			$cats_query = new WP_Query( array(
-				'post_type'      => 'post',
-				'posts_per_page' => -1,
-				'category__in'   => $cats,
-				'post__not_in'   => $tags_arr,
-				'fields'         => 'ids',
-			) );
-			$cats_arr = $cats_query->posts;
+			if ( ! empty( $cats ) ) {
+				$cats_query = new WP_Query( array(
+					'post_type'      => 'post',
+					'posts_per_page' => -1,
+					'category__in'   => $cats,
+					'post__not_in'   => $tags_arr,
+					'fields'         => 'ids',
+				) );
+				$cats_arr = $cats_query->posts;
+			}
+
 			$posts_list = array_merge( $tags_arr, $cats_arr );
 			
 			// Get posts from item selection.
@@ -168,8 +176,7 @@ function speekr_import_posts() {
 		}
 
 		// Set the new post type.
-		//$set = set_post_type( $posts['list'][ $posts['current'] ], speekr_get_cpt_slug() );
-		$set = true;
+		$set = set_post_type( $posts['list'][ $posts['current'] ], speekr_get_cpt_slug() );
 		$data['post_id'] = $posts['list'][ $posts['current'] ];
 
 		if ( $set ) {

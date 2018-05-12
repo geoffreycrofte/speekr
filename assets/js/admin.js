@@ -224,16 +224,17 @@
 			return;
 		}
 
-		var $_this    = $(this),
-			$importer = $_this.closest( '.speekr-importer' ),
-			nonce     = $importer.data( 'nonce' ),
-			action    = 'speekr_import_posts',
-			posts     = { 'cats': [], 'tags': [], 'posts': [] },
-			$ld_nb    = $( '.speekr-progress-nb' ),
-			$ld_total = $( '.speekr-progress-max' ),
-			$ld_prog  = $( '.speekr-progress-bar-value' ),
-			$ld_perc  = $( '.speekr-progress-bar-percent' ),
-			$ld_posts = $( '.speekr-progress-posts' ),
+		var $_this     = $(this),
+			$importer  = $_this.closest( '.speekr-importer' ),
+			nonce      = $importer.data( 'nonce' ),
+			action     = 'speekr_import_posts',
+			posts      = { 'cats': [], 'tags': [], 'posts': [] },
+			$ld_nb     = $( '.speekr-progress-nb' ),
+			$ld_total  = $( '.speekr-progress-max' ),
+			$ld_prog   = $( '.speekr-progress-bar-value' ),
+			$ld_perc   = $( '.speekr-progress-bar-percent' ),
+			$ld_posts  = $( '.speekr-progress-posts' ),
+			$ld_noitem = $( '.speekr-no-items' ),
 			importr   = function(action, nonce, posts, loop) {
 				
 				loop = loop || null;
@@ -242,7 +243,6 @@
 					ajaxurl,
 					{ action: action, _wpnonce: nonce, posts: posts, loop: loop }
 				).done( function( data ) {
-					console.log(data);
 					var datas = data.data.datas,
 						loop  = {
 							'max':     datas.max,
@@ -251,8 +251,15 @@
 						},
 						percent = parseInt( ( loop.current + 1 ) / loop.max * 100 );
 
+					// No items?
+					if ( datas.max === 0 ) {
+						percent = 100;
+						$ld_noitem.addClass( 'is-visible' ).attr( 'aria-hidden', 'false' )
+					} else {
+						$ld_posts.addClass( 'is-visible' ).attr( 'aria-hidden', 'false' );
+					}
+
 					// Set loader styles
-					$ld_posts.addClass( 'is-visible' ).attr( 'aria-hidden', 'false' );
 					$ld_nb.text( loop.current + 1 );
 					$ld_total.text( loop.max );
 					$ld_perc.text( percent + '%' );

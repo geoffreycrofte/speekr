@@ -232,6 +232,9 @@ function speekr_importer_page() {
 							);
 							?>
 						</p>
+						<p class="speekr-progress-posts speekr-no-items" aria-hidden="true">
+							<?php _e( 'Weird. Seems like you do not have any items in your selection.<br>Try by reloading the page maybe?', 'speekr'); ?>
+						</p>
 						<div class="speekr-progress-bar">
 							<div class="speekr-progress-bar-value">
 								<span class="speekr-progress-bar-percent">0%</span>
