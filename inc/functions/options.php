@@ -118,7 +118,7 @@ function speekr_update_option( $the_option, $the_value ) {
 
 	$options[ $the_option ] = $the_value;
 
-	speekr_update_options( $options );
+	return speekr_update_options( $options );
 
 }
 
