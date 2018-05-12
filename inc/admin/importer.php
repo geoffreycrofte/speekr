@@ -20,7 +20,7 @@ function speekr_plugin_importer() {
 	add_settings_section( 'speekr_option_import', '<i class="dashicons dashicons-tag" aria-hidden="true"></i>&nbsp;' . __( 'From Category and Tag', 'speekr' ), 'speekr_import_section_text', SPEEKR_SLUG . '_import' );
 	add_settings_field( 'speekr_category_import', __( 'Import From Categories', 'speekr' ), 'speekr_select_categories', SPEEKR_SLUG . '_import', 'speekr_option_import' );
 	add_settings_field( 'speekr_tag_import', __( 'Import From Tags', 'speekr' ), 'speekr_select_tags', SPEEKR_SLUG . '_import', 'speekr_option_import' );
-	add_settings_field( 'speekr_tag_import_submit', '<p class="hide-if-no-js"><button type="submit" name="speekr-submit-tags" class="speekr-button">' . __( 'Import posts', 'speekr' ) . '</button></p>', '__return_null', SPEEKR_SLUG . '_import', 'speekr_option_import' );
+	add_settings_field( 'speekr_tag_import_submit', '<p class="hide-if-no-js"><button type="button" name="speekr-submit-tags" class="speekr-button">' . __( 'Import posts', 'speekr' ) . '</button></p>', '__return_null', SPEEKR_SLUG . '_import', 'speekr_option_import' );
 
 	// Posts list
 	add_settings_section( 'speekr_option_import_posts', '<i class="dashicons dashicons-admin-post" aria-hidden="true"></i>&nbsp;' . __( 'From Posts Selection', 'speekr' ), 'speekr_import_section_text2', SPEEKR_SLUG . '_import' );
@@ -107,7 +107,7 @@ function speekr_select_tags() {
 		foreach ( $terms as $term ) {
 			$id = $term->term_id;
 			$output .= '<span class="speekr-checkbox-option speekr-tag-' . esc_attr( $id ) . '">
-					<input name="' . SPEEKR_SETTING_SLUG . '[cat]" id="speekr-tag-' . esc_attr( $id ) . '" type="checkbox" value="' . esc_attr( $id ) . '">
+					<input name="' . SPEEKR_SETTING_SLUG . '[tag]" id="speekr-tag-' . esc_attr( $id ) . '" type="checkbox" value="' . esc_attr( $id ) . '">
 					<label class="speekr-label" for="speekr-tag-' . esc_attr( $id ) . '">' . esc_html( $term->name ) . '</label>
 				</span><br>';
 		}
@@ -155,9 +155,9 @@ function speekr_select_posts() {
 	if ( ! empty( $posts ) ) {
 		foreach ( $posts as $post ) {
 			$id = $post->ID;
-			$output .= '<span class="speekr-checkbox-option speekr-tag-' . esc_attr( $id ) . '">
-					<input name="' . SPEEKR_SETTING_SLUG . '[cat]" id="speekr-tag-' . esc_attr( $id ) . '" type="checkbox" value="' . esc_attr( $id ) . '">
-					<label class="speekr-label" for="speekr-tag-' . esc_attr( $id ) . '">' . esc_html( $post->post_title ) . '</label>
+			$output .= '<span class="speekr-checkbox-option speekr-post-' . esc_attr( $id ) . '">
+					<input name="' . SPEEKR_SETTING_SLUG . '[post]" id="speekr-post-' . esc_attr( $id ) . '" type="checkbox" value="' . esc_attr( $id ) . '">
+					<label class="speekr-label" for="speekr-post-' . esc_attr( $id ) . '">' . esc_html( $post->post_title ) . '</label>
 				</span><br>';
 		}
 	} else {
@@ -197,7 +197,7 @@ function speekr_importer_page() {
 
 		<h1 class="screen-reader-text"><?php echo SPEEKR_PLUGIN_NAME . ' - ' . __( 'Import your existing talks.', 'speekr' ); ?></h1>
 
-		<div class="speekr-settings">
+		<div class="speekr-settings speekr-importer" data-nonce="<?php echo wp_create_nonce( 'speekr_import_posts' ); ?>">
 			<div class="speekr-main-content">
 				<div class="speekr-settings-header">
 					<?php echo speekr_get_logo_title( __( 'Import your existing talks.', 'speekr' ) ); ?>
@@ -211,7 +211,7 @@ function speekr_importer_page() {
 						do_settings_sections( SPEEKR_SLUG . '_import' );
 					?>
 					<p class="submit hide-if-no-js">
-						<button class="button button-primary" type="submit"><?php _e( 'Import Selected Posts', 'speekr' ); ?></button>
+						<button class="button button-primary" type="button"><?php _e( 'Import Selected Posts', 'speekr' ); ?></button>
 					</p>
 					<p class="hide-if-js">
 						<?php _e( 'You need JS to use the importer.', 'speekr' ); ?>

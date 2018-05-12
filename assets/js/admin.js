@@ -202,4 +202,44 @@
 		} );
 	} );
 
+	/**
+	 * Importer.
+	 * Ajax action.
+	 */
+	$( '.speekr-importer' ).on( 'click.speekr', 'button', function() {
+		var $_this    = $(this),
+			$importer = $_this.closest( '.speekr-importer' ),
+			nonce     = $importer.data( 'nonce' ),
+			action    = 'speekr_import_posts',
+			posts     = { 'cats': [], 'tags': [], 'posts': [] };
+
+		// Get from categories
+		$importer.find( '[name="speekr_settings[cat]"]:checked' ).each(function(){
+			posts.cats.push( $(this).val() );
+		});
+
+		// Get from tags
+		$importer.find( '[name="speekr_settings[tag]"]:checked' ).each(function(){
+			posts.tags.push( $(this).val() );
+		});
+
+		// Get from posts
+		$importer.find( '[name="speekr_settings[post]"]:checked' ).each(function(){
+			posts.posts.push( $(this).val() );
+		});
+
+		console.log( posts );
+
+		/*
+		$.post(
+			ajaxurl,
+			{ action: action, _wpnonce: nonce, posts: posts }
+		).done( function( data ) {
+			console.log(data);
+		} );
+		*/
+
+		return false;
+	} );
+
 } )( jQuery, window, document );
