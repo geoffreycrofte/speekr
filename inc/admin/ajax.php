@@ -61,7 +61,7 @@ function speekr_remove_notice() {
 		
 		if ( ! get_current_user_id() && current_user_can( 'edit_users' ) ) {
 			$data['message'] = __( 'You are not allowed to remove this notice.' );
-			wp_send_json_error( $data  );
+			wp_send_json_error( $data );
 			exit;
 		}
 		
@@ -102,11 +102,17 @@ add_action( 'wp_ajax_speekr_remove_notice', 'speekr_remove_notice' );
 function speekr_import_posts() {
 	$data = array( 'message' => 'Security check issue…' );
 
-	if ( isset( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'] , 'speekr_import_posts' ) ) {
+	if (
+		isset( $_POST['_wpnonce'] )
+		&&
+		wp_verify_nonce( $_POST['_wpnonce'] , 'speekr_import_posts' )
+		&&
+		isset( $_POST['posts'] )
+	) {
 		
 		if ( ! get_current_user_id() && current_user_can( 'edit_users' ) ) {
 			$data['message'] = __( 'You are not allowed to import posts.' );
-			wp_send_json_error( $data  );
+			wp_send_json_error( $data );
 			exit;
 		}
 
@@ -117,9 +123,18 @@ function speekr_import_posts() {
 			'list'    => array(),
 		);
 
-		// If JS sent CURRENT, it's because we are inside our increment loop, else get posts.
-		if ( ! isset( $_POST[ 'current' ] ) ) {
-			
+		// If JS sent LOOP array, it's because we are inside our increment loop…
+		if ( isset( $_POST[ 'loop' ] ) && is_array( $_POST['loop'] ) ) {
+			$posts['max']     = intval( $_POST['loop']['max'] );
+			$posts['list']    = $_POST['loop']['list'];
+			$posts['current'] = intval( $_POST['loop']['current'] ) + 1;
+			sleep(1);
+		}
+		// …else get posts. 
+		else {
+			// Get posts from Tags,			
+			$posts_arr = $_POST['posts']['posts'];
+
 			// Get posts from Tags,
 			$tags = $_POST['posts']['tags'];
 
@@ -127,8 +142,11 @@ function speekr_import_posts() {
 				'post_type'      => 'post',
 				'posts_per_page' => -1,
 				'tag__in'		 => $tags,
+				'post__not_in'	 => $posts_arr,
 				'fields'         => 'ids',
 			) );
+			$tags_arr = $tags_query->posts;
+			$tags_arr = array_merge( $posts_arr, $tags_arr );
 			
 			// Get posts from Cats,
 			$cats = $_POST['posts']['cats'];
@@ -137,40 +155,38 @@ function speekr_import_posts() {
 				'post_type'      => 'post',
 				'posts_per_page' => -1,
 				'category__in'   => $cats,
+				'post__not_in'   => $tags_arr,
 				'fields'         => 'ids',
 			) );
-
-			$posts_list = array_merge( $cats_query, $tags_query );
-
-			// Get our posts list.
-			$posts_list = $_POST['posts']['posts'];
+			$cats_arr = $cats_query->posts;
+			$posts_list = array_merge( $tags_arr, $cats_arr );
 			
 			// Get posts from item selection.
 			$posts['max']     = count( $posts_list );
 			$posts['current'] = 0;
 			$posts['list']    = $posts_list;
-		} else {
-			$posts['current'] = (int) $_POST['current'] + 1;
 		}
 
 		// Set the new post type.
-		$set = set_post_type( $posts['list'][ (int) $posts['current'] ], speekr_get_cpt_slug() );
-		$data['post_id'] = $post_id;
+		//$set = set_post_type( $posts['list'][ $posts['current'] ], speekr_get_cpt_slug() );
+		$set = true;
+		$data['post_id'] = $posts['list'][ $posts['current'] ];
 
 		if ( $set ) {
-			$data['post_id'] = $post_id;
-			$data['message'] = $post_id . ' is now a Speekr talk';
+			$data['message'] = $data['post_id'] . ' is now a Speekr talk';
 			$data['datas']   = $posts;
 			wp_send_json_success( $data );
+			exit;
 		} else {
 			$data['message'] = __( 'Cannot edit that post.', 'speekr' );
 			$data['datas']   = $posts;
 			wp_send_json_error( $data );
+			exit;
 		}
 	} else {
 		wp_send_json_error( $data );
+		exit;
 	}
-	exit;
 }
 add_action( 'wp_ajax_nopriv_speekr_import_posts', 'speekr_import_posts' );
 add_action( 'wp_ajax_speekr_import_posts', 'speekr_import_posts' );

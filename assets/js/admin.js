@@ -206,12 +206,66 @@
 	 * Importer.
 	 * Ajax action.
 	 */
+	var can_import = function() {
+		if ( $( '.speekr-importer [type="checkbox"]:checked' ).length === 0 ) {
+			$( '.speekr-importer button' ).addClass( 'disabled' );
+		} else {
+			$( '.speekr-importer button' ).removeClass( 'disabled' );
+		}
+	};
+
+	can_import();
+
+	$( '.speekr-importer [type="checkbox"]' ).on( 'change.speekr', can_import );
+
 	$( '.speekr-importer' ).on( 'click.speekr', 'button', function() {
+
+		if ( $(this).hasClass( 'disabled' ) ) {
+			return;
+		}
+
 		var $_this    = $(this),
 			$importer = $_this.closest( '.speekr-importer' ),
 			nonce     = $importer.data( 'nonce' ),
 			action    = 'speekr_import_posts',
-			posts     = { 'cats': [], 'tags': [], 'posts': [] };
+			posts     = { 'cats': [], 'tags': [], 'posts': [] },
+			$ld_nb    = $( '.speekr-progress-nb' ),
+			$ld_total = $( '.speekr-progress-max' ),
+			$ld_prog  = $( '.speekr-progress-bar-value' ),
+			$ld_perc  = $( '.speekr-progress-bar-percent' ),
+			$ld_posts = $( '.speekr-progress-posts' ),
+			importr   = function(action, nonce, posts, loop) {
+				
+				loop = loop || null;
+
+				$.post(
+					ajaxurl,
+					{ action: action, _wpnonce: nonce, posts: posts, loop: loop }
+				).done( function( data ) {
+					console.log(data);
+					var datas = data.data.datas,
+						loop  = {
+							'max':     datas.max,
+							'current': datas.current,
+							'list':    datas.list,
+						},
+						percent = parseInt( ( loop.current + 1 ) / loop.max * 100 );
+
+					// Set loader styles
+					$ld_posts.addClass( 'is-visible' ).attr( 'aria-hidden', 'false' );
+					$ld_nb.text( loop.current + 1 );
+					$ld_total.text( loop.max );
+					$ld_perc.text( percent + '%' );
+					$ld_prog.css('width', percent + '%' );
+					
+					if ( (datas.max - 1) > datas.current ) {
+						// Ajaxception…
+						importr( action, nonce, posts, loop );
+					} else {
+						$( '.speekr-progress-cta' ).addClass( 'is-visible' ).attr( 'aria-hidden', 'false' );
+					}
+				} );
+			}; 
 
 		// Get from categories
 		$importer.find( '[name="speekr_settings[cat]"]:checked' ).each(function(){
@@ -228,16 +282,9 @@
 			posts.posts.push( $(this).val() );
 		});
 
-		console.log( posts );
-
-		/*
-		$.post(
-			ajaxurl,
-			{ action: action, _wpnonce: nonce, posts: posts }
-		).done( function( data ) {
-			console.log(data);
-		} );
-		*/
+		// Show loader & launch importer
+		$( '.speekr-importer-loader' ).addClass( 'is-visible' ).attr( 'aria-hidden', 'false' );
+		importr( action, nonce, posts );
 
 		return false;
 	} );
