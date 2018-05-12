@@ -20,7 +20,7 @@ function speekr_plugin_importer() {
 	add_settings_section( 'speekr_option_import', '<i class="dashicons dashicons-tag" aria-hidden="true"></i>&nbsp;' . __( 'From Category and Tag', 'speekr' ), 'speekr_import_section_text', SPEEKR_SLUG . '_import' );
 	add_settings_field( 'speekr_category_import', __( 'Import From Categories', 'speekr' ), 'speekr_select_categories', SPEEKR_SLUG . '_import', 'speekr_option_import' );
 	add_settings_field( 'speekr_tag_import', __( 'Import From Tags', 'speekr' ), 'speekr_select_tags', SPEEKR_SLUG . '_import', 'speekr_option_import' );
-	add_settings_field( 'speekr_tag_import_submit', '<p><button type="submit" name="speekr-submit-tags" class="speekr-button">' . __( 'Import posts', 'speekr' ) . '</button></p>', '__return_null', SPEEKR_SLUG . '_import', 'speekr_option_import' );
+	add_settings_field( 'speekr_tag_import_submit', '<p class="hide-if-no-js"><button type="submit" name="speekr-submit-tags" class="speekr-button">' . __( 'Import posts', 'speekr' ) . '</button></p>', '__return_null', SPEEKR_SLUG . '_import', 'speekr_option_import' );
 
 	// Posts list
 	add_settings_section( 'speekr_option_import_posts', '<i class="dashicons dashicons-admin-post" aria-hidden="true"></i>&nbsp;' . __( 'From Posts Selection', 'speekr' ), 'speekr_import_section_text2', SPEEKR_SLUG . '_import' );
@@ -178,22 +178,9 @@ function speekr_select_posts() {
  * @author Geoffrey Crofte
  * @since 1.0
  */
-function speekr_sanitize_importing( $options ) {
+//function speekr_sanitize_importing( $options ) {
 
-	$newoptions = array();
-
-	// TODO: should be sanitized.
-	$newoptions['list_layout'] = $options['list_layout'];
-
-	// No risk, save integer value.
-	$newoptions['list_page'] = (int) $options['list_page'];
-
-	// Authorized values.
-	$css_auth = speekr_get_admin_css_values();
-	$newoptions['css'] = array_key_exists( $options['css'], $css_auth ) ? $options['css'] : 'both';
-
-	return $newoptions;
-}
+//}
 
 /**
  * Generate Importer Page.
@@ -223,8 +210,11 @@ function speekr_importer_page() {
 						settings_fields( SPEEKR_SETTING_SLUG . '_import' );
 						do_settings_sections( SPEEKR_SLUG . '_import' );
 					?>
-					<p class="submit">
+					<p class="submit hide-if-no-js">
 						<button class="button button-primary" type="submit"><?php _e( 'Import Selected Posts', 'speekr' ); ?></button>
+					</p>
+					<p class="hide-if-js">
+						<?php _e( 'You need JS to use the importer.', 'speekr' ); ?>
 					</p>
 					</form>
 				</div><!-- .speekr-settings-content -->
