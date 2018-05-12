@@ -218,12 +218,36 @@ function speekr_importer_page() {
 					</p>
 					</form>
 				</div><!-- .speekr-settings-content -->
+
+				<div class="speekr-importer-loader" aria-hidden="true">
+
+					<div class="speekr-progress">
+						<p class="speekr-h2"><?php _e( 'Import in progress', 'speekr' ); ?></p>
+
+						<p class="speekr-progress-posts" aria-hidden="true">
+							<?php printf(
+								__( '%1$s of %2$s post(s)', 'speekr' ),
+								'<span class="speekr-progress-nb">0</span>',
+								'<span class="speekr-progress-max">0</span>'
+							);
+							?>
+						</p>
+						<div class="speekr-progress-bar">
+							<div class="speekr-progress-bar-value">
+								<span class="speekr-progress-bar-percent">0%</span>
+							</div>
+						</div>
+						<p class="speekr-progress-cta" aria-hidden="true">
+							<a href="<?php echo speekr_get_posts_list_url(); ?>" class="button speekr-button-primary speekr-button speekr-button-big speekr-button-ghost"><?php _e( 'Go to the List of Talks', 'speekr' ); ?></a>
+						</p>
+					</div>
+				</div>
 			</div>
 
 			<div class="speekr-sidebar">
 				<?php speekr_print_sidebar(); ?>
 			</div>
-		</div><!-- .speekr-settings -->
+		</div><!-- .speekr-settings.speekr-importer -->
 	</div><!-- .wrap -->
 <?php
 }
