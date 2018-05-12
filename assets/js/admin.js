@@ -182,4 +182,24 @@
 		}
 	} );
 
+
+	/**
+	 * Notices Removing.
+	 * Ajax action.
+	 */
+	$( '.speekr-notice' ).on( 'click.speekr', '.notice-dismiss', function() {
+		var $_this  = $(this),
+			$notice = $_this.closest( '.speekr-notice' ),
+			notice  = $notice.data( 'notice' ),
+			nonce   = $notice.data( 'nonce' ),
+			action  = 'speekr_remove_notice';
+
+		$.post(
+			ajaxurl,
+			{ action: action, _wpnonce: nonce, notice: notice }
+		).done( function( data ) {
+			console.log(data);
+		} );
+	} );
+
 } )( jQuery, window, document );
