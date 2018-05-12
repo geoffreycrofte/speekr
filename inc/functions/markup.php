@@ -172,13 +172,13 @@ if ( ! function_exists( 'speekr_get_logo_title' ) ) {
 	 */
 	function speekr_get_logo_title( $subtitle = '' ) {
 		$header = '
-		<h1 class="speerk-settings-h1">
+		<p class="speekr-settings-h1">
 			<i class="speekr-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path d="M75,2H5A5,5,0,0,0,0,7v4a5,5,0,0,0,4,4.9V55a6,6,0,0,0,6,6H38v6.86l-10.33,8.4a2,2,0,1,0,2.52,3.1l9.43-7.66,9.93,8.15a2,2,0,0,0,1.27.46,2,2,0,0,0,1.27-3.55L42,68.48V61H70a6,6,0,0,0,6-6V15.9A5,5,0,0,0,80,11V7A5,5,0,0,0,75,2ZM72,55a2,2,0,0,1-2,2H10a2,2,0,0,1-2-2V16H72Zm4-44a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V7A1,1,0,0,1,5,6H75a1,1,0,0,1,1,1Z"/><path d="M22.67,34.5a2,2,0,0,0,2-2,2.5,2.5,0,0,1,5,0,2,2,0,0,0,4,0,6.5,6.5,0,0,0-13,0A2,2,0,0,0,22.67,34.5Z"/><path d="M48.67,34.5a2,2,0,0,0,2-2,2.5,2.5,0,0,1,5,0,2,2,0,0,0,4,0,6.5,6.5,0,0,0-13,0A2,2,0,0,0,48.67,34.5Z"/><path d="M31.67,42c0,3.91,5.11,6.5,8.5,6.5s8.5-2.59,8.5-6.5a2,2,0,0,0-4,0c0,.91-2.6,2.5-4.5,2.5s-4.5-1.59-4.5-2.5a2,2,0,0,0-4,0Z"/></svg></i>
 			<span>
 				<span class="speekr-title">' . SPEEKR_PLUGIN_NAME . '</span>
 				<span class="speekr-subtitle">' . esc_html( $subtitle ) . '</span>
 			</span>
-		</h1>';
+		</p>';
 
 		return apply_filters( 'speekr_get_logo_title', $header );
 	}

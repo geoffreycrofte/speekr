@@ -206,31 +206,34 @@ function speekr_sanitize_importing( $options ) {
 function speekr_importer_page() {
 	global $speekr_options;
 ?>
-	<div class="wrap speekr-settings">
-		
-		<div class="speekr-main-content">
-			<div class="speekr-settings-header">
-				<?php echo speekr_get_logo_title( __( 'Import your existing talks.', 'speekr' ) ); ?>
-				<p class="speekr-version-number"><?php echo SPEEKR_PLUGIN_NAME . '&nbsp;v.' . SPEEKR_VERSION; ?></p>
-			</div><!-- .speekr-settings-header -->
-			
-			<div class="speekr-settings-content">
-				<form method="post" action="options.php">
-				<?php
-					settings_fields( SPEEKR_SETTING_SLUG . '_import' );
-					do_settings_sections( SPEEKR_SLUG . '_import' );
-				?>
-				<p class="submit">
-					<button class="button button-primary" type="submit"><?php _e( 'Import Selected Posts', 'speekr' ); ?></button>
-				</p>
-				</form>
-			</div><!-- .speekr-settings-content -->
-		</div>
+	<div class="wrap">
 
-		<div class="speekr-sidebar">
-			<?php speekr_print_sidebar(); ?>
-		</div>
+		<h1 class="screen-reader-text"><?php echo SPEEKR_PLUGIN_NAME . ' - ' . __( 'Import your existing talks.', 'speekr' ); ?></h1>
 
-	</div><!-- .speekr-settings.wrap -->
+		<div class="speekr-settings">
+			<div class="speekr-main-content">
+				<div class="speekr-settings-header">
+					<?php echo speekr_get_logo_title( __( 'Import your existing talks.', 'speekr' ) ); ?>
+					<p class="speekr-version-number"><?php echo SPEEKR_PLUGIN_NAME . '&nbsp;v.' . SPEEKR_VERSION; ?></p>
+				</div><!-- .speekr-settings-header -->
+
+				<div class="speekr-settings-content">
+					<form method="post" action="options.php">
+					<?php
+						settings_fields( SPEEKR_SETTING_SLUG . '_import' );
+						do_settings_sections( SPEEKR_SLUG . '_import' );
+					?>
+					<p class="submit">
+						<button class="button button-primary" type="submit"><?php _e( 'Import Selected Posts', 'speekr' ); ?></button>
+					</p>
+					</form>
+				</div><!-- .speekr-settings-content -->
+			</div>
+
+			<div class="speekr-sidebar">
+				<?php speekr_print_sidebar(); ?>
+			</div>
+		</div><!-- .speekr-settings -->
+	</div><!-- .wrap -->
 <?php
 }
