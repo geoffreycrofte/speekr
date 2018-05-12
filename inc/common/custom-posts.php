@@ -38,20 +38,20 @@ function speekr_register_post_types() {
 		'labels'               => $labels,
 		'description'          => __( 'You talks made public.', 'speekr' ),
 		'public'               => true,
-		'excluded_from_search' => apply_filters( 'speekr_excluded_from_search', false ),
-		'publicly_queryable'   => apply_filters( 'speekr_publicly_queryable', true ),
-		'show_ui'              => apply_filters( 'speekr_show_ui', true ),
-		'show_in_nav_menus'    => apply_filters( 'speekr_show_in_nav_menus', true ),
+		'excluded_from_search' => false,
+		'publicly_queryable'   => true,
+		'show_ui'              => true,
+		'show_in_nav_menus'    => true,
 		'show_in_menu'         => true, // or 'something.php' to put this menu item as submenu
-		'show_in_admin_bar'    => apply_filters( 'speekr_show_in_admin_bar', false ),
-		'menu_position'        => apply_filters( 'speekr_menu_position', 6 ),
+		'show_in_admin_bar'    => false,
+		'menu_position'        => 6,
 		'menu_icon'            => 'dashicons-speekr',
-		'capability_type'      => apply_filters( 'speekr_capability_types', 'post' ),
+		'capability_type'      => 'post',
 		'register_meta_box_cb' => 'speekr_custom_meta_boxes',
 		'query_var'            => 'talks',
 		'can_export'           => true,
 		//'taxonomies'           => 'speekr_categories' TODO?
-		'supports'             => apply_filters( 'speekr_supports', array(
+		'supports'             => array(
 			'title',
 			//'editor',
 			'author',
@@ -60,14 +60,16 @@ function speekr_register_post_types() {
 			//'comments',
 			'revisions',
 			'page-attributes'
-		) ),
+		),
 		'rewrite'              => array(
-			'slug'       => __( 'talks', 'speekr' ), 
+			'slug'       => apply_filters( 'speekr_talks_rewrite_slug', __( 'talks', 'speekr' ) ), 
 			'with_front' => false, // more '/talks/something' than '/blog/talks/something' 
 			'feeds'      => false,
 			'pages'      => false, // no pagination ('page/2' no longer provided)
 		),
 	);
+
+	$args = apply_filters( 'speekr_talk_cpt_args', $args );
 
 	register_post_type( speekr_get_cpt_slug(), $args );
 
