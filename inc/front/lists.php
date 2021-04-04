@@ -42,14 +42,15 @@ function speekr_get_list_content( $options ) {
 
 		while ( $talks->have_posts() ) {
 			$talks->the_post();
-			$id = get_the_ID();
+			$id    = get_the_ID();
 			$metas = get_post_meta( $id );
 
-			$conf       = unserialize( $metas['speekr-conf'][0] );
-			$is_article = $metas['speekr-as-article'][0] === 'on' ? true : false;
+			// TODO: check if meta exists to avoid notice (just in case)
+			$conf       = isset( $metas['speekr-conf'] ) && isset( $metas['speekr-conf'][0] ) ? unserialize( $metas['speekr-conf'][0] ) : null;
+			$is_article = isset( $metas['speekr-as-article'] ) && isset( $metas['speekr-as-article'][0] ) ? ( $metas['speekr-as-article'][0] === 'on' ? true : false ) : null;
 			$is_linked  = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
-			$medialinks = unserialize( $metas['speekr-media-links'][0] );
-			$is_feat    = $metas['speekr-is-featured'][0];
+			$medialinks = isset( $metas['speekr-media-links'] ) && isset( $metas['speekr-media-links'][0] ) ? unserialize( $metas['speekr-media-links'][0] ) : null;
+			$is_feat    = isset( $metas['speekr-is-featured'] ) && isset( $metas['speekr-is-featured'][0] ) ? $metas['speekr-is-featured'][0] : false;
 			$classes    = $is_feat ? ' talk-featured' : '';
 
 			$list .= '<article class="' . implode( ' ', get_post_class() ) . $classes . '" itemscope itemtype="http://schema.org/CreativeWork">';
@@ -85,7 +86,10 @@ function speekr_get_list_content( $options ) {
 			$list .= '</div><!-- .talk-metadatas -->';
 
 			// Summary content.
-			$list .= '<div class="talk-summary" itemprop="description">' . wpautop( $metas['speekr-summary'][0] )  . '</div><!-- .talk-summary -->';
+			if ( isset( $metas['speekr-summary'][0] ) ) {
+				$list .= '<div class="talk-summary" itemprop="description">' . wpautop( $metas['speekr-summary'][0] )  . '</div><!-- .talk-summary -->';
+			}
+
 			$list .= $is_feat ? '</div><!-- .talk-meta-n-summ -->' : '';
 
 			// Links.
@@ -114,6 +118,10 @@ function speekr_get_list_content( $options ) {
  */
 function speekr_edit_body_class( $classes ) {
 	global $post;
+
+	if ( ! isset( $post->ID ) ) {
+		return $classes;
+	}
 
 	$options = speekr_get_options();
 

@@ -115,7 +115,7 @@ if ( ! function_exists( 'speekr_get_talk_links' ) ) {
 			$title  = sprintf( __( 'See this talk on %s', 'speekr' ), $datas['name'] );
 			$class  = apply_filters( 'speekr_talk_links_classes', 'talk-link talk-link-' . $slug, $slug ); 
 
-			if ( 'other' === $slug && is_array( $meta['other-link'] ) && ! empty( $meta['other-link'] ) ) {
+			if ( 'other' === $slug && ! empty( $meta['other-link'] ) && is_array( $meta['other-link'] ) ) {
 				foreach ( $meta['other-link'] as $link ) {
 					if ( empty( $link['url'] ) || empty( $link['label'] ) ) {
 						continue;
@@ -229,10 +229,7 @@ function speekr_print_sidebar() {
 					'noun'  => '<a href="https://thenounproject.com/stephaniewalter/collection/speaker-icons/" target="_blank">The Noun Project</a>',
 				);
 				?>
-				<dt><?php _e( 'Original Idea', 'speekr' ); ?></dt>
-				<dd><?php echo $contrib['stef']; ?> &amp; <?php echo $contrib['geoff']; ?></dd>
-
-				<dt><?php _e( 'Admin &amp; Front Design', 'speekr' ); ?></dt>
+				<dt><?php _e( 'Original Idea and Global Design', 'speekr' ); ?></dt>
 				<dd><?php echo $contrib['stef']; ?> &amp; <?php echo $contrib['geoff']; ?></dd>
 
 				<dt><?php _e( 'Front &amp; Back Developments', 'speekr' ); ?></dt>

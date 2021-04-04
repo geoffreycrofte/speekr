@@ -16,6 +16,10 @@ $speekr_options = speekr_get_options();
  */
 function speekr_plugin_importer() {
 
+	// To which user?
+	add_settings_section( 'speekr_option_user', '<i class="dashicons dashicons-admin-users" aria-hidden="true"></i>&nbsp;' . __( 'User Attribution', 'speekr' ), 'speekr_import_section_text_user', SPEEKR_SLUG . '_import' );
+	add_settings_field( 'speekr_user_import', '<label for="speekr-user">' . __( 'Attribute the talks to:', 'speekr' ) . '</label>', 'speekr_select_user', SPEEKR_SLUG . '_import', 'speekr_option_user' );
+
 	// Categories & Tags
 	add_settings_section( 'speekr_option_import', '<i class="dashicons dashicons-tag" aria-hidden="true"></i>&nbsp;' . __( 'From Category and Tag', 'speekr' ), 'speekr_import_section_text', SPEEKR_SLUG . '_import' );
 	add_settings_field( 'speekr_category_import', __( 'Import From Categories', 'speekr' ), 'speekr_select_categories', SPEEKR_SLUG . '_import', 'speekr_option_import' );
@@ -31,6 +35,52 @@ function speekr_plugin_importer() {
 
 }
 add_filter( 'admin_init', 'speekr_plugin_importer' );
+
+/**
+ * Description Section Text.
+ *
+ * @return string
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_import_section_text_user() {
+?>
+	<p class="speekr-description"><?php _e( 'Associate the talks you are importing with a precise user.', 'speekr' ); ?></p>
+<?php
+}
+
+/**
+ * Display a list of users.
+ *
+ * @return void
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_select_user() {
+	global $speekr_options;
+
+	$opts = $speekr_options;
+
+	$users = get_users();
+
+	$output = '<p class="speekr-select">
+				<select name="' . SPEEKR_SETTING_SLUG . '[user]" id="speekr-user" required>
+					<option value="">' . __( 'Select a user', 'speekr' ) . '</option>';
+
+	if ( ! empty( $users ) ) {
+		foreach ( $users as $user ) {
+			$output .= '<option value="' . esc_attr( $user->ID ) . '"' . ( $user->ID === get_current_user_id() ? ' selected="selected"' : '' ) . '>' . esc_html( $user->data->display_name ) . ' (' . esc_html( $user->roles[0] ) . ')</option>';
+		}
+	} else {
+		$output .= '<em class="speekr-description">' . __( 'No users available.', 'speekr' ) . '</em>';
+	}
+
+	$output .= '</select></p>';
+
+	echo $output;
+}
 
 /**
  * Description Section Text.

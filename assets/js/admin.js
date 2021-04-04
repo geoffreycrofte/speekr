@@ -228,7 +228,7 @@
 			$importer  = $_this.closest( '.speekr-importer' ),
 			nonce      = $importer.data( 'nonce' ),
 			action     = 'speekr_import_posts',
-			posts      = { 'cats': [], 'tags': [], 'posts': [] },
+			posts      = { 'cats': [], 'tags': [], 'posts': [], 'author': null },
 			$ld_nb     = $( '.speekr-progress-nb' ),
 			$ld_total  = $( '.speekr-progress-max' ),
 			$ld_prog   = $( '.speekr-progress-bar-value' ),
@@ -288,6 +288,8 @@
 		$importer.find( '[name="speekr_settings[post]"]:checked' ).each(function(){
 			posts.posts.push( $(this).val() );
 		});
+
+		posts.author = $importer.find( '[name="speekr_settings[user]"]' ).val();
 
 		// Show loader & launch importer
 		$( '.speekr-importer-loader' ).addClass( 'is-visible' ).attr( 'aria-hidden', 'false' );

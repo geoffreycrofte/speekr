@@ -128,7 +128,7 @@ function speekr_import_posts() {
 			$posts['max']     = intval( $_POST['loop']['max'] );
 			$posts['list']    = $_POST['loop']['list'];
 			$posts['current'] = intval( $_POST['loop']['current'] ) + 1;
-			sleep(1);
+			//sleep(1);
 		}
 		// …else get posts. 
 		else {
@@ -176,8 +176,26 @@ function speekr_import_posts() {
 		}
 
 		// Set the new post type.
-		$set = set_post_type( $posts['list'][ $posts['current'] ], speekr_get_cpt_slug() );
 		$data['post_id'] = $posts['list'][ $posts['current'] ];
+		//$set = set_post_type( $data['post_id'], speekr_get_cpt_slug() );
+
+		// Set the new author if needed
+		$updated = wp_update_post( array(
+			'ID'          => $data['post_id'],
+			'post_author' => intval( $_POST['author'] ),
+		), false );
+		
+		/**
+		 * TODO
+		 */
+		// Set speekr post_meta to avoid PHP notices.
+
+		/**
+		 * TODOOOOOOOOO
+		 *
+		 * $_POST['author'] equal to 0 :/
+		 */
+
 
 		if ( $set ) {
 			$data['message'] = $data['post_id'] . ' is now a Speekr talk';
