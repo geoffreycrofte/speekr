@@ -89,3 +89,26 @@ function speekr_get_slideshare_iframe( $url ) {
 function speekr_get_slides_iframe_url( $url ) {
 	return '//' . trailingslashit( preg_replace( '(^https?://)', '', $url ) ) . 'embed?style=dark';
 }
+
+/**
+ * Get the metas for a Talk CPT
+ *
+ * @param  (int)   $post_id The post ID to retrieve the metas from.
+ * @return (array)          An array with all the Speekr Metas.
+ */
+function speekr_get_talk_metas( $post_id ) {
+	
+	$metas = array();
+
+	if ( get_post_type( $post_id ) !== 'talks' ) {
+		$metas['error'] = true;
+	} else {
+		$post_metas = get_post_meta( $post_id );
+		$metas['media_links'] = unserialize( $post_metas['speekr-media-links'][0] ); // array
+		$metas['conf_infos'] = unserialize( $post_metas['speekr-conf'][0] ); // array
+		$metas['summary'] = $post_metas['speekr-summary'][0]; // string
+		$metas['as_article'] = $post_metas['speekr-as-article'][0]; // "on"
+	}
+
+	return $metas;
+}
