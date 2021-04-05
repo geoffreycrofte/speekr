@@ -25,7 +25,6 @@ function speekr_get_youtube_id( $url ) {
  * @since  1.0
  */
 function speekr_get_vimeo_id( $url ) {
-	var_dump($url);
 	$url = explode( '/', $url ); // https:($0)/($1)/vimeo.com($2)/([id])$3
 	return $url[3];
 }
