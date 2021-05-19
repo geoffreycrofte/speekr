@@ -32,6 +32,8 @@ function speekr_welcome_notice(){
 		return;
 	}
 
+	wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/admin.min.css', array(), SPEEKR_VERSION, 'all' );
+
 	$notice = '<div class="notice speekr-notice is-dismissible" data-notice="welcome" data-nonce="' . wp_create_nonce( 'speekr_notice' ) . '">
 			<div class="speekr-settings-header">' . speekr_get_logo_title( 'Let’s get the party started!' ) . '</div>
 			<div class="speekr-notice-content">
