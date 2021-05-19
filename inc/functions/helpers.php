@@ -100,7 +100,7 @@ function speekr_get_talk_metas( $post_id ) {
 	
 	$metas = array();
 
-	if ( get_post_type( $post_id ) !== 'talks' ) {
+	if ( get_post_type( $post_id ) !== speekr_get_cpt_slug() ) {
 		$metas['error'] = true;
 	} else {
 		$post_metas = get_post_meta( $post_id );
