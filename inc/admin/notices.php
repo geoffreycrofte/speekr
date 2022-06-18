@@ -16,19 +16,17 @@ function speekr_welcome_notice(){
 
 	$notice = '';
 	$meta   = speekr_get_user_meta( 'notice' );
+	var_dump($meta);
 
 	if ( isset( $meta[ 'welcome' ] ) && 'off' === $meta[ 'welcome' ] ) {
 		return;
 	}
 
-	if ( 
-		$pagenow !== 'plugins.php'
-		&&
-		( $pagenow !== 'edit.php' && isset( $_GET['post_type'] ) && $_GET['post_type'] === speekr_get_cpt_slug() ) ) {
+	if ( ! is_speekr_plugin_allowed_pages() ) {
 		return;
 	}
 
-	if ( ! current_user_can( 'edit_users' ) ) {
+	if ( ! speekr_current_user_can_do() ) {
 		return;
 	}
 

@@ -19,6 +19,9 @@ function speekr_get_user_meta( $option = null ) {
 	if ( null !== $option && isset( $meta[ $option ] ) ) {
 		$meta = $meta[ $option ];
 	}
+
+	// Be sure to send back an array.
+	$meta = is_array( $meta ) ? $meta : array();
 	
 	/**
 	 * Filter any Speekr User Metadata after read.

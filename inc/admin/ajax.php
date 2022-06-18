@@ -59,7 +59,7 @@ function speekr_remove_notice() {
 
 	if ( isset( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'] , 'speekr_notice' ) ) {
 		
-		if ( ! get_current_user_id() && current_user_can( 'edit_users' ) ) {
+		if ( ! get_current_user_id() && speekr_current_user_can_do() ) {
 			$data['message'] = __( 'You are not allowed to remove this notice.' );
 			wp_send_json_error( $data );
 			exit;
@@ -73,10 +73,9 @@ function speekr_remove_notice() {
 		$updated = speekr_update_user_meta( 'notice', $notices );
 
 		if ( $updated ) {
-
 			// Compose data to send.
-			$data['user_id']    = get_current_user_id();
-			$data['message']    = $updated;
+			$data['user_id'] = get_current_user_id();
+			$data['message'] = $updated;
 
 			wp_send_json_success( $data );
 		} else {
@@ -110,7 +109,7 @@ function speekr_import_posts() {
 		isset( $_POST['posts'] )
 	) {
 		
-		if ( ! get_current_user_id() && current_user_can( 'edit_users' ) ) {
+		if ( ! get_current_user_id() && speekr_current_user_can_do() ) {
 			$data['message'] = __( 'You are not allowed to import posts.' );
 			wp_send_json_error( $data );
 			exit;

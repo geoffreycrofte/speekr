@@ -1,5 +1,5 @@
 ;( function( $, window, document, undefined ) {
-	
+	console.info('Speekr Admin JS Loaded');
 	/**
 	 * Accessibility Improvement.
 	 */
@@ -188,6 +188,7 @@
 	 * Ajax action.
 	 */
 	$( '.speekr-notice' ).on( 'click.speekr', '.notice-dismiss', function() {
+		console.log($(this));
 		var $_this  = $(this),
 			$notice = $_this.closest( '.speekr-notice' ),
 			notice  = $notice.data( 'notice' ),

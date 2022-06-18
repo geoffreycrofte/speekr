@@ -12,17 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 function speekr_enqueues() {
 	global $pagenow;
 
-	if ( 
-		( isset( $_GET['page'] ) && $_GET['page'] === 'speekr' )
-		||
-		( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'talks' )
-		||
-		( isset( $_GET['post'] ) && get_post_type( (int) $_GET['post'] ) === 'talks' )
-		||
-		( 'plugins.php' === $pagenow)
-	) {
+	if ( is_speekr_plugin_allowed_pages() ) {
 		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/admin.min.css', array(), SPEEKR_VERSION, 'all' );
-		wp_enqueue_script( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery' ), SPEEKR_VERSION, true );
+		wp_enqueue_script( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/js/speekr-admin.js', array( 'jquery' ), SPEEKR_VERSION, true );
 
 		$loc_datas = array(
 			'add_other_item'  => __( 'Add a new link', 'speekr' ),

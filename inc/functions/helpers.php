@@ -112,3 +112,32 @@ function speekr_get_talk_metas( $post_id ) {
 
 	return $metas;
 }
+
+/**
+ * Get the current_user_can() WP Function return value, appropriate for this plugin.
+ * @return (bool)
+ *
+ * @author Geoffrey Crofte
+ * @since  1.0
+ */
+function speekr_current_user_can_do() {
+	return current_user_can( 'edit_users' );
+}
+
+/**
+ * Restrict the CSS, JS and some other PHP functions to specific pages.
+ * @return (bool)
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ * 
+ */
+function is_speekr_plugin_allowed_pages() {
+	return ( isset( $_GET['page'] ) && $_GET['page'] === SPEEKR_SLUG )
+		||
+		( isset( $_GET['post_type'] ) && $_GET['post_type'] === speekr_get_cpt_slug() )
+		||
+		( isset( $_GET['post'] ) && get_post_type( (int) $_GET['post'] ) === speekr_get_cpt_slug() )
+		||
+		( 'plugins.php' === $pagenow );
+}
