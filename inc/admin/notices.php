@@ -16,7 +16,6 @@ function speekr_welcome_notice(){
 
 	$notice = '';
 	$meta   = speekr_get_user_meta( 'notice' );
-	var_dump($meta);
 
 	if ( isset( $meta[ 'welcome' ] ) && 'off' === $meta[ 'welcome' ] ) {
 		return;
