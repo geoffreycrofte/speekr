@@ -24,6 +24,7 @@ function speekr_plugin_settings() {
 	// Styles Section.
 	add_settings_section( 'speekr_option_styles', '<i class="dashicons dashicons-admin-appearance" aria-hidden="true"></i>&nbsp;' . __( 'Painting', 'speekr' ), 'speekr_styles_section_text', SPEEKR_SLUG );
 	add_settings_field( 'speekr_css_activate', __( 'Use default CSS?', 'speekr' ), 'speekr_get_css_activation', SPEEKR_SLUG, 'speekr_option_styles' );
+	add_settings_field( 'speekr_custom_colors', __( 'Select custom colors', 'speekr' ), 'speekr_get_custom_colors', SPEEKR_SLUG, 'speekr_option_styles' );
 
 	// Register settings and sanitize them
 	register_setting( SPEEKR_SETTING_SLUG . '_layout', SPEEKR_SETTING_SLUG, 'speekr_sanitize_settings' );
@@ -171,6 +172,25 @@ function speekr_get_css_activation() {
 
 
 /**
+ * Print Custom colors options
+ *
+ * @return void
+ *
+ * @author Geoffrey Crofte
+ * @since 1.0
+ */
+function speekr_get_custom_colors() {
+	global $speekr_options;
+
+	$opts = $speekr_options;
+	$option_name = SPEEKR_SETTING_SLUG . '[colors]';
+
+	echo speekr_get_theme_color_list_picker( array('slug' => 'headings', 'name' => __('Headings', 'speekr'), 'option_name' => $option_name, 'options' => $opts ) );
+	echo speekr_get_theme_color_list_picker( array('slug' => 'primary', 'name' => __('Primary', 'speekr'), 'option_name' => $option_name, 'options' => $opts ) );
+}
+
+
+/**
  * Sanitize Options.
  *
  * @return array Sanitized options
@@ -191,6 +211,10 @@ function speekr_sanitize_settings( $options ) {
 	// Authorized values.
 	$css_auth = speekr_get_admin_css_values();
 	$newoptions['css'] = array_key_exists( $options['css'], $css_auth ) ? $options['css'] : 'both';
+
+	foreach ($options['colors'] as $k => $v ) {
+		$newoptions['colors'][$k] = esc_attr( $v );
+	}
 
 	return $newoptions;
 }

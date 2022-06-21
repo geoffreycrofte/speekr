@@ -243,3 +243,38 @@ function speekr_print_sidebar() {
 <?php
 	do_action( 'speekr_after_sidebar_content' );
 }
+
+function speekr_get_theme_color_list_picker( $args ) {
+	$picker_name = isset( $args['name'] ) ? $args['name'] : '';
+	$picker_slug = isset( $args['slug'] ) ? $args['slug'] : uniqid();
+	$options     = isset( $args['options'] ) ? $args['options'] : array();
+	$option_name = isset( $args['option_name'] ) ? $args['option_name'] : SPEEKR_SETTING_SLUG . '[colors]'; 
+
+	// Markup setup
+	$output = '<p>' . __( 'Your theme doesn’t support custom color palette.', 'speekr' ) . '</p>';
+	$colors = get_theme_support('editor-color-palette');
+	$current = isset( $options['colors'][$picker_slug] ) ? $options['colors'][$picker_slug] : '' ;
+
+	if ( is_array( $colors ) &&  isset( $colors[0][0]['slug'] )) {
+		
+		$output = '<div class="speekr-color-list-container" data-id="' . $picker_slug . '">
+			<p id="speekr-color-list-label-' . $picker_slug . '">' . $picker_name . '</p>
+			<ul aria-labelledby="speekr-color-list-label-' . $picker_slug . '" class="speekr-color-list">';
+
+		foreach ( $colors[0] as $c ) {
+			$slug      = $c['slug'];
+			$color     = $c['color'];
+			$attr_name = $option_name . '[' . $picker_slug . ']';
+			$name      = isset( $c['name'] ) ? $c['name'] : __('Color not named', 'speekr') . '(' . $slug . ')';
+		
+			$output .= '<li class="speekr-color-item" style="--speekr-item-color:' . $color . '">
+				<input type="radio" name="' . $attr_name . '" id="speekr-color-selector-' . esc_attr( $picker_slug ) . '-' . esc_attr( $slug ) . '" value="' . esc_attr( $slug ) . '"' . ( $current === $slug ? ' checked="checked"' : '' ) . '>
+				<label for="speekr-color-selector-' . esc_attr( $picker_slug ) . '-' . esc_attr( $slug ) . '"><span class="speekr-color-dot"></span><span class="speekr-label-text">' . esc_html( $name ) . '</span></label>
+			</li>';
+		}
+
+		$output .= '</ul></div><!-- #headings -->';
+	}
+	
+	return $output;
+}

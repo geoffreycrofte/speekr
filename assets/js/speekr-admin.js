@@ -1,5 +1,6 @@
 ;( function( $, window, document, undefined ) {
 	console.info('Speekr Admin JS Loaded');
+
 	/**
 	 * Accessibility Improvement.
 	 */

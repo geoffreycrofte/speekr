@@ -1,32 +1,34 @@
 {
-  "name": "speekr-wp-plugin",
+  "name": "Speekr-WordPress-Plugin",
   "version": "1.0.0",
-  "description": "Speekr Plugin for WordPress",
-  "main": "index.php",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Hey, I'm a plugin for speakers using WordPress as a CMS.",
+  "author": "Geoffrey Crofte",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "WordPress",
+    "Plugin",
+    "Speakers",
+    "Conferences",
+    "Talks"
+  ],
+  "homepage": "https://github.com/geoffreycrofte/speekr",
   "repository": {
     "type": "git",
-    "url": "git+https://geoffrey_crofte@bitbucket.org/ninja_n_kitten/speekr-wordpress-plugin.git"
+    "url": "git+https://github.com/geoffreycrofte/speekr.git"
   },
-  "author": "Geoffrey Crofte",
-  "license": "GPL-2.0",
-  "homepage": "https://bitbucket.org/ninja_n_kitten/speekr-wordpress-plugin",
+  "bugs": {
+    "url": "https://github.com/geoffreycrofte/speekr/issues"
+  },
   "devDependencies": {
-    "browser-sync": "^2.9.11",
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "latest",
-    "gulp-less": "latest",
-    "gulp-livereload": "latest",
-    "gulp-load-plugins": "latest",
-    "gulp-minify-css": "latest",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "latest",
-    "gulp-server-livereload": "latest",
-    "gulp-uglify": "^1.5.1"
+    "@wordpress/scripts": "^12.1.0",
+    "dir-archiver": "^1.1.1",
+    "node-sass": "^4.14.1",
+    "csso-cli": "^3.0.0"
   },
-  "dependencies": {
-    "gulp-install": "^1.1.0"
+  "scripts": {
+    "watch": "node-sass assets/css/src/ -o assets/css/ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
+    "compile:css": "node-sass assets/css/src/ -o assets/css/",
+    "minify:css": "csso assets/css/speekr-admin.css -o assets/css/speekr-admin.min.css --source-map assets/css/speekr-admin.min.map && csso assets/css/speekr.css -o assets/css/speekr.min.css --source-map assets/css/speekr.min.map",
+    "lint:js": "wp-scripts lint-js 'assets/js/*.js'"
   }
 }

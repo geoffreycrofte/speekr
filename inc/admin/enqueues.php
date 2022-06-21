@@ -13,7 +13,7 @@ function speekr_enqueues() {
 	global $pagenow;
 
 	if ( is_speekr_plugin_allowed_pages() ) {
-		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/admin.min.css', array(), SPEEKR_VERSION, 'all' );
+		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/speekr-admin.css', array(), SPEEKR_VERSION, 'all' );
 		wp_enqueue_script( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/js/speekr-admin.js', array( 'jquery' ), SPEEKR_VERSION, true );
 
 		$loc_datas = array(
