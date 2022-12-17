@@ -21,14 +21,18 @@
   },
   "devDependencies": {
     "@wordpress/scripts": "^12.1.0",
+    "csso-cli": "^3.0.0",
     "dir-archiver": "^1.1.1",
-    "node-sass": "^4.14.1",
-    "csso-cli": "^3.0.0"
+    "node-sass": "^4.14.1"
   },
   "scripts": {
     "watch": "node-sass assets/css/src/ -o assets/css/ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
+    "css": "npm run compile:css ; npm run minify:css",
     "compile:css": "node-sass assets/css/src/ -o assets/css/",
     "minify:css": "csso assets/css/speekr-admin.css -o assets/css/speekr-admin.min.css --source-map assets/css/speekr-admin.min.map && csso assets/css/speekr.css -o assets/css/speekr.min.css --source-map assets/css/speekr.min.map",
     "lint:js": "wp-scripts lint-js 'assets/js/*.js'"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2"
   }
 }

@@ -45,7 +45,7 @@ function speekr_get_list_content( $options ) {
 			$id    = get_the_ID();
 			$metas = get_post_meta( $id );
 
-			// TODO: check if meta exists to avoid notice (just in case)
+			// METAS
 			$conf       = isset( $metas['speekr-conf'] ) && isset( $metas['speekr-conf'][0] ) ? unserialize( $metas['speekr-conf'][0] ) : null;
 			$is_article = isset( $metas['speekr-as-article'] ) && isset( $metas['speekr-as-article'][0] ) ? ( $metas['speekr-as-article'][0] === 'on' ? true : false ) : null;
 			$is_linked  = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
@@ -93,7 +93,7 @@ function speekr_get_list_content( $options ) {
 			$list .= $is_feat ? '</div><!-- .talk-meta-n-summ -->' : '';
 
 			// Links.
-			$links = speekr_get_talk_links( $id, $medialinks );
+			$links = speekr_get_talk_links( $id, $medialinks, $is_linked );
 			$full  = $is_linked ? '<a href="' . get_permalink() . '" title="' . sprintf( __( 'Read more about %s', 'speekr' ), '&quot;' . get_the_title() . '&quot;') . '" class="talk-link talk-link-more" rel="nofollow">' . __( 'Read More', '' ) . '</a>' : '';
 			$list .= '<div class="talk-links">' . $links . $full . '</div><!-- .talk-links -->';
 			$list .= $is_feat ? '</div><!-- .talk-summ-container -->' : '';

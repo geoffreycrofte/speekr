@@ -102,7 +102,11 @@
 .talk-media-container {
 	line-height: 0.8;
 }
+
 .talk-media {
+	position: relative;
+	aspect-ratio: 16/9;
+
 	&.talk-iframe {
 		position: relative;
 		width: 100%;

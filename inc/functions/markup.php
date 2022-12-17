@@ -23,47 +23,61 @@ if ( ! function_exists( 'speekr_get_media_header' ) ) {
 		$output = $classes = $embed = '';
 
 		if ( isset( $meta['embeded'] ) && $meta['embeded'] ) {
-			// do something with embeded thing.
-			switch ( $meta['embeded-media'] ) {
-				case 'youtube':
-					$embed = ! empty( $meta['youtube-link'] ) ? '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . speekr_get_youtube_id( $meta['youtube-link'] ) . '?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' : false;
-					$classes = ' talk-iframe';
-					break;
-				
-				case 'vimeo':
-					$embed = ! empty( $meta['vimeo-link'] ) ? '<iframe src="https://player.vimeo.com/video/' . speekr_get_vimeo_id( $meta['vimeo-link'] ) . '?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' : false;
-					$classes = ' talk-iframe';
-					break;
+			// try to use WP_oEmbed first
+			
+			$prov_url = $meta[ $meta['embeded-media'] . '-link'];
+			$oembed   = new WP_oEmbed();
+			$provider = $oembed->get_provider( $prov_url, [ 'discover' => false ] );
 
-				case 'speakerdeck':
-					$embed = ! empty( $meta['speakerdeck-link'] ) ? speekr_get_speakerdeck_iframe( $meta['speakerdeck-link']) : false;
-					$classes = ' talk-iframe';
-					break;
+			if ( false !== $provider ) {
+				// Some interesting data like author, dimensions, provider, type, etc.
+				// $data = $oembed->get_data( $prov_url, [ 'discover' => false ] );
+				$embed = wp_oembed_get($prov_url);
+			}
 
-				case 'slideshare':
-					$slideshare = ! empty( $meta['slideshare-link'] ) ? speekr_get_slideshare_iframe( $meta['slideshare-link'] ) : false;
-					$embed = isset( $slideshare['html'] ) ? $slideshare['html'] : false;
-					$img   = isset( $slideshare['thumbnail'] ) ? $slideshare['thumbnail'] : '';
-					$classes = ' talk-iframe';
-					break;
+			if ( $provider === false || $embed === false ) {
+				// do something with embeded thing our own way if oEmbed fail.
+				switch ( $meta['embeded-media'] ) {
+					case 'youtube':
+						$embed = ! empty( $meta['youtube-link'] ) ? '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . speekr_get_youtube_id( $meta['youtube-link'] ) . '?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' : false;
+						$classes = ' talk-iframe';
+						break;
+					
+					case 'vimeo':
+						$embed = ! empty( $meta['vimeo-link'] ) ? '<iframe src="https://player.vimeo.com/video/' . speekr_get_vimeo_id( $meta['vimeo-link'] ) . '?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' : false;
+						$classes = ' talk-iframe';
+						break;
 
-				case 'dailymotion':
-					$embed = '';
-					break;
+					case 'speakerdeck':
+						$embed = ! empty( $meta['speakerdeck-link'] ) ? speekr_get_speakerdeck_iframe( $meta['speakerdeck-link']) : false;
+						$classes = ' talk-iframe';
+						break;
 
-				case 'slides':
-					$embed = ! empty ( $meta['slides-link'] ) ? '<iframe src="' . speekr_get_slides_iframe_url( $meta['slides-link'] ) . '" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' : false;
-					$classes = ' talk-iframe';
-					break;
+					case 'slideshare':
+						$slideshare = ! empty( $meta['slideshare-link'] ) ? speekr_get_slideshare_iframe( $meta['slideshare-link'] ) : false;
+						$embed = isset( $slideshare['html'] ) ? $slideshare['html'] : false;
+						$img   = isset( $slideshare['thumbnail'] ) ? $slideshare['thumbnail'] : '';
+						$classes = ' talk-iframe';
+						break;
 
-				case 'custom':
-					$embed = ! empty( $meta['embed-code'] ) ? $meta['embed-code'] : false;
-					$classes = ' talk-iframe';
-					break;
+					case 'dailymotion':
+						$embed = '';
+						break;
 
-				default:
-					$embed = '';
-					break;
+					case 'slides':
+						$embed = ! empty ( $meta['slides-link'] ) ? '<iframe src="' . speekr_get_slides_iframe_url( $meta['slides-link'] ) . '" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' : false;
+						$classes = ' talk-iframe';
+						break;
+
+					case 'custom':
+						$embed = ! empty( $meta['embed-code'] ) ? $meta['embed-code'] : false;
+						$classes = ' talk-iframe';
+						break;
+
+					default:
+						$embed = '';
+						break;
+				}
 			}
 
 			$classes = apply_filters( 'speekr_media_embed_header_classes', $classes, $embed );
@@ -91,15 +105,17 @@ if ( ! function_exists( 'speekr_get_media_header' ) ) {
 if ( ! function_exists( 'speekr_get_talk_links' ) ) {
 	/**
 	 * Get links markup for a precise talk.
+	 * The markup will be volontarily incomplete in case the
 	 *
-	 * @param  (int)    $post_id  The post ID.
-	 * @param  (array)  $meta    An array of post options.
-	 * @return (string)           The links markup.
+	 * @param  (int)    $post_id      The post ID.
+	 * @param  (array)  $meta         An array of post options.
+	 * @param  (bool)   $force_one    The list will be only the featured medium.
+	 * @return (string)               The links markup.
 	 *
 	 * @author Geoffrey Crofte
 	 * @since  1.0
 	 */
-	function speekr_get_talk_links( $post_id, $meta = null ) {
+	function speekr_get_talk_links( $post_id, $meta = null, $force_one = false ) {
 		if ( $meta === null ) {
 			$meta = get_post_meta( $post_id, 'speekr-media-links', true );
 		}
@@ -108,6 +124,14 @@ if ( ! function_exists( 'speekr_get_talk_links' ) ) {
 		$nofollow   = apply_filters( 'speekr_nofollow_policy', ' rel="nofollow"' );
 		$targetbk   = apply_filters( 'speekr_targetblank_policy', ' target="_blank"' );
 		$output     = '';
+
+		// We can ask for only 1 medium, which will be the linked medium by default.
+		// This avoid a crowded footer with tones of links.
+		if ( $force_one && isset( $meta['embeded'] ) && $meta['embeded'] && isset( $meta['embeded-media'] ) && array_key_exists( $meta['embeded-media'], $auth_links ) ) {
+			$auth_links = array(
+				$meta['embeded-media'] => $auth_links[ $meta['embeded-media'] ]
+			);
+		}
 
 		foreach ( $auth_links as $slug => $datas ) {
 
