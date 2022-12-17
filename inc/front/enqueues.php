@@ -16,7 +16,12 @@ function speekr_enqueues_infront() {
 	if ( ! is_object( $current ) ) {
 		return;
 	}
-	if ( isset( $options['list_page'] ) && $options['list_page'] == $current->ID ) {
+	// If the current object is a listed page for Speekr, or if it's the current CPT page.
+	if ( 
+		( isset( $options['list_page'] ) && $options['list_page'] == $current->ID )
+		||
+		( $current->post_type === speekr_get_cpt_slug() )
+	) {
 		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/speekr.min.css', array(), SPEEKR_VERSION, 'all' );
 	}
 }

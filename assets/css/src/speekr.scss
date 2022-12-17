@@ -106,6 +106,8 @@
 .talk-media {
 	position: relative;
 	aspect-ratio: 16/9;
+	width: clamp(320px, 100%, 80vw);
+	z-index: 1;
 
 	&.talk-iframe {
 		position: relative;

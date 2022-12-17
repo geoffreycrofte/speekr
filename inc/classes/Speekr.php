@@ -126,6 +126,7 @@ class Speekr {
 
 		require_once( SPEEKR_DIRNAME . '/inc/front/enqueues.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/lists.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/front/single.php' );
 
 		do_action( 'speekr_after_includes_front' );
 	}
