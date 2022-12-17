@@ -141,3 +141,20 @@ function is_speekr_plugin_allowed_pages() {
 		||
 		( 'plugins.php' === $pagenow );
 }
+
+/**
+ * Returns the ID of a given page if it matches an existing setting ID for this page.
+ * 
+ * @param  (string)    $page   The setting slug of the page found in the plugin settings.
+ * 
+ * @return (int|bool)          The ID of the page, if found, or false if it doesn't match a setting info.
+ */
+function speekr_get_pages_id( $page ) {
+	$options = speekr_get_options();
+
+	if ( isset( $options[ $page ] ) ) {
+		return (int) $options[ $page ];
+	}
+
+	return false;
+}

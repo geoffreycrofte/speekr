@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function speekr_maybe_replace_post_thumbnail_html( $html ) {
 	global $post;
 
-	if ( get_post_type() === 'talks' ) {
+	if ( get_post_type() === speekr_get_cpt_slug() ) {
 		$meta = get_post_meta( $post->ID, 'speekr-media-links', true );
 
 		if ( isset( $meta['embeded'] ) && $meta['embeded'] ) {

@@ -104,8 +104,8 @@ if ( ! function_exists( 'speekr_get_media_header' ) ) {
 
 if ( ! function_exists( 'speekr_get_talk_links' ) ) {
 	/**
-	 * Get links markup for a precise talk.
-	 * The markup will be volontarily incomplete in case the
+	 * Get links markup for a specific talk.
+	 * The markup will be volontarily incomplete in case the $force_one param is set to true.
 	 *
 	 * @param  (int)    $post_id      The post ID.
 	 * @param  (array)  $meta         An array of post options.

@@ -110,6 +110,7 @@ class Speekr {
 		require_once( SPEEKR_DIRNAME . '/inc/admin/importer.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/menus.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/custom-meta-boxes.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/admin/admin-customizations.php' );
 
 		do_action( 'speekr_after_includes_admin' );
 	}
