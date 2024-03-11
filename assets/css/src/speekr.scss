@@ -6,6 +6,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin: 1em -20px;
+	container-type: inline-size;
 
 	.talks.talks {
 		display: flex;
@@ -15,6 +16,10 @@
 		margin: 1em 0;
 		padding: 20px;
 		box-shadow: none;
+
+		@container (min-width: 840px) {
+    		flex-basis: 33.33%;
+		}
 
 		.talk-inner {
 			display: flex;
@@ -136,10 +141,10 @@
 	.talk-place,
 	.talk-sep,
 	.talk-time {
-		display: inline-block;
+		display: inline-block!important;
 		font-size: .875em;
-		margin: 0;
-		font-style: italic;
+		margin: 0!important;
+		opacity: .75;
 	}
 }
 

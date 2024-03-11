@@ -229,16 +229,24 @@ function speekr_conference_mb( $post ) {
 	
 	$output = '<p class="speekr-mb-description">' . __( 'What’s its name and where did it take place?', 'speekr' ) . '</p>
 			<div class="speekr-mb-block">
+
+				' . apply_filters( 'speekr_conference_mb_begin', '', $post ) . '
+
 				<p class="speekr-mb-line">
 					<label for="speekr-conf-name">' . __( 'Conference Name', 'speekr' )  . '</label>
 					<br>
 					<input type="text" name="speekr-conf[name]" id="speekr-conf-name" value="' . esc_attr( isset( $speekr_conf[ 'name' ] ) ? $speekr_conf[ 'name' ] : '' ) . '" />
 				</p>
+
+				' . apply_filters( 'speekr_conference_mb_after_conf_name', '', $post ) . '
+
 				<p class="speekr-mb-line">
 					<label for="speekr-conf-url">' . __( 'Conference Link', 'speekr' )  . '</label>
 					<br>
 					<input type="text" name="speekr-conf[url]" id="speekr-conf-url" value="' . esc_attr( isset( $speekr_conf[ 'url' ] ) ? $speekr_conf[ 'url' ] : '' ) . '" />
 				</p>
+
+				' . apply_filters( 'speekr_conference_mb_end', '', $post ) . '
 			</div>';
 
 	echo apply_filters( 'speekr_conference_mb', $output, $post );
@@ -373,7 +381,10 @@ function speekr_save_mb( $post_id ) {
 		if ( isset( $_POST['speekr-conf'] ) ) {
 			$conf['name'] = isset( $_POST['speekr-conf']['name'] ) ? esc_html( $_POST['speekr-conf']['name'] ) : '';
 			$conf['url']  = isset( $_POST['speekr-conf']['url'] ) ? esc_url( $_POST['speekr-conf']['url'] ) : '';
-			update_post_meta( $post_id, 'speekr-conf', $conf );
+
+			$conf = apply_filters( 'speekr_save_mb_conf', $conf );
+
+			update_post_meta( $post_id, 'speekr-conf', $conf  );
 		}
 
 		if ( isset( $_POST['speekr_summary'] ) ) {
@@ -393,6 +404,8 @@ function speekr_save_mb( $post_id ) {
 		} else {
 			update_post_meta( $post_id, 'speekr-is-featured', false );
 		}
+
+		do_action( 'speekr_save_mb', $post_id );
 
 	}  
 }

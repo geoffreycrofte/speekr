@@ -133,6 +133,8 @@ function speekr_current_user_can_do() {
  * 
  */
 function is_speekr_plugin_allowed_pages() {
+	global $pagenow;
+	
 	return ( isset( $_GET['page'] ) && $_GET['page'] === SPEEKR_SLUG )
 		||
 		( isset( $_GET['post_type'] ) && $_GET['post_type'] === speekr_get_cpt_slug() )
@@ -144,6 +146,9 @@ function is_speekr_plugin_allowed_pages() {
 
 /**
  * Returns the ID of a given page if it matches an existing setting ID for this page.
+ * Among Pages:
+ * 	- list_page (the page listing the Talks - Archives)
+ * 	- actually, that's all for now.
  * 
  * @param  (string)    $page   The setting slug of the page found in the plugin settings.
  * 

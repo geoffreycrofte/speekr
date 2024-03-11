@@ -88,6 +88,9 @@ class Speekr {
 		require_once( SPEEKR_DIRNAME . '/inc/functions/usermeta.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/settings.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/default-types.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/classes/Speekr_Templates_Loader.php' );
+
+		$templates = new Speekr_Templates_Loader();
 
 		do_action( 'speekr_after_includes' );
 	}
