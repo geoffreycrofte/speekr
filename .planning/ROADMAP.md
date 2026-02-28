@@ -31,10 +31,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. `npm run start` enters watch mode and recompiles SCSS and JS on file change without errors
   3. Plugin loads on WordPress without PHP fatal errors after the build toolchain migration (existing `inc/` bootstrap is untouched)
   4. Compiled assets in `build/` are enqueued correctly by the existing PHP enqueue hooks — no 404s in browser network tab
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: Migrate `package.json` from `node-sass`/`csso-cli`/`gulp` to `@wordpress/scripts`; configure `webpack.config.js` with block entry points and legacy admin/frontend script entry points; verify `npm run build` and `npm run start` both succeed
+- [ ] 01-01-PLAN.md — Replace package.json scripts/deps + create webpack.config.js + update .gitignore
+- [ ] 01-02-PLAN.md — Create src/ entry points (admin JS/SCSS + frontend SCSS with font path fix)
+- [ ] 01-03-PLAN.md — Run npm install + build + update PHP enqueue paths in 3 files
+- [ ] 01-04-PLAN.md — Watch mode test + browser verification + remove legacy compiled assets
 
 ### Phase 2: Data Layer
 **Goal**: All CPTs are visible to the block editor and REST API; every post meta field is registered and accessible via `useEntityProp()` in JavaScript; the Topics taxonomy is in place; no legacy `save_post` callback can silently wipe data
@@ -108,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Build Foundation | 0/1 | Not started | - |
+| 1. Build Foundation | 0/4 | Not started | - |
 | 2. Data Layer | 0/3 | Not started | - |
 | 3. Editor Blocks | 0/2 | Not started | - |
 | 4. Display Blocks | 0/3 | Not started | - |
