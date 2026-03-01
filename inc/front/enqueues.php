@@ -13,18 +13,16 @@ function speekr_enqueues_infront() {
 	$current = get_queried_object();
 	$options = speekr_get_options();
 
-	$debug = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true ) ? '' : '.min';
-
 	if ( ! is_object( $current ) ) {
 		return;
 	}
 	// If the current object is a listed page for Speekr, or if it's the current CPT page.
-	if ( 
+	if (
 		( isset( $options['list_page'] ) && $options['list_page'] == $current->ID )
 		||
 		( $current->post_type === speekr_get_cpt_slug() )
 	) {
-		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'assets/css/speekr' . $debug . '.css', array(), SPEEKR_VERSION, 'all' );
+		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'build/frontend/style-style.css', array(), SPEEKR_VERSION, 'all' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'speekr_enqueues_infront' );
