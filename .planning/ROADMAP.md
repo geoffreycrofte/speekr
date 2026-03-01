@@ -49,12 +49,12 @@ Plans:
   3. Speaker can create a Speaker Profile post and populate headshots, short bio, long bio, social links, and rider fields
   4. Speaker can create a Conference entry with event name, date, city, country, event URL, and a talk reference
   5. Topics taxonomy appears in the Talks editor and accepts terms; topics are queryable via REST API
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: Register Speaker Profile CPT with `show_in_rest: true`, `custom-fields` in supports; register all Speaker Profile post meta (`_speekr_headshots`, `_speekr_bio_short`, `_speekr_bio_long`, `_speekr_social_links`, `_speekr_rider`) via `register_post_meta()` with `show_in_rest: true`, `single: true`, and `auth_callback`; add new file `inc/cpt/speaker-profile.php` loaded via `require_once` in `inc/classes/Speekr.php`
-- [ ] 02-02: Register Conferences CPT with `show_in_rest: true`; register all Conference post meta (`_speekr_conf_date`, `_speekr_conf_city`, `_speekr_conf_country`, `_speekr_conf_url`, `_speekr_conf_talk_ref`) via `register_post_meta()`; update existing Talks CPT registration to add `show_in_rest: true` and `custom-fields` to supports
-- [ ] 02-03: Register Topics taxonomy on the Talks CPT with `show_in_rest: true`; audit and gate all existing `save_post` callbacks in `inc/admin/custom-meta-boxes.php` against REST double-fire (gate with `wp_is_post_autosave()`, `wp_is_post_revision()`, and check `$_POST` is not empty)
+- [ ] 02-01-PLAN.md — Register Speaker Profile CPT + all five Speaker Profile post meta fields (headshots, bio short, bio long, social links, rider); create inc/cpt/speaker-profile.php; wire into Speekr::includes()
+- [ ] 02-02-PLAN.md — Register Conferences CPT + all five Conference post meta fields; update Talks CPT with show_in_rest: true and editor/custom-fields in supports; create inc/cpt/conferences.php; wire into Speekr::includes()
+- [ ] 02-03-PLAN.md — Register Topics taxonomy on Talks CPT with show_in_rest: true; gate speekr_save_mb against REST double-fire with empty($_POST), wp_is_post_autosave(), and wp_is_post_revision() guards
 
 ### Phase 3: Editor Blocks
 **Goal**: Speakers can enter and edit all talk metadata, conference data, and speaker profile data through native Gutenberg block editor sidebar panels — no classic meta boxes required
