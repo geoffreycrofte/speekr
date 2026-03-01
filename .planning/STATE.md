@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 1 of 5 (Build Foundation)
-Plan: 2 of 1 in current phase (Plan 02 complete)
+Plan: 3 of 3 in current phase (Plan 03 complete — build pipeline fully operational)
 Status: In progress
-Last activity: 2026-03-01 — Plan 02 complete: src/ entry points created; @font-face paths corrected for build output
+Last activity: 2026-03-01 — Plan 03 complete: npm install clean, build/ populated, PHP enqueue paths updated to build/ output
 
-Progress: [██░░░░░░░░] 20%
+Progress: [███░░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: ~1 min
-- Total execution time: ~2 min
+- Total plans completed: 3
+- Average duration: ~2 min
+- Total execution time: ~7 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-build-foundation | 2 | ~2 min | ~1 min |
+| 01-build-foundation | 3 | ~7 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min)
+- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min), 01-03 (~5 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -50,6 +50,8 @@ Recent decisions affecting current work:
 - [Phase 01-build-foundation]: defaultConfig.entry() must be called as a function in @wordpress/scripts v27+; webpack.config.js documents this with inline comment
 - [Phase 01-build-foundation]: build/ is NOT gitignored (WordPress plugin convention); only build/**/*.map is excluded
 - [Phase 01-build-foundation Plan 02]: @font-face url() paths in src/frontend/style.scss use ../../assets/fonts/front/ (relative to build/frontend/ output, not source location)
+- [Phase 01-build-foundation Plan 03]: @wordpress/scripts CSS output uses style- prefix — entry admin/index produces build/admin/style-index.css (not index.css); entry frontend/style produces build/frontend/style-style.css (not style.css)
+- [Phase 01-build-foundation Plan 03]: RTL companion files auto-emitted: style-index-rtl.css, style-style-rtl.css
 
 ### Pending Todos
 
@@ -63,5 +65,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-01
-Stopped at: Completed 01-build-foundation Plan 02 — src/ entry points created with corrected font paths. Ready for Plan 03.
+Stopped at: Completed 01-build-foundation Plan 03 — build pipeline operational. Phase 1 complete. Ready for Phase 2.
 Resume file: None
