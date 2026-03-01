@@ -6,10 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin Name: Speekr
  * Plugin URI: http://wordpress.org/extend/plugins/speekr
- * Description: Create an archive with the talks you gave around the world.
- * Author: <a href="https://geoffrey.crofte.fr">Geoffrey Crofte</a>, <a href="https://stephaniewalter.fr/">Stephanie Walter</a>
+ * Description: Create an archive with the talks you gave around the world, and push your speaker profile around.
+ * Author: <a href="https://geoffreycrofte.com">Geoffrey Crofte</a>, <a href="https://stephaniewalter.design/">Stephanie Walter</a>
  * Version: 1.0
- * Author URI: https://crofte.fr
+ * Author URI: https://geoffreycrofte.com
  * License: GPLv2 or later
  * Text Domain: speekr
  */
