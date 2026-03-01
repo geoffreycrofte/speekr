@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 1 of 5 (Build Foundation)
-Plan: 1 of 1 in current phase (Plan 01 complete)
+Plan: 2 of 1 in current phase (Plan 02 complete)
 Status: In progress
-Last activity: 2026-03-01 — Plan 01 complete: replaced node-sass/gulp pipeline with @wordpress/scripts; webpack.config.js created
+Last activity: 2026-03-01 — Plan 02 complete: src/ entry points created; @font-face paths corrected for build output
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
+- Total plans completed: 2
 - Average duration: ~1 min
-- Total execution time: ~1 min
+- Total execution time: ~2 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-build-foundation | 1 | ~1 min | ~1 min |
+| 01-build-foundation | 2 | ~2 min | ~1 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~1 min)
-- Trend: —
+- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min)
+- Trend: consistent
 
 *Updated after each plan completion*
 
@@ -49,6 +49,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Geocoding strategy for Conference lat/lng is an open design decision — must be resolved before Phase 4 (manual entry vs. geocoding API vs. coordinate lookup table)
 - [Phase 01-build-foundation]: defaultConfig.entry() must be called as a function in @wordpress/scripts v27+; webpack.config.js documents this with inline comment
 - [Phase 01-build-foundation]: build/ is NOT gitignored (WordPress plugin convention); only build/**/*.map is excluded
+- [Phase 01-build-foundation Plan 02]: @font-face url() paths in src/frontend/style.scss use ../../assets/fonts/front/ (relative to build/frontend/ output, not source location)
 
 ### Pending Todos
 
@@ -62,5 +63,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-01
-Stopped at: Completed 01-build-foundation Plan 01 — build pipeline replaced with @wordpress/scripts. Ready for Plan 02.
+Stopped at: Completed 01-build-foundation Plan 02 — src/ entry points created with corrected font paths. Ready for Plan 03.
 Resume file: None
