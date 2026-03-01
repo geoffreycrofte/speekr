@@ -372,6 +372,22 @@ add_action( 'post_submitbox_misc_actions', 'speekr_add_sticky_on_cpt' );
  */
 function speekr_save_mb( $post_id ) {
 
+	// Gate 1: REST API requests send no $_POST — bail immediately to prevent
+	// overwriting registered meta with empty values on block editor saves.
+	if ( empty( $_POST ) ) {
+		return;
+	}
+
+	// Gate 2: Skip post autosaves (REST-aware check).
+	if ( wp_is_post_autosave( $post_id ) ) {
+		return;
+	}
+
+	// Gate 3: Skip post revisions.
+	if ( wp_is_post_revision( $post_id ) ) {
+		return;
+	}
+
 	if ( ! isset( $_POST['_wpnonce'] ) ) {
 		return;
 	}
