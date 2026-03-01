@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 1 of 5 (Build Foundation)
-Plan: 3 of 3 in current phase (Plan 03 complete — build pipeline fully operational)
-Status: In progress
-Last activity: 2026-03-01 — Plan 03 complete: npm install clean, build/ populated, PHP enqueue paths updated to build/ output
+Plan: 4 of 4 in current phase (Plan 04 complete — browser verified, legacy assets cleaned up)
+Status: Phase 1 complete
+Last activity: 2026-03-01 — Plan 04 complete: watch mode verified, browser approved (no 404s, fonts render), legacy CSS/SCSS/JS removed from assets/
 
-Progress: [███░░░░░░░] 30%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -27,10 +27,10 @@ Progress: [███░░░░░░░] 30%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-build-foundation | 3 | ~7 min | ~2 min |
+| 01-build-foundation | 4 | ~12 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min), 01-03 (~5 min)
+- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min), 01-03 (~5 min), 01-04 (~5 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -52,6 +52,8 @@ Recent decisions affecting current work:
 - [Phase 01-build-foundation Plan 02]: @font-face url() paths in src/frontend/style.scss use ../../assets/fonts/front/ (relative to build/frontend/ output, not source location)
 - [Phase 01-build-foundation Plan 03]: @wordpress/scripts CSS output uses style- prefix — entry admin/index produces build/admin/style-index.css (not index.css); entry frontend/style produces build/frontend/style-style.css (not style.css)
 - [Phase 01-build-foundation Plan 03]: RTL companion files auto-emitted: style-index-rtl.css, style-style-rtl.css
+- [Phase 01-build-foundation Plan 04]: Legacy cleanup gated on human-verify — files deleted only after browser confirmation of no 404s and font rendering
+- [Phase 01-build-foundation Plan 04]: assets/js/speekr-admin.js retained alongside src/admin/index.js — both are same source; deferred cleanup
 
 ### Pending Todos
 
@@ -65,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-01
-Stopped at: Completed 01-build-foundation Plan 03 — build pipeline operational. Phase 1 complete. Ready for Phase 2.
+Stopped at: Completed 01-build-foundation Plan 04 — browser verified, legacy assets cleaned up. Phase 1 fully complete. Ready for Phase 2.
 Resume file: None
