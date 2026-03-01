@@ -5,32 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** A speaker shares one URL; a conference organizer finds everything they need — profile, assets, talks, past conferences — without the speaker maintaining a separate doc or PDF.
-**Current focus:** Phase 1 — Build Foundation
+**Current focus:** Phase 2 — Data Layer
 
 ## Current Position
 
-Phase: 1 of 5 (Build Foundation)
-Plan: 4 of 4 in current phase (Plan 04 complete — browser verified, legacy assets cleaned up)
-Status: Phase 1 complete
-Last activity: 2026-03-01 — Plan 04 complete: watch mode verified, browser approved (no 404s, fonts render), legacy CSS/SCSS/JS removed from assets/
+Phase: 2 of 5 (Data Layer)
+Plan: 1 of N in current phase (Plan 01 complete — Speaker Profile CPT + meta registered)
+Status: Phase 2 in progress
+Last activity: 2026-03-02 — Plan 01 complete: speekr_speaker CPT registered with block editor support, five post meta fields with REST API schemas
 
 Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 5
 - Average duration: ~2 min
-- Total execution time: ~7 min
+- Total execution time: ~14 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
+| 02-data-layer | 1 | ~2 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min), 01-03 (~5 min), 01-04 (~5 min)
+- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min), 01-03 (~5 min), 01-04 (~5 min), 02-01 (~2 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -54,10 +55,13 @@ Recent decisions affecting current work:
 - [Phase 01-build-foundation Plan 03]: RTL companion files auto-emitted: style-index-rtl.css, style-style-rtl.css
 - [Phase 01-build-foundation Plan 04]: Legacy cleanup gated on human-verify — files deleted only after browser confirmation of no 404s and font rendering
 - [Phase 01-build-foundation Plan 04]: assets/js/speekr-admin.js retained alongside src/admin/index.js — both are same source; deferred cleanup
+- [Phase 02-data-layer Plan 01]: CPT files live in inc/cpt/{slug}.php, loaded via require_once in Speekr::includes() (not includes_admin()) for REST API availability
+- [Phase 02-data-layer Plan 01]: Structured meta (arrays/objects) use expanded show_in_rest schema with items.properties and additionalProperties: false for strictness; remove additionalProperties: false from headshots/social_links items if REST saves are rejected in Plan 03 verification
+- [Phase 02-data-layer Plan 01]: PHP binary not in PATH in this shell; use /Applications/MAMP/bin/php/php8.2.0/bin/php for linting
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
@@ -66,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-01
-Stopped at: Completed 01-build-foundation Plan 04 — browser verified, legacy assets cleaned up. Phase 1 fully complete. Ready for Phase 2.
+Last session: 2026-03-02
+Stopped at: Completed 02-data-layer Plan 01 — Speaker Profile CPT + meta registered. Ready for Plan 02.
 Resume file: None
