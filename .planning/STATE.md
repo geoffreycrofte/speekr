@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 2 of 5 (Data Layer)
-Plan: 1 of N in current phase (Plan 01 complete — Speaker Profile CPT + meta registered)
+Plan: 2 of N in current phase (Plan 02 complete — Conferences CPT registered; Talks CPT updated for block editor)
 Status: Phase 2 in progress
-Last activity: 2026-03-02 — Plan 01 complete: speekr_speaker CPT registered with block editor support, five post meta fields with REST API schemas
+Last activity: 2026-03-02 — Plan 02 complete: speekr_conference CPT registered with five REST meta fields; Talks CPT updated with show_in_rest, editor, custom-fields supports
 
 Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: ~2 min
-- Total execution time: ~14 min
+- Total plans completed: 6
+- Average duration: ~2.5 min
+- Total execution time: ~17 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
-| 02-data-layer | 1 | ~2 min | ~2 min |
+| 02-data-layer | 2 | ~5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~1 min), 01-02 (~1 min), 01-03 (~5 min), 01-04 (~5 min), 02-01 (~2 min)
+- Last 5 plans: 01-02 (~1 min), 01-03 (~5 min), 01-04 (~5 min), 02-01 (~2 min), 02-02 (~3 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -58,6 +58,8 @@ Recent decisions affecting current work:
 - [Phase 02-data-layer Plan 01]: CPT files live in inc/cpt/{slug}.php, loaded via require_once in Speekr::includes() (not includes_admin()) for REST API availability
 - [Phase 02-data-layer Plan 01]: Structured meta (arrays/objects) use expanded show_in_rest schema with items.properties and additionalProperties: false for strictness; remove additionalProperties: false from headshots/social_links items if REST saves are rejected in Plan 03 verification
 - [Phase 02-data-layer Plan 01]: PHP binary not in PATH in this shell; use /Applications/MAMP/bin/php/php8.2.0/bin/php for linting
+- [Phase 02-data-layer]: Conferences CPT key is 'speekr_conference' (underscore) — Phase 5 must verify FSE template name compatibility before template registration
+- [Phase 02-data-layer]: Talks CPT 'editor' and 'custom-fields' supports were previously commented out; both activated in Plan 02 to enable block editor and useEntityProp() in Phase 3
 
 ### Pending Todos
 
@@ -71,5 +73,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 02-data-layer Plan 01 — Speaker Profile CPT + meta registered. Ready for Plan 02.
+Stopped at: Completed 02-data-layer Plan 02 — Conferences CPT registered, Talks CPT updated for block editor. Ready for Plan 03.
 Resume file: None
