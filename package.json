@@ -19,20 +19,15 @@
   "bugs": {
     "url": "https://github.com/geoffreycrofte/speekr/issues"
   },
-  "devDependencies": {
-    "@wordpress/scripts": "^12.1.0",
-    "csso-cli": "^3.0.0",
-    "dir-archiver": "^1.1.1",
-    "node-sass": "^4.14.1"
-  },
   "scripts": {
-    "watch": "node-sass assets/css/src/ -o assets/css/ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
-    "css": "npm run compile:css ; npm run minify:css",
-    "compile:css": "node-sass assets/css/src/ -o assets/css/",
-    "minify:css": "csso assets/css/speekr-admin.css -o assets/css/speekr-admin.min.css --source-map assets/css/speekr-admin.min.map && csso assets/css/speekr.css -o assets/css/speekr.min.css --source-map assets/css/speekr.min.map",
-    "lint:js": "wp-scripts lint-js 'assets/js/*.js'"
+    "build":     "wp-scripts build",
+    "build:dev": "wp-scripts build --mode=development",
+    "start":     "wp-scripts start",
+    "lint":      "wp-scripts lint-js && wp-scripts lint-style",
+    "clean":     "rm -rf build"
   },
-  "dependencies": {
-    "gulp": "^4.0.2"
+  "devDependencies": {
+    "@wordpress/scripts": "^31.5.0",
+    "dir-archiver": "^1.1.1"
   }
 }
