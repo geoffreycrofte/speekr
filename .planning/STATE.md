@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** A speaker shares one URL; a conference organizer finds everything they need — profile, assets, talks, past conferences — without the speaker maintaining a separate doc or PDF.
-**Current focus:** Phase 2 — Data Layer
+**Current focus:** Phase 3 — Editor Blocks
 
 ## Current Position
 
-Phase: 2 of 5 (Data Layer)
-Plan: 5 of N in current phase (Plan 05 complete — _speekr_conf_speakers array meta registered on speekr_conference CPT; REST API and useEntityProp() ready)
-Status: Phase 2 in progress
-Last activity: 2026-03-02 — Plan 05 complete: _speekr_conf_speakers meta field added to inc/cpt/conferences.php; Conference CPT data layer complete
+Phase: 3 of 5 (Editor Blocks)
+Plan: 1 of 5 in current phase (Plan 01 complete — PHP block registration infrastructure + Talk meta REST keys + classic meta box hiding)
+Status: Phase 3 in progress
+Last activity: 2026-03-02 — Plan 01 complete: inc/blocks/blocks.php created; blocks.php wired into Speekr::includes(); classic Talks meta boxes hidden in block editor
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: ~2.4 min
-- Total execution time: ~19 min
+- Total plans completed: 9
+- Average duration: ~2.3 min
+- Total execution time: ~21 min
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [█████░░░░░] 50%
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
+| 03-editor-blocks | 1 | ~2 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (~2 min), 02-02 (~3 min), 02-03 (~1 min), 02-04 (~2 min), 02-05 (~1 min)
+- Last 5 plans: 02-03 (~1 min), 02-04 (~2 min), 02-05 (~1 min), 03-01 (~2 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -64,6 +65,9 @@ Recent decisions affecting current work:
 - [Phase 02-data-layer Plan 03]: save_post guard order established: empty($_POST) -> wp_is_post_autosave -> wp_is_post_revision -> nonce check -> capability check; use this order for all future save_post callbacks
 - [Phase 02-data-layer]: Taxonomy registration moved from admin-only bootstrap (includes_admin) to common path (includes) — same pattern as CPTs in Plan 01; ensures REST API availability without additional hooks
 - [Phase 02-data-layer Plan 05]: single=true required for array meta with show_in_rest schema — WordPress needs single=true to expose arrays correctly via REST API for useEntityProp(); default=array() ensures field is never null in REST response
+- [Phase 03-editor-blocks Plan 01]: blocks.php loaded via Speekr::includes() (not includes_admin()) so block and meta registration runs on all requests including REST API — same pattern as CPTs and taxonomies
+- [Phase 03-editor-blocks Plan 01]: Block-editor media links use new _speekr_media_{youtube,vimeo,slides} keys; legacy speekr-media-links serialised array NOT registered for REST — two separate save paths to avoid schema complexity and REST 400 errors
+- [Phase 03-editor-blocks Plan 01]: __back_compat_meta_box: true hides speekr-summary, speekr-media-links, speekr-conference meta boxes in Gutenberg while keeping them functional in classic editor; speekr-content (wp_editor) intentionally left visible in both
 
 ### Pending Todos
 
@@ -77,5 +81,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 02-data-layer Plan 05 — _speekr_conf_speakers array meta registered on Conference CPT; Conference CPT data layer complete. Ready for Plan 06.
+Stopped at: Completed 03-editor-blocks Plan 01 — PHP block registration infrastructure complete; Talk meta registered for REST; classic meta boxes hidden in block editor. Ready for Plan 02.
 Resume file: None
