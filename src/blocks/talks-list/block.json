@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "speekr/talks-list",
+    "version": "1.0.0",
+    "title": "Talks List",
+    "category": "speekr",
+    "description": "Grid or list of published talks with client-side topic filtering.",
+    "attributes": {
+        "layout": {
+            "type": "string",
+            "default": "grid",
+            "enum": ["grid", "list"]
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "viewScript": "file:./view.js",
+    "style": "file:./style-index.css"
+}
