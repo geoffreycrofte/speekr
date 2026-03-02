@@ -1,0 +1,10 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "speekr/speaker-profile-meta",
+    "version": "1.0.0",
+    "title": "Speaker Profile Meta",
+    "category": "speekr",
+    "description": "Speekr Speaker Profile metadata sidebar panels.",
+    "editorScript": "file:./index.js"
+}
