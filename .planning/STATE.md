@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 3 of 5 (Editor Blocks)
-Plan: 3 of 5 in current phase (Plan 03 complete — Conference meta block: Details panel, Talk Reference panel, Speakers panel)
+Plan: 4 of 5 in current phase (Plan 04 complete — Speaker Profile meta block: Headshots, Bio, Social Links, Rider panels)
 Status: Phase 3 in progress
-Last activity: 2026-03-02 — Plan 03 complete: src/blocks/conference-meta/ (block.json, index.js, edit.js) built; three PluginDocumentSettingPanel components with search-as-you-type meta editors; npm run build exits 0
+Last activity: 2026-03-02 — Plan 04 complete: src/blocks/speaker-profile-meta/ (block.json, index.js, edit.js) built; four PluginDocumentSettingPanel components with MediaUpload, TextareaControls, social links dropdown, rider fields; npm run build exits 0
 
-Progress: [███████░░░] 64%
+Progress: [████████░░] 72%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: ~2.2 min
-- Total execution time: ~22 min
+- Total execution time: ~26 min
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [███████░░░] 64%
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
-| 03-editor-blocks | 3 | ~4 min | ~1.3 min |
+| 03-editor-blocks | 4 | ~8 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (~2 min), 02-05 (~1 min), 03-01 (~2 min), 03-03 (~1 min)
+- Last 5 plans: 02-05 (~1 min), 03-01 (~2 min), 03-03 (~1 min), 03-04 (~4 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -71,6 +71,8 @@ Recent decisions affecting current work:
 - [Phase 03-editor-blocks Plan 03]: All Conference meta state hooks consolidated in single ConferenceMetaPanels component — avoids prop-drilling meta/setMeta into per-panel sub-components
 - [Phase 03-editor-blocks Plan 03]: Speaker name cache uses functional setSpeakerNames update ((prev) => ({...prev, ...newNames})) to avoid stale closure issues with concurrent fetches
 - [Phase 03-editor-blocks Plan 03]: selectedTalkId and selectedSpeakers derived from meta at render time (not mirrored in useState) — always reflects persisted state without sync issues
+- [Phase 03-editor-blocks Plan 04]: Arrow-button reorder (↑/↓) used instead of drag-and-drop for Headshots panel — simpler, accessible, sufficient for MVP; drag upgrade deferred
+- [Phase 03-editor-blocks Plan 04]: TextareaControl for bio/rider fields — RichText broken in PluginDocumentSettingPanel since WP 6.5 (Gutenberg issue #60524); plain text stored, formatting applied at render in Phase 4
 
 ### Pending Todos
 
@@ -84,5 +86,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 03-editor-blocks Plan 03 — Conference meta block complete: three PluginDocumentSettingPanel components (Details, Talk Reference, Speakers) with search-as-you-type REST queries and spread setMeta pattern. Ready for Plan 04.
+Stopped at: Completed 03-editor-blocks Plan 04 — Speaker Profile meta block complete: four PluginDocumentSettingPanel components (Headshots, Bio, Social Links, Rider) with MediaUpload, TextareaControls, spread setMeta pattern. Phase 3 has one plan remaining (Plan 05).
 Resume file: None
