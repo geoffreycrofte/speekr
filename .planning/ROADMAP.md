@@ -49,12 +49,13 @@ Plans:
   3. Speaker can create a Speaker Profile post and populate headshots, short bio, long bio, social links, and rider fields
   4. Speaker can create a Conference entry with event name, date, city, country, event URL, and a talk reference
   5. Topics taxonomy appears in the Talks editor and accepts terms; topics are queryable via REST API
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
 - [ ] 02-01-PLAN.md — Register Speaker Profile CPT + all five Speaker Profile post meta fields (headshots, bio short, bio long, social links, rider); create inc/cpt/speaker-profile.php; wire into Speekr::includes()
 - [ ] 02-02-PLAN.md — Register Conferences CPT + all five Conference post meta fields; update Talks CPT with show_in_rest: true and editor/custom-fields in supports; create inc/cpt/conferences.php; wire into Speekr::includes()
 - [ ] 02-03-PLAN.md — Register Topics taxonomy on Talks CPT with show_in_rest: true; gate speekr_save_mb against REST double-fire with empty($_POST), wp_is_post_autosave(), and wp_is_post_revision() guards
+- [ ] 02-04-PLAN.md — Gap closure: move speekr_register_topics_taxonomy() to inc/common/taxonomies.php and wire into Speekr::includes() so REST API requests register the taxonomy (fixes /wp-json/wp/v2/speekr_topic 404)
 
 ### Phase 3: Editor Blocks
 **Goal**: Speakers can enter and edit all talk metadata, conference data, and speaker profile data through native Gutenberg block editor sidebar panels — no classic meta boxes required
@@ -112,7 +113,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Build Foundation | 0/4 | Not started | - |
-| 2. Data Layer | 0/3 | Not started | - |
+| 2. Data Layer | 0/4 | In progress | - |
 | 3. Editor Blocks | 0/2 | Not started | - |
 | 4. Display Blocks | 0/3 | Not started | - |
 | 5. Templates and Compatibility | 0/3 | Not started | - |
