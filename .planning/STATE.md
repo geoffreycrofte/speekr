@@ -10,16 +10,16 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 5 (Frontend Display Blocks) — IN PROGRESS
-Plan: 3 of 6 in phase 04 (Plan 03 complete — Talks List dynamic block: render.php with media priority chain, topic pill filter data attrs, conference meta lookup; vanilla JS view.js; responsive grid/list CSS)
-Status: Phase 4 in progress — Plans 01–03 complete, Plan 04 next
-Last activity: 2026-03-02 — Plan 03 complete: speekr/talks-list block with render.php, pill filter view.js, style.scss with container queries
+Plan: 4 of 6 in phase 04 (Plan 04 complete — Single Talk dynamic block: render.php with wp_oembed_get() video priority chain, 16:9 wrapper, conference section, Resources pill list, blog CTA guard)
+Status: Phase 4 in progress — Plans 01–04 complete, Plan 05 next
+Last activity: 2026-03-02 — Plan 04 complete: speekr/single-talk block with render.php (oEmbed video chain, fallback image, conference meta lookup, Resources section), style.scss with 16:9 video wrapper and conference accent
 
 Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: ~2.2 min
 - Total execution time: ~33 min
 
@@ -30,10 +30,10 @@ Progress: [█████████░] 92%
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
 | 03-editor-blocks | 8 | ~26 min | ~3.3 min |
-| 04-display-blocks | 3 | ~8 min | ~2.7 min |
+| 04-display-blocks | 4 | ~10 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (~2 min), 03-08 (~3 min), 04-01 (~2 min), 04-02 (~3 min), 04-03 (~3 min)
+- Last 5 plans: 03-08 (~3 min), 04-01 (~2 min), 04-02 (~3 min), 04-03 (~3 min), 04-04 (~2 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -89,6 +89,9 @@ Recent decisions affecting current work:
 - [Phase 04-display-blocks Plan 02]: Sass darken() deprecated in Dart Sass 3.x — use @use 'sass:color' + color.adjust($color, $lightness: -10%) in all new SCSS files
 - [Phase 04-display-blocks Plan 02]: style key in block.json references compiled output name (file:./style-index.css) not source SCSS — @wordpress/scripts names CSS side-effects style-index.css
 - [Phase 04-display-blocks Plan 02]: Social link display is icon-only by default (screen-reader-text span for accessibility); display style toggle deferred to Phase 5
+- [Phase 04-display-blocks Plan 04]: No viewScript for single-talk block — all rendering is server-side PHP; no interactive frontend JS required
+- [Phase 04-display-blocks Plan 04]: wp_oembed_get() used for video embeds — handles oEmbed discovery, WordPress transient caching, and error handling natively; preferred over manual iframe construction
+- [Phase 04-display-blocks Plan 04]: get_the_ID() context approach (no post attribute) — single-talk block designed exclusively for single 'talks' CPT pages; attribute-based post selection is unnecessary over-engineering for this use case
 
 ### Pending Todos
 
@@ -104,5 +107,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 04-display-blocks Plan 03 — speekr/talks-list dynamic block: render.php with media priority chain (YT/Vimeo/slide/featured/placeholder), topic pill filter data-topics attrs, conference meta lookup, speekr-as-article guard; vanilla JS view.js pill filter; style.scss with container queries and grid/list layouts.
+Stopped at: Completed 04-display-blocks Plan 04 — speekr/single-talk dynamic block: render.php with wp_oembed_get() video priority chain (YouTube > Vimeo > Dailymotion), 16:9 aspect-ratio wrapper, featured image / placeholder fallback, conference reference section (name, URL, date, city/country), Resources pill section (SpeakerDeck, Slides, Slideshare, other links), speekr-as-article === 'on' blog CTA, graceful non-talk fallback message; style.scss with conference accent block and pill resource links.
 Resume file: None
