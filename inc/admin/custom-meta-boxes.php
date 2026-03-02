@@ -23,7 +23,7 @@ function speekr_custom_meta_boxes( $post ) {
 		null,
 		'normal',
 		'high',
-		null // callback_args (array)
+		array( '__back_compat_meta_box' => true )
 	);
 
 	add_meta_box(
@@ -33,7 +33,7 @@ function speekr_custom_meta_boxes( $post ) {
 		null,
 		'normal',
 		'high',
-		null // callback_args (array)
+		array( '__back_compat_meta_box' => true )
 	);
 
 	add_meta_box(
@@ -43,7 +43,7 @@ function speekr_custom_meta_boxes( $post ) {
 		null,
 		'side',
 		'high',
-		null // callback_args (array)
+		array( '__back_compat_meta_box' => true )
 	);
 
 	add_meta_box(
