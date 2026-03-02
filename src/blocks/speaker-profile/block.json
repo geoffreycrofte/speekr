@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "speekr/speaker-profile",
+    "version": "1.0.0",
+    "title": "Speaker Profile",
+    "category": "speekr",
+    "description": "Renders the speaker's headshot, bio, social links, and rider.",
+    "attributes": {
+        "layout": {
+            "type": "string",
+            "default": "side-by-side",
+            "enum": ["side-by-side", "stacked"]
+        },
+        "allowDownload": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "file:./style-index.css"
+}
