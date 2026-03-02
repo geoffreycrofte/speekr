@@ -171,3 +171,20 @@ function speekr_register_talk_meta() {
 	) );
 }
 add_action( 'init', 'speekr_register_talk_meta' );
+
+/**
+ * Enqueue Speekr editor panel styles in the block editor.
+ */
+function speekr_enqueue_editor_panel_styles() {
+	$asset_file = SPEEKR_DIRNAME . '/build/editor/speekr-panels.css';
+	if ( ! file_exists( $asset_file ) ) {
+		return;
+	}
+	wp_enqueue_style(
+		'speekr-editor-panels',
+		SPEEKR_PLUGIN_URL . 'build/editor/speekr-panels.css',
+		array( 'wp-edit-post' ),
+		SPEEKR_VERSION
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'speekr_enqueue_editor_panel_styles' );

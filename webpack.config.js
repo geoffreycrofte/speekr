@@ -18,5 +18,7 @@ module.exports = {
 		// Legacy frontend: SCSS only → build/frontend/style.css
 		// Note: also emits build/frontend/style.js (empty) — expected, do not enqueue it
 		'frontend/style': path.resolve( __dirname, 'src/frontend/style.scss' ),
+		// Editor panel styles — loaded in block editor via enqueue_block_editor_assets
+		'editor/speekr-panels': path.resolve( __dirname, 'src/editor/speekr-panels.scss' ),
 	},
 };
