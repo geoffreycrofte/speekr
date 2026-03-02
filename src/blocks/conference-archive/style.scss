@@ -1,0 +1,46 @@
+.wp-block-speekr-conference-archive {
+    overflow-x: auto;
+
+    .speekr-conference-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+
+        th {
+            text-align: left;
+            padding: 0.6rem 0.75rem;
+            border-bottom: 2px solid #9768a7;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(151, 104, 167, 0.04);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: rgba(151, 104, 167, 0.5);
+
+            &:hover {
+                text-decoration-color: #9768a7;
+            }
+        }
+    }
+
+    &.speekr-conference-archive--empty {
+        opacity: 0.7;
+        font-style: italic;
+    }
+}

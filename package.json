@@ -30,5 +30,9 @@
     "@wordpress/icons": "^11.7.0",
     "@wordpress/scripts": "^31.5.0",
     "dir-archiver": "^1.1.1"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3"
   }
 }
