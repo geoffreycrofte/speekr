@@ -66,11 +66,14 @@ Plans:
   2. Editing a Conference post shows block editor sidebar panels for: event name, date, city, country, event URL, and talk reference — all fields save correctly
   3. Editing a Speaker Profile post shows block editor sidebar panels for: headshots, short bio, long bio, social links, and rider — rich text fields support formatting
   4. A plain PHP function in `inc/blocks/blocks.php` registers all blocks from `build/blocks/*/block.json` via `register_block_type()`; no block throws a console error on load
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 03-01: Create `inc/blocks/blocks.php` with a `speekr_register_blocks()` function that loops `build/blocks/*/block.json` and calls `register_block_type()`; hook it to `init`; load the file via `require_once` in `inc/classes/Speekr.php`; scaffold `blocks/talk-meta/` with `block.json` (apiVersion 3), `edit.js` using `useEntityProp` and `PluginDocumentSettingPanel`, and `index.js`
-- [ ] 03-02: Scaffold `blocks/conference-meta/` editor block following the same pattern as `talk-meta`; scaffold `blocks/speaker-profile-meta/` editor block for Speaker Profile CPT; confirm all three editor blocks save correctly without interfering with legacy meta boxes
+- [ ] 03-01-PLAN.md — PHP foundation: inc/blocks/blocks.php (speekr_register_blocks glob loop + Talk meta REST registration); wire into Speekr::includes(); add __back_compat_meta_box to 3 classic Talks meta boxes
+- [ ] 03-02-PLAN.md — Talk meta block: src/blocks/talk-meta/ with 4 panels (Summary, Media Links, Conference, Appears In read-only reverse lookup)
+- [ ] 03-03-PLAN.md — Conference meta block: src/blocks/conference-meta/ with 3 panels (Details, Talk Reference search, Speakers multi-add)
+- [ ] 03-04-PLAN.md — Speaker Profile meta block: src/blocks/speaker-profile-meta/ with 4 panels (Headshots, Bio, Social Links, Rider)
+- [ ] 03-05-PLAN.md — Final build verification + human verify all three CPT panels in WordPress admin
 
 ### Phase 4: Display Blocks
 **Goal**: Visitors to a speaker's site can view the speaker profile, browse talks with topic filtering, view individual talk detail with media embeds, browse conference history, and see all conference locations on an interactive world map
@@ -114,6 +117,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Build Foundation | 0/4 | Not started | - |
 | 2. Data Layer | 0/4 | In progress | - |
-| 3. Editor Blocks | 0/2 | Not started | - |
+| 3. Editor Blocks | 0/5 | Not started | - |
 | 4. Display Blocks | 0/3 | Not started | - |
 | 5. Templates and Compatibility | 0/3 | Not started | - |
