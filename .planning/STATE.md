@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 
 ## Current Position
 
-Phase: 3 of 5 (Editor Blocks) — COMPLETE
-Plan: 8 of 8 in phase 03 (Plan 08 complete — Editor panel UI polish: icons, filled/empty states, headshot grid, social/media link lists)
-Status: Phase 3 complete — ready for Phase 4
-Last activity: 2026-03-02 — Plan 08 complete: SCSS panel styles compiled via webpack, enqueue_block_editor_assets hook, @wordpress/icons on all 11 panels, is-filled classNames for visual state
+Phase: 4 of 5 (Frontend Display Blocks) — IN PROGRESS
+Plan: 1 of 6 in phase 04 (Plan 01 complete — PHP foundation: geocoordinate meta, Nominatim geocoding hook, press-kit REST endpoint)
+Status: Phase 4 in progress — Plan 01 complete, Plan 02 next
+Last activity: 2026-03-02 — Plan 01 complete: _speekr_conf_lat/_speekr_conf_lng meta, Nominatim geocode-on-save, admin notice, manual coordinate panel, ZipArchive press-kit REST endpoint
 
-Progress: [█████████░] 90%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
+- Total plans completed: 13
 - Average duration: ~2.2 min
-- Total execution time: ~28 min
+- Total execution time: ~30 min
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [█████████░] 90%
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
 | 03-editor-blocks | 8 | ~26 min | ~3.3 min |
+| 04-display-blocks | 1 | ~2 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (~2 min), 03-03 (~1 min), 03-04 (~4 min), 03-02 (~2 min)
+- Last 5 plans: 03-03 (~1 min), 03-04 (~4 min), 03-02 (~2 min), 03-08 (~3 min), 04-01 (~2 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -92,11 +93,13 @@ None.
 
 ### Blockers/Concerns
 
-- [Phase 4]: Geocoding strategy for Conference lat/lng must be decided before `blocks/conference-map/` implementation begins. Options: (a) manual lat/lng entry fields, (b) geocoding API call at post save, (c) bundled country/city coordinate lookup table. No external API key dependency preferred.
+- [Phase 04-display-blocks Plan 01]: Geocoding strategy resolved — Nominatim (OpenStreetMap) via wp_remote_get with required User-Agent header; no API key, GPL-compatible; skip-if-already-geocoded guard prevents redundant API calls on re-saves
+- [Phase 04-display-blocks Plan 01]: press-kit.php loaded via Speekr::includes() (not includes_front()) — REST API must be available on both admin and frontend requests; consistent with CPT/blocks.php pattern
+- [Phase 04-display-blocks Plan 01]: Manual coordinates panel uses conditional render in editor sidebar (!lat && !lng) rather than separate settings page or classic meta box — keeps all conference meta unified
 - [Phase 5]: Verify that Talks and Conferences CPT slugs use hyphens (not underscores) before FSE template registration — WP template name validation rejects underscores. Check `speekr_get_cpt_slug()` in `inc/functions/helpers.php`.
 
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 03-editor-blocks Plan 08 — Editor panel UI polish: SCSS stylesheet compiled via webpack, enqueue_block_editor_assets hook, @wordpress/icons on all 11 panels, is-filled classNames for visual state.
+Stopped at: Completed 04-display-blocks Plan 01 — PHP foundation: _speekr_conf_lat/_speekr_conf_lng meta, Nominatim geocoding hook, failure notice, manual coordinate panel in conference editor, ZipArchive press-kit REST endpoint at speekr/v1/press-kit/{id}.
 Resume file: None
