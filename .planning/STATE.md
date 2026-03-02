@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 3 of 5 (Editor Blocks)
-Plan: 6 of 6 in current phase (Plan 06 complete — Bug fixes and gap closure: headshot img thumbnails, HTML5 DnD, HTML entity decoding, 7-type media links parity, long bio removal)
+Plan: 7 of 7 in current phase (Plan 07 complete — Admin menu reorganization: Speekr top-level menu, CPTs sub-listed, Speaker Profile relabeled to Speakers)
 Status: Phase 3 complete
-Last activity: 2026-03-02 — Plan 06 complete: headshot img thumbnails via getMedia, HTML5 drag-to-reorder, decodeEntities on conference search results, talk media links expanded to 7 types + repeatable Other, _speekr_bio_long deregistered
+Last activity: 2026-03-02 — Plan 07 complete: Speekr top-level admin menu (dashicons-microphone), show_in_menu => 'speekr' on all three CPTs, Speaker Profile labels renamed to Speakers
 
-Progress: [█████████░] 84%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
@@ -29,7 +29,7 @@ Progress: [█████████░] 84%
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
-| 03-editor-blocks | 6 | ~13 min | ~2.2 min |
+| 03-editor-blocks | 7 | ~18 min | ~2.6 min |
 
 **Recent Trend:**
 - Last 5 plans: 03-01 (~2 min), 03-03 (~1 min), 03-04 (~4 min), 03-02 (~2 min)
@@ -78,6 +78,8 @@ Recent decisions affecting current work:
 - [Phase 03-editor-blocks Plan 06]: HeadshotItem extracted as sub-component so useSelect(getMedia) can be called per-item without violating React hooks rules (hooks cannot be called inside .map())
 - [Phase 03-editor-blocks Plan 06]: post_content (block editor body) is canonical long-form bio — _speekr_bio_long deregistered from PHP and panel removed from UI; Short Bio remains for program intros
 - [Phase 03-editor-blocks Plan 06]: decodeEntities from @wordpress/html-entities applied at every title.rendered reference in conference-meta (storage + display) — first-party WP package, no install needed
+- [Phase 03-editor-blocks Plan 07]: Talks CPT registered in inc/common/custom-posts.php (not a separate talks.php) — show_in_menu added there; admin-menu.php loaded first in includes_admin() so menu slug 'speekr' is available before CPT submenu resolution
+- [Phase 03-editor-blocks Plan 07]: All plugin CPTs use show_in_menu => 'speekr' pattern; new admin pages go in inc/admin/admin-menu.php loaded via Speekr::includes_admin()
 
 ### Pending Todos
 
@@ -91,5 +93,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 03-editor-blocks Plan 06 — Phase 3 complete. Bug fixes and gap closure: HeadshotItem with getMedia img thumbnails + HTML5 DnD, decodeEntities on conference search, 7-type media links + repeatable Other, _speekr_bio_long deregistered.
+Stopped at: Completed 03-editor-blocks Plan 07 — Admin menu reorganization: Speekr top-level menu, show_in_menu => 'speekr' on Talks/Conferences/Speakers CPTs, Speaker Profile relabeled to Speakers.
 Resume file: None
