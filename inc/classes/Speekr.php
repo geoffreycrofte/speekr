@@ -109,6 +109,7 @@ class Speekr {
 	public function includes_admin() {
 		do_action( 'speekr_before_includes_admin' );
 
+		require_once( SPEEKR_DIRNAME . '/inc/admin/admin-menu.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/functions/urls.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/notices.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/admin/ajax.php' );
