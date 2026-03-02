@@ -6,6 +6,7 @@ import { TextControl, Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { decodeEntities } from '@wordpress/html-entities';
 
 const ConferenceMetaPanels = () => {
 	const postType = useSelect(
@@ -32,7 +33,7 @@ const ConferenceMetaPanels = () => {
 	useEffect( () => {
 		if ( ! selectedTalkId ) return;
 		apiFetch( { path: `/wp/v2/talks/${ selectedTalkId }?_fields=id,title` } )
-			.then( ( post ) => setSelectedTalkTitle( post.title.rendered ) )
+			.then( ( post ) => setSelectedTalkTitle( decodeEntities( post.title.rendered ) ) )
 			.catch( () => {} );
 	}, [ selectedTalkId ] );
 
@@ -71,7 +72,7 @@ const ConferenceMetaPanels = () => {
 			.then( ( posts ) => {
 				const newNames = {};
 				posts.forEach( ( p ) => {
-					newNames[ p.id ] = p.title.rendered;
+					newNames[ p.id ] = decodeEntities( p.title.rendered );
 				} );
 				setSpeakerNames( ( prev ) => ( { ...prev, ...newNames } ) );
 			} )
@@ -187,7 +188,7 @@ const ConferenceMetaPanels = () => {
 							setTalkResults( [] );
 						} }
 					>
-						{ post.title.rendered }
+						{ decodeEntities( post.title.rendered ) }
 					</Button>
 				) ) }
 			</PluginDocumentSettingPanel>
@@ -224,7 +225,7 @@ const ConferenceMetaPanels = () => {
 						variant="tertiary"
 						onClick={ () => addSpeaker( post.id ) }
 					>
-						{ post.title.rendered }
+						{ decodeEntities( post.title.rendered ) }
 					</Button>
 				) ) }
 			</PluginDocumentSettingPanel>
