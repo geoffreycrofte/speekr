@@ -100,5 +100,21 @@ function speekr_register_conference_meta() {
 		'sanitize_callback' => 'absint',
 		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
 	) );
+
+	// Field 6 — Speaker references (array of speekr_speaker post IDs).
+	register_post_meta( 'speekr_conference', '_speekr_conf_speakers', array(
+		'single'       => true,
+		'type'         => 'array',
+		'show_in_rest' => array(
+			'schema' => array(
+				'type'  => 'array',
+				'items' => array(
+					'type' => 'integer',
+				),
+			),
+		),
+		'default'      => array(),
+		'auth_callback' => function() { return current_user_can( 'edit_posts' ); },
+	) );
 }
 add_action( 'init', 'speekr_register_conference_meta' );
