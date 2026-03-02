@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "speekr/conference-map",
+  "version": "1.0.0",
+  "title": "Conference Map",
+  "category": "speekr",
+  "description": "World map of all conference appearances with clustered pins.",
+  "attributes": {
+    "height": {
+      "type": "number",
+      "default": 450
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js",
+  "style": "file:./style-index.css"
+}

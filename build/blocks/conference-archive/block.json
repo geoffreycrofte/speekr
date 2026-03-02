@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "speekr/conference-archive",
+  "version": "1.0.0",
+  "title": "Conference Archive",
+  "category": "speekr",
+  "description": "Filterable list of past conference appearances with name, date, city, and talk given.",
+  "attributes": {},
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "file:./style-index.css"
+}
