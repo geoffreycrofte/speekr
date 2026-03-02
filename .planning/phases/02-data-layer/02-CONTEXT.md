@@ -1,6 +1,7 @@
 # Phase 2: Data Layer - Context
 
 **Gathered:** 2026-03-01
+**Updated:** 2026-03-02
 **Status:** Ready for planning
 
 <domain>
@@ -46,6 +47,13 @@ Register all CPTs (Speaker Profile, Conferences, Talks) with `show_in_rest: true
 - Purpose: prevent REST API saves (which don't send $_POST) from triggering legacy meta box writes that could wipe registered meta
 - Existing data is preserved — the gate prevents double-write, not data deletion
 
+### Target audiences and dual-use design
+- Speekr targets **two audiences on the same data model**: (a) a speaker running their own site — one Speaker Profile, their own talks and conferences; (b) a conference organizer running a speaker bureau — multiple Speaker Profile posts, one per speaker
+- The CPT approach serves both: a speaker just creates one post; an organizer creates many. No separate code paths or UI modes needed at the data layer
+- **Conference → Speaker reference field** (`_speekr_conf_speakers`): Conference posts should store an array of Speaker Profile post IDs so conference organizers can attach multiple speakers to a single conference. Registered as a `type: array` meta field with `show_in_rest: true` on the Conferences CPT. The UI for managing this relationship is built in Phase 3.
+  - Each item: an integer (post ID of a `speekr_speaker` post)
+  - This is IN SCOPE for Phase 2 data layer — field must be registered before Phase 3 editor blocks can use it via `useEntityProp()`
+
 ### Claude's Discretion
 - Exact `register_post_meta()` schema shapes for array fields (WP REST `show_in_rest` schema for nested objects)
 - Whether to use `sanitize_callback` functions or rely on WP's built-in sanitization for each field type
@@ -66,7 +74,12 @@ Register all CPTs (Speaker Profile, Conferences, Talks) with `show_in_rest: true
 <deferred>
 ## Deferred Ideas
 
-None — discussion stayed within phase scope.
+### Phase 6: Plugin Mode & Onboarding UX
+A first-run setup step where the site owner tells the plugin which mode they're operating in: **speaker** (one profile, their own content) or **conference organizer** (multiple speaker profiles, attaching speakers to conferences). This affects:
+- Which admin menu items and post types are surfaced
+- Default settings and help text
+- Possible restriction of who can create/edit Speaker Profiles
+This is a dedicated new phase after Phase 5 — it's a coherent onboarding + settings feature, not a data layer or block concern.
 
 </deferred>
 
@@ -74,3 +87,4 @@ None — discussion stayed within phase scope.
 
 *Phase: 02-data-layer*
 *Context gathered: 2026-03-01*
+*Updated: 2026-03-02 — added dual-audience design, Conference → Speaker reference field, deferred Phase 6 plugin mode*
