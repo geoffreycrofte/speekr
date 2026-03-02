@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since  1.0
  */
 function speekr_get_option_page_url() {
-	return apply_filters( 'speekr_get_option_page_url', admin_url( 'edit.php?post_type=' .speekr_get_cpt_slug() . '&page=' . SPEEKR_SLUG ) );
+	return apply_filters( 'speekr_get_option_page_url', admin_url( 'admin.php?page=' . SPEEKR_SLUG ) );
 }
 
 /**
@@ -22,7 +22,7 @@ function speekr_get_option_page_url() {
  * @since  1.0
  */
 function speekr_get_importer_page_url() {
-	return apply_filters( 'speekr_get_importer_page_url', admin_url( 'edit.php?post_type=' .speekr_get_cpt_slug() . '&page=speekr-importer' ) );
+	return apply_filters( 'speekr_get_importer_page_url', admin_url( 'admin.php?page=speekr-importer' ) );
 }
 
 /**

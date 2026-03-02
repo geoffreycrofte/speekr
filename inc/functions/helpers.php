@@ -137,6 +137,8 @@ function is_speekr_plugin_allowed_pages() {
 	
 	return ( isset( $_GET['page'] ) && $_GET['page'] === SPEEKR_SLUG )
 		||
+		( isset( $_GET['page'] ) && $_GET['page'] === 'speekr-importer' )
+		||
 		( isset( $_GET['post_type'] ) && $_GET['post_type'] === speekr_get_cpt_slug() )
 		||
 		( isset( $_GET['post'] ) && get_post_type( (int) $_GET['post'] ) === speekr_get_cpt_slug() )

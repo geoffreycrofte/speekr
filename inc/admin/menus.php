@@ -45,6 +45,24 @@ function speekr_add_settings_menu(){
 add_action( 'admin_menu', 'speekr_add_settings_menu' );
 
 /**
+ * Keep the Speekr menu open and highlighted when viewing the Topics taxonomy.
+ * WordPress defaults to the Posts menu for edit-tags.php pages.
+ */
+add_filter( 'parent_file', function ( $parent_file ) {
+	if ( 'edit-tags.php' === $GLOBALS['pagenow'] && isset( $_GET['taxonomy'] ) && 'speekr_topic' === $_GET['taxonomy'] ) {
+		return 'speekr';
+	}
+	return $parent_file;
+} );
+
+add_filter( 'submenu_file', function ( $submenu_file ) {
+	if ( 'edit-tags.php' === $GLOBALS['pagenow'] && isset( $_GET['taxonomy'] ) && 'speekr_topic' === $_GET['taxonomy'] ) {
+		return 'edit-tags.php?taxonomy=speekr_topic&post_type=talks';
+	}
+	return $submenu_file;
+} );
+
+/**
  * Add a link to the plugin description in the plugin list.
  *
  * @return void
