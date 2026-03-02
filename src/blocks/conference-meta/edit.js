@@ -236,6 +236,36 @@ const ConferenceMetaPanels = () => {
 					</Button>
 				) ) }
 			</PluginDocumentSettingPanel>
+
+			{ /* Panel 4: Manual Coordinates — shown only when geocoding has not populated lat/lng */ }
+			{ ( ! meta._speekr_conf_lat && ! meta._speekr_conf_lng ) && (
+				<PluginDocumentSettingPanel
+					name="speekr-conf-coordinates"
+					title={ __( 'Coordinates (Manual)', 'speekr' ) }
+					icon="location-alt"
+					className="speekr-panel-conf-coordinates"
+				>
+					<p style={ { fontSize: '12px', color: '#757575', marginBottom: '8px' } }>
+						{ __( 'Geocoding did not resolve this location automatically. Enter coordinates manually.', 'speekr' ) }
+					</p>
+					<TextControl
+						label={ __( 'Latitude', 'speekr' ) }
+						type="number"
+						value={ meta._speekr_conf_lat ?? '' }
+						onChange={ ( value ) =>
+							setMeta( { ...meta, _speekr_conf_lat: parseFloat( value ) || 0 } )
+						}
+					/>
+					<TextControl
+						label={ __( 'Longitude', 'speekr' ) }
+						type="number"
+						value={ meta._speekr_conf_lng ?? '' }
+						onChange={ ( value ) =>
+							setMeta( { ...meta, _speekr_conf_lng: parseFloat( value ) || 0 } )
+						}
+					/>
+				</PluginDocumentSettingPanel>
+			) }
 		</>
 	);
 };
