@@ -22,7 +22,7 @@ function speekr_register_admin_menu() {
 		'edit_posts',                       // Capability
 		'speekr',                           // Menu slug — CPTs target this with show_in_menu
 		'speekr_admin_menu_page',           // Callback
-		'dashicons-microphone',             // Icon (microphone suits a speaker plugin)
+		'dashicons-speekr',                 // Custom plugin icon (font registered in enqueues.php)
 		25                                  // Position (below Comments at 25)
 	);
 }

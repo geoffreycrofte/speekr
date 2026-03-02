@@ -7,7 +7,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 import { decodeEntities } from '@wordpress/html-entities';
-import { calendar, mapMarker, link, people } from '@wordpress/icons';
+// Panel icons use dashicon strings (native WP, consistent with admin UI)
 
 const ConferenceMetaPanels = () => {
 	const postType = useSelect(
@@ -123,7 +123,7 @@ const ConferenceMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-conf-details"
 				title={ __( 'Conference Details', 'speekr' ) }
-				icon={ calendar }
+				icon="calendar-alt"
 				className={ `speekr-panel-conf-details${ ( meta._speekr_conf_date || meta._speekr_conf_city ) ? ' is-filled' : '' }` }
 			>
 				<TextControl
@@ -161,7 +161,7 @@ const ConferenceMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-conf-talk"
 				title={ __( 'Talk Reference', 'speekr' ) }
-				icon={ link }
+				icon="admin-links"
 				className={ `speekr-panel-conf-talk${ selectedTalkId > 0 ? ' is-filled' : '' }` }
 			>
 				{ selectedTalkId > 0 && (
@@ -202,7 +202,7 @@ const ConferenceMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-conf-speakers"
 				title={ __( 'Speakers', 'speekr' ) }
-				icon={ people }
+				icon="groups"
 				className={ `speekr-panel-conf-speakers${ selectedSpeakers.length > 0 ? ' is-filled' : '' }` }
 			>
 				{ selectedSpeakers.length > 0 && (

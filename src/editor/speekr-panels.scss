@@ -7,7 +7,7 @@
  */
 
 // ── Shared panel icon state ───────────────────────────────────────────────
-// Panels with is-filled class show their icon in WP blue (#007cba)
+// Panels with is-filled class show their icon in plugin primary color (#9768a7)
 // Panels without it show the icon in muted grey
 
 .components-panel__body {
@@ -31,7 +31,7 @@
 
         // Filled: icon becomes WP blue
         &.is-filled > .components-panel__body-title .components-button svg {
-            color: #007cba;
+            color: #9768a7;
         }
     }
 }
@@ -92,7 +92,7 @@
         position: absolute;
         top: 4px;
         left: 4px;
-        background: #007cba;
+        background: #9768a7;
         color: #fff;
         font-size: 9px;
         font-weight: 600;

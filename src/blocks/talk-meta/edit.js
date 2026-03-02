@@ -6,7 +6,7 @@ import { TextControl, TextareaControl, Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
-import { quote, video, mapMarker, seen } from '@wordpress/icons';
+// Panel icons use dashicon strings (native WP, consistent with admin UI)
 
 const TalkMetaPanels = () => {
 	const postType = useSelect(
@@ -77,7 +77,7 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-summary"
 				title={ __( 'Talk Summary', 'speekr' ) }
-				icon={ quote }
+				icon="format-quote"
 				className={ `speekr-panel-talk-summary${ meta[ 'speekr-summary' ] ? ' is-filled' : '' }` }
 			>
 				<TextareaControl
@@ -94,7 +94,7 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-media"
 				title={ __( 'Media Links', 'speekr' ) }
-				icon={ video }
+				icon="video-alt2"
 				className={ `speekr-panel-talk-media${
 					( meta._speekr_media_youtube || meta._speekr_media_vimeo || meta._speekr_media_dailymotion ||
 					  meta._speekr_media_slides || meta._speekr_media_speakerdeck || meta._speekr_media_slideshare ||
@@ -179,7 +179,7 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-conf"
 				title={ __( 'Conference', 'speekr' ) }
-				icon={ mapMarker }
+				icon="location"
 				className={ `speekr-panel-talk-conference${ meta[ 'speekr-conf' ]?.name ? ' is-filled' : '' }` }
 			>
 				<TextControl
@@ -199,7 +199,7 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-appears-in"
 				title={ __( 'Appears In', 'speekr' ) }
-				icon={ seen }
+				icon="visibility"
 				className="speekr-panel-talk-appears-in"
 			>
 				{ loading && <p>{ __( 'Loading\u2026', 'speekr' ) }</p> }
