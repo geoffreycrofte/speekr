@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 2 of 5 (Data Layer)
-Plan: 3 of N in current phase (Plan 03 complete — Topics taxonomy registered; speekr_save_mb gated against REST double-fire)
+Plan: 4 of N in current phase (Plan 04 complete — speekr_topic taxonomy moved to common bootstrap path; REST API gap closed)
 Status: Phase 2 in progress
-Last activity: 2026-03-02 — Plan 03 complete: speekr_topic taxonomy with show_in_rest: true; speekr_save_mb REST API guard added
+Last activity: 2026-03-02 — Plan 04 complete: inc/common/taxonomies.php created; Speekr::includes() wired; /wp-json/wp/v2/speekr_topic unblocked
 
 Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: ~2.5 min
-- Total execution time: ~17 min
+- Total plans completed: 7
+- Average duration: ~2.4 min
+- Total execution time: ~19 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
-| 02-data-layer | 3 | ~6 min | ~2 min |
+| 02-data-layer | 4 | ~8 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (~5 min), 01-04 (~5 min), 02-01 (~2 min), 02-02 (~3 min), 02-03 (~1 min)
+- Last 5 plans: 01-04 (~5 min), 02-01 (~2 min), 02-02 (~3 min), 02-03 (~1 min), 02-04 (~2 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -62,6 +62,7 @@ Recent decisions affecting current work:
 - [Phase 02-data-layer]: Talks CPT 'editor' and 'custom-fields' supports were previously commented out; both activated in Plan 02 to enable block editor and useEntityProp() in Phase 3
 - [Phase 02-data-layer Plan 03]: speekr_topic taxonomy: hierarchical: false (tag-like) with show_in_rest: true — enables block editor sidebar panel and /wp-json/wp/v2/speekr_topic endpoint without additional code
 - [Phase 02-data-layer Plan 03]: save_post guard order established: empty($_POST) -> wp_is_post_autosave -> wp_is_post_revision -> nonce check -> capability check; use this order for all future save_post callbacks
+- [Phase 02-data-layer]: Taxonomy registration moved from admin-only bootstrap (includes_admin) to common path (includes) — same pattern as CPTs in Plan 01; ensures REST API availability without additional hooks
 
 ### Pending Todos
 
@@ -75,5 +76,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 02-data-layer Plan 03 — speekr_topic taxonomy registered, speekr_save_mb REST guard added. Ready for Plan 04.
+Stopped at: Completed 02-data-layer Plan 04 — Topics taxonomy moved to common bootstrap path; /wp-json/wp/v2/speekr_topic gap closed. Ready for Plan 05.
 Resume file: None
