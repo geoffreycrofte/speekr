@@ -117,5 +117,90 @@ function speekr_register_conference_meta() {
 		'default'      => array(),
 		'auth_callback' => function() { return current_user_can( 'edit_posts' ); },
 	) );
+
+	// Field 7 — Latitude (float, set by Nominatim geocoding on post save).
+	register_post_meta( 'speekr_conference', '_speekr_conf_lat', array(
+		'single'            => true,
+		'type'              => 'number',
+		'show_in_rest'      => true,
+		'sanitize_callback' => function( $v ) { return (float) $v; },
+		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+	) );
+
+	// Field 8 — Longitude (float, set by Nominatim geocoding on post save).
+	register_post_meta( 'speekr_conference', '_speekr_conf_lng', array(
+		'single'            => true,
+		'type'              => 'number',
+		'show_in_rest'      => true,
+		'sanitize_callback' => function( $v ) { return (float) $v; },
+		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+	) );
 }
 add_action( 'init', 'speekr_register_conference_meta' );
+
+/**
+ * Auto-geocode a Conference post on save using Nominatim (OpenStreetMap).
+ *
+ * Runs only when city and country are present. Skips if coordinates are already
+ * stored (avoids redundant API calls on re-saves). Rate limit: 1 req/sec max;
+ * custom User-Agent is required by Nominatim policy.
+ *
+ * @param int $post_id The saved post ID.
+ * @return void
+ * @since 4.0
+ */
+function speekr_geocode_conference_on_save( $post_id ) {
+	if ( wp_is_post_autosave( $post_id ) ) return;
+	if ( wp_is_post_revision( $post_id ) ) return;
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+	$city    = get_post_meta( $post_id, '_speekr_conf_city', true );
+	$country = get_post_meta( $post_id, '_speekr_conf_country', true );
+	if ( empty( $city ) || empty( $country ) ) return;
+
+	// Skip if already geocoded — prevent re-hitting API on every save.
+	// To re-geocode: clear meta manually or add a force flag in future.
+	if ( get_post_meta( $post_id, '_speekr_conf_lat', true ) ) return;
+
+	$query    = urlencode( $city . ', ' . $country );
+	$url      = 'https://nominatim.openstreetmap.org/search?q=' . $query . '&format=json&limit=1';
+	$response = wp_remote_get( $url, array(
+		'headers' => array(
+			'User-Agent' => 'Speekr WordPress Plugin/1.0 (https://github.com/geoffreycrofte/speekr)',
+		),
+		'timeout' => 10,
+	) );
+
+	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		set_transient( 'speekr_geocode_failed_' . $post_id, 1, 5 * MINUTE_IN_SECONDS );
+		return;
+	}
+
+	$body = json_decode( wp_remote_retrieve_body( $response ), true );
+	if ( empty( $body[0]['lat'] ) || empty( $body[0]['lon'] ) ) {
+		set_transient( 'speekr_geocode_failed_' . $post_id, 1, 5 * MINUTE_IN_SECONDS );
+		return;
+	}
+
+	update_post_meta( $post_id, '_speekr_conf_lat', (float) $body[0]['lat'] );
+	update_post_meta( $post_id, '_speekr_conf_lng', (float) $body[0]['lon'] );
+}
+add_action( 'save_post_speekr_conference', 'speekr_geocode_conference_on_save' );
+
+/**
+ * Show an admin notice when Nominatim geocoding failed on the last conference save.
+ *
+ * @return void
+ * @since 4.0
+ */
+function speekr_geocode_failure_notice() {
+	global $post;
+	if ( ! isset( $post->ID ) || 'speekr_conference' !== get_post_type( $post->ID ) ) return;
+	if ( ! get_transient( 'speekr_geocode_failed_' . $post->ID ) ) return;
+	delete_transient( 'speekr_geocode_failed_' . $post->ID );
+	echo '<div class="notice notice-warning is-dismissible"><p>'
+		. esc_html__( 'Could not resolve location — add coordinates manually.', 'speekr' )
+		. '</p></div>';
+}
+add_action( 'admin_notices', 'speekr_geocode_failure_notice' );
