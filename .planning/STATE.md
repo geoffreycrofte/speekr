@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 5 (Frontend Display Blocks) — IN PROGRESS
-Plan: 2 of 6 in phase 04 (Plan 02 complete — Speaker Profile dynamic block: PHP render, CSS grid/flex layouts, social icon SVG map, press-kit button)
-Status: Phase 4 in progress — Plans 01–02 complete, Plan 03 next
-Last activity: 2026-03-02 — Plan 02 complete: speekr/speaker-profile block with render.php, InspectorControls (layout + allowDownload), style.scss with container queries
+Plan: 3 of 6 in phase 04 (Plan 03 complete — Talks List dynamic block: render.php with media priority chain, topic pill filter data attrs, conference meta lookup; vanilla JS view.js; responsive grid/list CSS)
+Status: Phase 4 in progress — Plans 01–03 complete, Plan 04 next
+Last activity: 2026-03-02 — Plan 03 complete: speekr/talks-list block with render.php, pill filter view.js, style.scss with container queries
 
 Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: ~2.2 min
-- Total execution time: ~30 min
+- Total execution time: ~33 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [█████████░] 92%
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
 | 03-editor-blocks | 8 | ~26 min | ~3.3 min |
-| 04-display-blocks | 2 | ~5 min | ~2.5 min |
+| 04-display-blocks | 3 | ~8 min | ~2.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-04 (~4 min), 03-02 (~2 min), 03-08 (~3 min), 04-01 (~2 min), 04-02 (~3 min)
+- Last 5 plans: 03-02 (~2 min), 03-08 (~3 min), 04-01 (~2 min), 04-02 (~3 min), 04-03 (~3 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -104,5 +104,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 04-display-blocks Plan 02 — speekr/speaker-profile dynamic block: render.php with headshots/bio/social icons/rider/press-kit button, InspectorControls with layout+allowDownload, style.scss with container queries and CSS grid/flex layouts.
+Stopped at: Completed 04-display-blocks Plan 03 — speekr/talks-list dynamic block: render.php with media priority chain (YT/Vimeo/slide/featured/placeholder), topic pill filter data-topics attrs, conference meta lookup, speekr-as-article guard; vanilla JS view.js pill filter; style.scss with container queries and grid/list layouts.
 Resume file: None
