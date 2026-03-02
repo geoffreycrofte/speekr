@@ -32,6 +32,7 @@ function speekr_register_conferences_cpt() {
 		'public'           => true,
 		'show_ui'          => true,
 		'show_in_rest'     => true,
+		'show_in_menu'     => 'speekr',
 		'show_in_nav_menus' => false,
 		'menu_icon'        => 'dashicons-calendar-alt',
 		'menu_position'    => 8,

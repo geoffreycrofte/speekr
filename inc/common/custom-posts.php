@@ -42,7 +42,7 @@ function speekr_register_post_types() {
 		'publicly_queryable'   => true,
 		'show_ui'              => true,
 		'show_in_nav_menus'    => true,
-		'show_in_menu'         => true, // or 'something.php' to put this menu item as submenu
+		'show_in_menu'         => 'speekr', // sub-item under the Speekr top-level menu
 		'show_in_admin_bar'    => false,
 		'show_in_rest'         => true,
 		'menu_position'        => 6,
