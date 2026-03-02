@@ -85,12 +85,15 @@ Plans:
   3. Inserting the Single Talk block on a single talk page renders the media embed (or featured image fallback), description, conference reference, and all relevant links
   4. Inserting the Conference Archive block renders a filterable list of past conference appearances with name, date, city, and talk given
   5. Inserting the Conference Map block renders a Leaflet.js map with one pin per conference; clicking a pin shows a popup with conference name, date, talk given, and event link; Leaflet does not load in the block editor (only on the frontend via `viewScript`)
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 04-01: Build `blocks/speaker-profile/` as a dynamic block with `render.php` reading Speaker Profile post meta; build `blocks/talks-list/` with `render.php` querying published Talks posts, optional Topics filter, and topic filter UI in `edit.js`
-- [ ] 04-02: Build `blocks/single-talk/` as a dynamic block with `render.php` that renders media embed via existing oEmbed/iframe helpers in `inc/` and all talk meta fields
-- [ ] 04-03: Build `blocks/conference-map/` following the dynamic block + `viewScript` pattern: `render.php` outputs conference lat/lng coordinates as a JSON data attribute; `view.js` reads the attribute and initializes Leaflet 1.9.4 (never loaded in the editor); build `blocks/conference-archive/` as a dynamic block with filterable list render
+- [ ] 04-01-PLAN.md — PHP foundation: _speekr_conf_lat/_speekr_conf_lng meta registration, Nominatim geocoding hook, admin notice, manual coord panel in conference-meta, press kit REST endpoint
+- [ ] 04-02-PLAN.md — Speaker Profile block: src/blocks/speaker-profile/ with layout toggle, bio + post_content, social SVG icons, rider, optional press kit download button
+- [ ] 04-03-PLAN.md — Talks List block: src/blocks/talks-list/ with card grid/list, media priority, topic pill filter (view.js), empty state
+- [ ] 04-04-PLAN.md — Single Talk block: src/blocks/single-talk/ with video embed priority, fallback image, conference reference, Resources section
+- [ ] 04-05-PLAN.md — Conference Archive + Conference Map blocks: npm install leaflet + markercluster, both block source files, Leaflet view.js with icon fix
+- [ ] 04-06-PLAN.md — Final build + human verify all 5 display blocks on frontend
 
 ### Phase 5: Templates and Compatibility
 **Goal**: The plugin works in block themes (FSE templates), classic themes (PHP template files), and shortcode-based page builders; developers can extend all output points via action/filter hooks
@@ -118,5 +121,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Build Foundation | 0/4 | Not started | - |
 | 2. Data Layer | 0/4 | In progress | - |
 | 3. Editor Blocks | 0/5 | Not started | - |
-| 4. Display Blocks | 0/3 | Not started | - |
+| 4. Display Blocks | 0/6 | Not started | - |
 | 5. Templates and Compatibility | 0/3 | Not started | - |
