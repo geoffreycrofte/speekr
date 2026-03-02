@@ -10,16 +10,16 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 5 (Frontend Display Blocks) — IN PROGRESS
-Plan: 1 of 6 in phase 04 (Plan 01 complete — PHP foundation: geocoordinate meta, Nominatim geocoding hook, press-kit REST endpoint)
-Status: Phase 4 in progress — Plan 01 complete, Plan 02 next
-Last activity: 2026-03-02 — Plan 01 complete: _speekr_conf_lat/_speekr_conf_lng meta, Nominatim geocode-on-save, admin notice, manual coordinate panel, ZipArchive press-kit REST endpoint
+Plan: 2 of 6 in phase 04 (Plan 02 complete — Speaker Profile dynamic block: PHP render, CSS grid/flex layouts, social icon SVG map, press-kit button)
+Status: Phase 4 in progress — Plans 01–02 complete, Plan 03 next
+Last activity: 2026-03-02 — Plan 02 complete: speekr/speaker-profile block with render.php, InspectorControls (layout + allowDownload), style.scss with container queries
 
 Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
+- Total plans completed: 14
 - Average duration: ~2.2 min
 - Total execution time: ~30 min
 
@@ -30,10 +30,10 @@ Progress: [█████████░] 92%
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
 | 03-editor-blocks | 8 | ~26 min | ~3.3 min |
-| 04-display-blocks | 1 | ~2 min | ~2 min |
+| 04-display-blocks | 2 | ~5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (~1 min), 03-04 (~4 min), 03-02 (~2 min), 03-08 (~3 min), 04-01 (~2 min)
+- Last 5 plans: 03-04 (~4 min), 03-02 (~2 min), 03-08 (~3 min), 04-01 (~2 min), 04-02 (~3 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -86,6 +86,9 @@ Recent decisions affecting current work:
 - [Phase 03-editor-blocks Plan 08]: formatQuote not exported by @wordpress/icons — use quote instead; always verify icon export names from the package's exports list before importing
 - [Phase 03-editor-blocks Plan 08]: Editor-only styles use webpack entry + enqueue_block_editor_assets pattern — do not add to block.json editorStyle (that would limit scope to individual blocks only)
 - [Phase 03-editor-blocks Plan 08]: Panel visual state pattern: speekr-panel-{name} CSS class + is-filled conditional suffix; CSS sets icon color (muted grey → WP blue #007cba)
+- [Phase 04-display-blocks Plan 02]: Sass darken() deprecated in Dart Sass 3.x — use @use 'sass:color' + color.adjust($color, $lightness: -10%) in all new SCSS files
+- [Phase 04-display-blocks Plan 02]: style key in block.json references compiled output name (file:./style-index.css) not source SCSS — @wordpress/scripts names CSS side-effects style-index.css
+- [Phase 04-display-blocks Plan 02]: Social link display is icon-only by default (screen-reader-text span for accessibility); display style toggle deferred to Phase 5
 
 ### Pending Todos
 
@@ -101,5 +104,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 04-display-blocks Plan 01 — PHP foundation: _speekr_conf_lat/_speekr_conf_lng meta, Nominatim geocoding hook, failure notice, manual coordinate panel in conference editor, ZipArchive press-kit REST endpoint at speekr/v1/press-kit/{id}.
+Stopped at: Completed 04-display-blocks Plan 02 — speekr/speaker-profile dynamic block: render.php with headshots/bio/social icons/rider/press-kit button, InspectorControls with layout+allowDownload, style.scss with container queries and CSS grid/flex layouts.
 Resume file: None
