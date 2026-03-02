@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "speekr/talk-meta",
+  "version": "1.0.0",
+  "title": "Talk Meta",
+  "category": "speekr",
+  "description": "Speekr Talk metadata sidebar panels.",
+  "editorScript": "file:./index.js"
+}
