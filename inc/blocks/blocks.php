@@ -122,5 +122,52 @@ function speekr_register_talk_meta() {
 			},
 		)
 	);
+
+	// Dailymotion media link — block-editor path.
+	register_post_meta( speekr_get_cpt_slug(), '_speekr_media_dailymotion', array(
+		'single'            => true,
+		'type'              => 'string',
+		'show_in_rest'      => true,
+		'sanitize_callback' => 'esc_url_raw',
+		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+	) );
+
+	// SpeakerDeck media link — block-editor path.
+	register_post_meta( speekr_get_cpt_slug(), '_speekr_media_speakerdeck', array(
+		'single'            => true,
+		'type'              => 'string',
+		'show_in_rest'      => true,
+		'sanitize_callback' => 'esc_url_raw',
+		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+	) );
+
+	// Slideshare media link — block-editor path.
+	register_post_meta( speekr_get_cpt_slug(), '_speekr_media_slideshare', array(
+		'single'            => true,
+		'type'              => 'string',
+		'show_in_rest'      => true,
+		'sanitize_callback' => 'esc_url_raw',
+		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+	) );
+
+	// Other links — repeatable array of { label, url } objects.
+	register_post_meta( speekr_get_cpt_slug(), '_speekr_media_other', array(
+		'single'       => true,
+		'type'         => 'array',
+		'show_in_rest' => array(
+			'schema' => array(
+				'type'  => 'array',
+				'items' => array(
+					'type'       => 'object',
+					'properties' => array(
+						'label' => array( 'type' => 'string' ),
+						'url'   => array( 'type' => 'string', 'format' => 'uri' ),
+					),
+				),
+			),
+		),
+		'default'      => array(),
+		'auth_callback' => function() { return current_user_can( 'edit_posts' ); },
+	) );
 }
 add_action( 'init', 'speekr_register_talk_meta' );

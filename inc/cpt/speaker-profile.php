@@ -161,15 +161,6 @@ function speekr_register_speaker_profile_meta() {
 		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
 	) );
 
-	// Field 3: _speekr_bio_long — plain string (long bio).
-	register_post_meta( 'speekr_speaker', '_speekr_bio_long', array(
-		'single'            => true,
-		'type'              => 'string',
-		'show_in_rest'      => true,
-		'sanitize_callback' => 'sanitize_textarea_field',
-		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
-	) );
-
 	// Field 4: _speekr_social_links — array of { platform, url, label } objects.
 	register_post_meta( 'speekr_speaker', '_speekr_social_links', array(
 		'single'            => true,
