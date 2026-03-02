@@ -1,0 +1,10 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "speekr/conference-meta",
+    "version": "1.0.0",
+    "title": "Conference Meta",
+    "category": "speekr",
+    "description": "Speekr Conference metadata sidebar panels.",
+    "editorScript": "file:./index.js"
+}
