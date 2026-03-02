@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 3 of 5 (Editor Blocks)
-Plan: 5 of 5 in current phase (Plan 02 complete — Talk meta block: Summary, Media Links, Conference, Appears In panels)
-Status: Phase 3 in progress
-Last activity: 2026-03-02 — Plan 02 complete: src/blocks/talk-meta/ (block.json, index.js, edit.js) built; four PluginDocumentSettingPanel components (Summary TextareaControl, Media Links URLs, Conference object, Appears In reverse lookup); npm run build exits 0
+Plan: 6 of 6 in current phase (Plan 06 complete — Bug fixes and gap closure: headshot img thumbnails, HTML5 DnD, HTML entity decoding, 7-type media links parity, long bio removal)
+Status: Phase 3 complete
+Last activity: 2026-03-02 — Plan 06 complete: headshot img thumbnails via getMedia, HTML5 drag-to-reorder, decodeEntities on conference search results, talk media links expanded to 7 types + repeatable Other, _speekr_bio_long deregistered
 
-Progress: [████████░░] 76%
+Progress: [█████████░] 84%
 
 ## Performance Metrics
 
@@ -29,7 +29,7 @@ Progress: [████████░░] 76%
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
-| 03-editor-blocks | 5 | ~10 min | ~2 min |
+| 03-editor-blocks | 6 | ~13 min | ~2.2 min |
 
 **Recent Trend:**
 - Last 5 plans: 03-01 (~2 min), 03-03 (~1 min), 03-04 (~4 min), 03-02 (~2 min)
@@ -75,6 +75,9 @@ Recent decisions affecting current work:
 - [Phase 03-editor-blocks Plan 04]: TextareaControl for bio/rider fields — RichText broken in PluginDocumentSettingPanel since WP 6.5 (Gutenberg issue #60524); plain text stored, formatting applied at render in Phase 4
 - [Phase 03-editor-blocks Plan 02]: TextareaControl for Talk summary field — same RichText limitation as Speaker Profile; plain text stored via sanitize_textarea_field, formatting can be applied at render in Phase 4
 - [Phase 03-editor-blocks Plan 02]: Appears In panel fetches up to 100 conferences on mount and filters client-side by _speekr_conf_talk_ref === postId — acceptable ceiling for plugin's use case
+- [Phase 03-editor-blocks Plan 06]: HeadshotItem extracted as sub-component so useSelect(getMedia) can be called per-item without violating React hooks rules (hooks cannot be called inside .map())
+- [Phase 03-editor-blocks Plan 06]: post_content (block editor body) is canonical long-form bio — _speekr_bio_long deregistered from PHP and panel removed from UI; Short Bio remains for program intros
+- [Phase 03-editor-blocks Plan 06]: decodeEntities from @wordpress/html-entities applied at every title.rendered reference in conference-meta (storage + display) — first-party WP package, no install needed
 
 ### Pending Todos
 
@@ -88,5 +91,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 03-editor-blocks Plan 02 — Talk meta block complete: four PluginDocumentSettingPanel components (Summary, Media Links, Conference, Appears In reverse lookup) with TextareaControl, TextControls, apiFetch spread setMeta pattern. Phase 3 has one plan remaining (Plan 05).
+Stopped at: Completed 03-editor-blocks Plan 06 — Phase 3 complete. Bug fixes and gap closure: HeadshotItem with getMedia img thumbnails + HTML5 DnD, decodeEntities on conference search, 7-type media links + repeatable Other, _speekr_bio_long deregistered.
 Resume file: None
