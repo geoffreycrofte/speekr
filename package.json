@@ -20,13 +20,14 @@
     "url": "https://github.com/geoffreycrofte/speekr/issues"
   },
   "scripts": {
-    "build":     "wp-scripts build",
+    "build": "wp-scripts build",
     "build:dev": "wp-scripts build --mode=development",
-    "start":     "wp-scripts start",
-    "lint":      "wp-scripts lint-js && wp-scripts lint-style",
-    "clean":     "rm -rf build"
+    "start": "wp-scripts start",
+    "lint": "wp-scripts lint-js && wp-scripts lint-style",
+    "clean": "rm -rf build"
   },
   "devDependencies": {
+    "@wordpress/icons": "^11.7.0",
     "@wordpress/scripts": "^31.5.0",
     "dir-archiver": "^1.1.1"
   }

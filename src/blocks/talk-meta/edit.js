@@ -6,6 +6,7 @@ import { TextControl, TextareaControl, Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { quote, video, mapMarker, seen } from '@wordpress/icons';
 
 const TalkMetaPanels = () => {
 	const postType = useSelect(
@@ -76,6 +77,8 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-summary"
 				title={ __( 'Talk Summary', 'speekr' ) }
+				icon={ quote }
+				className={ `speekr-panel-talk-summary${ meta[ 'speekr-summary' ] ? ' is-filled' : '' }` }
 			>
 				<TextareaControl
 					label={ __( 'Summary', 'speekr' ) }
@@ -91,6 +94,12 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-media"
 				title={ __( 'Media Links', 'speekr' ) }
+				icon={ video }
+				className={ `speekr-panel-talk-media${
+					( meta._speekr_media_youtube || meta._speekr_media_vimeo || meta._speekr_media_dailymotion ||
+					  meta._speekr_media_slides || meta._speekr_media_speakerdeck || meta._speekr_media_slideshare ||
+					  ( meta._speekr_media_other && meta._speekr_media_other.length > 0 ) )
+					? ' is-filled' : '' }` }
 			>
 				<TextControl
 					label={ __( 'YouTube URL', 'speekr' ) }
@@ -170,6 +179,8 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-conf"
 				title={ __( 'Conference', 'speekr' ) }
+				icon={ mapMarker }
+				className={ `speekr-panel-talk-conference${ meta[ 'speekr-conf' ]?.name ? ' is-filled' : '' }` }
 			>
 				<TextControl
 					label={ __( 'Conference Name', 'speekr' ) }
@@ -188,6 +199,8 @@ const TalkMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-talk-appears-in"
 				title={ __( 'Appears In', 'speekr' ) }
+				icon={ seen }
+				className="speekr-panel-talk-appears-in"
 			>
 				{ loading && <p>{ __( 'Loading\u2026', 'speekr' ) }</p> }
 				{ ! loading && conferences.length === 0 && (

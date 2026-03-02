@@ -16,6 +16,7 @@ import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { TextControl, TextareaControl, SelectControl, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { image, formatBold, share, formatListBullets } from '@wordpress/icons';
 
 const PLATFORMS = [
 	{ value: '', label: __( 'Select platform…', 'speekr' ) },
@@ -179,6 +180,8 @@ const SpeakerProfileMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-speaker-headshots"
 				title={ __( 'Headshots', 'speekr' ) }
+				icon={ image }
+				className={ `speekr-panel-headshots${ headshots.length > 0 ? ' is-filled' : '' }` }
 			>
 				<div className="speekr-headshots-list">
 					{ headshots.map( ( shot, index ) => (
@@ -217,6 +220,8 @@ const SpeakerProfileMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-speaker-bio"
 				title={ __( 'Bio', 'speekr' ) }
+				icon={ formatBold }
+				className={ `speekr-panel-bio${ meta._speekr_bio_short ? ' is-filled' : '' }` }
 			>
 				<TextareaControl
 					label={ __( 'Short Bio', 'speekr' ) }
@@ -233,6 +238,8 @@ const SpeakerProfileMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-speaker-social"
 				title={ __( 'Social Links', 'speekr' ) }
+				icon={ share }
+				className={ `speekr-panel-social${ socialLinks.length > 0 ? ' is-filled' : '' }` }
 			>
 				{ socialLinks.length > 0 && (
 					<ul className="speekr-social-links-list">
@@ -294,6 +301,8 @@ const SpeakerProfileMetaPanels = () => {
 			<PluginDocumentSettingPanel
 				name="speekr-speaker-rider"
 				title={ __( 'Rider', 'speekr' ) }
+				icon={ formatListBullets }
+				className={ `speekr-panel-rider${ Object.values( rider ).some( Boolean ) ? ' is-filled' : '' }` }
 			>
 				<TextareaControl
 					label={ __( 'AV / Tech requirements', 'speekr' ) }
