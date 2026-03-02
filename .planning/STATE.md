@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 5 (Frontend Display Blocks) — IN PROGRESS
-Plan: 4 of 6 in phase 04 (Plan 04 complete — Single Talk dynamic block: render.php with wp_oembed_get() video priority chain, 16:9 wrapper, conference section, Resources pill list, blog CTA guard)
-Status: Phase 4 in progress — Plans 01–04 complete, Plan 05 next
-Last activity: 2026-03-02 — Plan 04 complete: speekr/single-talk block with render.php (oEmbed video chain, fallback image, conference meta lookup, Resources section), style.scss with 16:9 video wrapper and conference accent
+Plan: 5 of 6 in phase 04 (Plan 05 complete — Conference Archive + Conference Map blocks: Leaflet world map with markercluster via viewScript, server-rendered conference table)
+Status: Phase 4 in progress — Plans 01–05 complete, Plan 06 next
+Last activity: 2026-03-02 — Plan 05 complete: speekr/conference-archive (table block) + speekr/conference-map (Leaflet + markercluster map, viewScript only, webpack icon fix, data-speekr-map JSON bridge)
 
-Progress: [█████████░] 92%
+Progress: [█████████░] 95%
 
 ## Performance Metrics
 
@@ -30,10 +30,10 @@ Progress: [█████████░] 92%
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
 | 03-editor-blocks | 8 | ~26 min | ~3.3 min |
-| 04-display-blocks | 4 | ~10 min | ~2.5 min |
+| 04-display-blocks | 5 | ~12 min | ~2.4 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-08 (~3 min), 04-01 (~2 min), 04-02 (~3 min), 04-03 (~3 min), 04-04 (~2 min)
+- Last 5 plans: 04-01 (~2 min), 04-02 (~3 min), 04-03 (~3 min), 04-04 (~2 min), 04-05 (~2 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -92,6 +92,10 @@ Recent decisions affecting current work:
 - [Phase 04-display-blocks Plan 04]: No viewScript for single-talk block — all rendering is server-side PHP; no interactive frontend JS required
 - [Phase 04-display-blocks Plan 04]: wp_oembed_get() used for video embeds — handles oEmbed discovery, WordPress transient caching, and error handling natively; preferred over manual iframe construction
 - [Phase 04-display-blocks Plan 04]: get_the_ID() context approach (no post attribute) — single-talk block designed exclusively for single 'talks' CPT pages; attribute-based post selection is unnecessary over-engineering for this use case
+- [Phase 04-display-blocks Plan 05]: viewScript key in block.json is the correct mechanism for frontend-only JS; Leaflet must NOT be in editorScript — confirmed working
+- [Phase 04-display-blocks Plan 05]: CSS imports inside view.js (leaflet.css, MarkerCluster.css) compile to view.css via @wordpress/scripts 31.5.0 webpack config — no separate css-loader config needed
+- [Phase 04-display-blocks Plan 05]: data-speekr-map JSON attribute on block container is the data bridge from PHP render to JS map init — avoids REST API call on page load
+- [Phase 04-display-blocks Plan 05]: Leaflet webpack icon path fix (delete _getIconUrl + mergeOptions) is mandatory — webpack hashes image filenames, breaking Leaflet's relative icon path resolution without this fix
 
 ### Pending Todos
 
@@ -107,5 +111,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 04-display-blocks Plan 04 — speekr/single-talk dynamic block: render.php with wp_oembed_get() video priority chain (YouTube > Vimeo > Dailymotion), 16:9 aspect-ratio wrapper, featured image / placeholder fallback, conference reference section (name, URL, date, city/country), Resources pill section (SpeakerDeck, Slides, Slideshare, other links), speekr-as-article === 'on' blog CTA, graceful non-talk fallback message; style.scss with conference accent block and pill resource links.
+Stopped at: Completed 04-display-blocks Plan 05 — speekr/conference-archive (server-rendered table of past conferences ordered by date DESC, name/URL/date/city/talk title columns) + speekr/conference-map (Leaflet 1.9.4 + markercluster interactive world map loaded exclusively via viewScript, data-speekr-map JSON bridge from PHP render, webpack icon path fix applied, build/images/ Leaflet marker assets emitted).
 Resume file: None
