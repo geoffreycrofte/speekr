@@ -30,6 +30,62 @@ const PLATFORMS = [
 	{ value: 'other', label: __( 'Other', 'speekr' ) },
 ];
 
+/**
+ * HeadshotItem sub-component.
+ *
+ * Renders a single headshot row using getMedia from WordPress core store to
+ * display an actual image thumbnail. Supports HTML5 drag-to-reorder.
+ */
+const HeadshotItem = ( { shot, index, dragIndex, onDragStart, onDrop, onRemove, onLabelChange } ) => {
+	const media = useSelect(
+		( select ) => select( 'core' ).getMedia( shot.id ),
+		[ shot.id ]
+	);
+
+	return (
+		<div
+			className={ `speekr-headshot-item${ dragIndex === index ? ' is-dragging' : '' }` }
+			draggable
+			onDragStart={ () => onDragStart( index ) }
+			onDragOver={ ( e ) => e.preventDefault() }
+			onDrop={ () => onDrop( index ) }
+		>
+			{ index === 0 && (
+				<span className="speekr-primary-badge">
+					{ __( 'Primary', 'speekr' ) }
+				</span>
+			) }
+			{ media?.source_url ? (
+				<img
+					src={ media.source_url }
+					alt={ media.alt_text || shot.label || __( 'Headshot', 'speekr' ) }
+					className="speekr-headshot-thumb"
+					width={ 80 }
+					height={ 80 }
+					style={ { objectFit: 'cover', borderRadius: '4px' } }
+				/>
+			) : (
+				<div className="speekr-headshot-placeholder">
+					{ __( 'Loading\u2026', 'speekr' ) }
+				</div>
+			) }
+			<TextControl
+				label={ __( 'Label', 'speekr' ) }
+				value={ shot.label }
+				onChange={ ( label ) => onLabelChange( index, label ) }
+			/>
+			<Button
+				isDestructive
+				variant="secondary"
+				onClick={ () => onRemove( index ) }
+				aria-label={ __( 'Remove headshot', 'speekr' ) }
+			>
+				{ '\u00d7' }
+			</Button>
+		</div>
+	);
+};
+
 const SpeakerProfileMetaPanels = () => {
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -41,6 +97,9 @@ const SpeakerProfileMetaPanels = () => {
 	const [ newPlatform, setNewPlatform ] = useState( '' );
 	const [ newUrl, setNewUrl ] = useState( '' );
 	const [ newLabel, setNewLabel ] = useState( '' );
+
+	// Headshots drag state.
+	const [ dragIndex, setDragIndex ] = useState( null );
 
 	if ( ! meta ) return null;
 
@@ -69,14 +128,15 @@ const SpeakerProfileMetaPanels = () => {
 		setMeta( { ...meta, _speekr_headshots: updated } );
 	};
 
-	// Arrow-button reorder: ↑/↓ buttons move item up or down in the array.
-	// Simpler and more accessible than drag-and-drop for the MVP.
-	// Drag-to-reorder can be layered in as a future enhancement.
-	const reorder = ( fromIndex, toIndex ) => {
-		const updated = [ ...headshots ];
-		const [ moved ] = updated.splice( fromIndex, 1 );
-		updated.splice( toIndex, 0, moved );
-		setMeta( { ...meta, _speekr_headshots: updated } );
+	const handleDragStart = ( index ) => setDragIndex( index );
+	const handleDrop = ( toIndex ) => {
+		if ( dragIndex !== null && dragIndex !== toIndex ) {
+			const updated = [ ...headshots ];
+			const [ moved ] = updated.splice( dragIndex, 1 );
+			updated.splice( toIndex, 0, moved );
+			setMeta( { ...meta, _speekr_headshots: updated } );
+		}
+		setDragIndex( null );
 	};
 
 	// -------------------------------------------------------------------------
@@ -122,43 +182,16 @@ const SpeakerProfileMetaPanels = () => {
 			>
 				<div className="speekr-headshots-list">
 					{ headshots.map( ( shot, index ) => (
-						<div key={ shot.id } className="speekr-headshot-item">
-							{ index === 0 && (
-								<span className="speekr-primary-badge">
-									{ __( 'Primary', 'speekr' ) }
-								</span>
-							) }
-							<span>{ `${ __( 'Attachment', 'speekr' ) } #${ shot.id }` }</span>
-							<TextControl
-								label={ __( 'Label', 'speekr' ) }
-								value={ shot.label }
-								onChange={ ( label ) => updateLabel( index, label ) }
-							/>
-							<Button
-								variant="secondary"
-								onClick={ () => reorder( index, index - 1 ) }
-								disabled={ index === 0 }
-								aria-label={ __( 'Move up', 'speekr' ) }
-							>
-								{ '↑' }
-							</Button>
-							<Button
-								variant="secondary"
-								onClick={ () => reorder( index, index + 1 ) }
-								disabled={ index === headshots.length - 1 }
-								aria-label={ __( 'Move down', 'speekr' ) }
-							>
-								{ '↓' }
-							</Button>
-							<Button
-								isDestructive
-								variant="secondary"
-								onClick={ () => removeHeadshot( index ) }
-								aria-label={ __( 'Remove headshot', 'speekr' ) }
-							>
-								{ '×' }
-							</Button>
-						</div>
+						<HeadshotItem
+							key={ shot.id }
+							shot={ shot }
+							index={ index }
+							dragIndex={ dragIndex }
+							onDragStart={ handleDragStart }
+							onDrop={ handleDrop }
+							onRemove={ removeHeadshot }
+							onLabelChange={ updateLabel }
+						/>
 					) ) }
 				</div>
 				<MediaUploadCheck>
@@ -178,6 +211,8 @@ const SpeakerProfileMetaPanels = () => {
 			     Panel 2 — Bio
 			     RichText not used — broken in PluginDocumentSettingPanel since
 			     WP 6.5 (Gutenberg issue #60524). Using TextareaControl instead.
+			     Long Bio removed — post_content (block editor body) is the
+			     long-form content area for Speaker Profiles.
 			     ---------------------------------------------------------------- */ }
 			<PluginDocumentSettingPanel
 				name="speekr-speaker-bio"
@@ -188,13 +223,7 @@ const SpeakerProfileMetaPanels = () => {
 					value={ meta._speekr_bio_short ?? '' }
 					onChange={ ( v ) => setMeta( { ...meta, _speekr_bio_short: v } ) }
 					rows={ 3 }
-					help={ __( 'Used for program intros. Plain text only in editor — formatting applied at render.', 'speekr' ) }
-				/>
-				<TextareaControl
-					label={ __( 'Long Bio', 'speekr' ) }
-					value={ meta._speekr_bio_long ?? '' }
-					onChange={ ( v ) => setMeta( { ...meta, _speekr_bio_long: v } ) }
-					rows={ 6 }
+					help={ __( 'Short Bio for program intros. Use the post content area below for your full bio.', 'speekr' ) }
 				/>
 			</PluginDocumentSettingPanel>
 
@@ -213,7 +242,7 @@ const SpeakerProfileMetaPanels = () => {
 									{ entry.platform === 'other' && entry.label
 										? entry.label
 										: entry.platform }
-									{ ' — ' }
+									{ ' \u2014 ' }
 									{ entry.url }
 								</span>
 								<Button
@@ -222,7 +251,7 @@ const SpeakerProfileMetaPanels = () => {
 									onClick={ () => removeLink( index ) }
 									aria-label={ __( 'Remove link', 'speekr' ) }
 								>
-									{ '×' }
+									{ '\u00d7' }
 								</Button>
 							</li>
 						) ) }
