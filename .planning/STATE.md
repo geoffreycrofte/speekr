@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 3 of 5 (Editor Blocks)
-Plan: 1 of 5 in current phase (Plan 01 complete — PHP block registration infrastructure + Talk meta REST keys + classic meta box hiding)
+Plan: 3 of 5 in current phase (Plan 03 complete — Conference meta block: Details panel, Talk Reference panel, Speakers panel)
 Status: Phase 3 in progress
-Last activity: 2026-03-02 — Plan 01 complete: inc/blocks/blocks.php created; blocks.php wired into Speekr::includes(); classic Talks meta boxes hidden in block editor
+Last activity: 2026-03-02 — Plan 03 complete: src/blocks/conference-meta/ (block.json, index.js, edit.js) built; three PluginDocumentSettingPanel components with search-as-you-type meta editors; npm run build exits 0
 
-Progress: [██████░░░░] 60%
+Progress: [███████░░░] 64%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: ~2.3 min
-- Total execution time: ~21 min
+- Total plans completed: 10
+- Average duration: ~2.2 min
+- Total execution time: ~22 min
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [██████░░░░] 60%
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
-| 03-editor-blocks | 1 | ~2 min | ~2 min |
+| 03-editor-blocks | 3 | ~4 min | ~1.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-03 (~1 min), 02-04 (~2 min), 02-05 (~1 min), 03-01 (~2 min)
+- Last 5 plans: 02-04 (~2 min), 02-05 (~1 min), 03-01 (~2 min), 03-03 (~1 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -68,6 +68,9 @@ Recent decisions affecting current work:
 - [Phase 03-editor-blocks Plan 01]: blocks.php loaded via Speekr::includes() (not includes_admin()) so block and meta registration runs on all requests including REST API — same pattern as CPTs and taxonomies
 - [Phase 03-editor-blocks Plan 01]: Block-editor media links use new _speekr_media_{youtube,vimeo,slides} keys; legacy speekr-media-links serialised array NOT registered for REST — two separate save paths to avoid schema complexity and REST 400 errors
 - [Phase 03-editor-blocks Plan 01]: __back_compat_meta_box: true hides speekr-summary, speekr-media-links, speekr-conference meta boxes in Gutenberg while keeping them functional in classic editor; speekr-content (wp_editor) intentionally left visible in both
+- [Phase 03-editor-blocks Plan 03]: All Conference meta state hooks consolidated in single ConferenceMetaPanels component — avoids prop-drilling meta/setMeta into per-panel sub-components
+- [Phase 03-editor-blocks Plan 03]: Speaker name cache uses functional setSpeakerNames update ((prev) => ({...prev, ...newNames})) to avoid stale closure issues with concurrent fetches
+- [Phase 03-editor-blocks Plan 03]: selectedTalkId and selectedSpeakers derived from meta at render time (not mirrored in useState) — always reflects persisted state without sync issues
 
 ### Pending Todos
 
@@ -81,5 +84,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 03-editor-blocks Plan 01 — PHP block registration infrastructure complete; Talk meta registered for REST; classic meta boxes hidden in block editor. Ready for Plan 02.
+Stopped at: Completed 03-editor-blocks Plan 03 — Conference meta block complete: three PluginDocumentSettingPanel components (Details, Talk Reference, Speakers) with search-as-you-type REST queries and spread setMeta pattern. Ready for Plan 04.
 Resume file: None
