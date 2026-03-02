@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** A speaker shares one URL; a conference organizer finds everything they need — profile, assets, talks, past conferences — without the speaker maintaining a separate doc or PDF.
-**Current focus:** Phase 3 — Editor Blocks
+**Current focus:** Phase 4 — Frontend Display Blocks
 
 ## Current Position
 
-Phase: 3 of 5 (Editor Blocks)
-Plan: 7 of 7 in current phase (Plan 07 complete — Admin menu reorganization: Speekr top-level menu, CPTs sub-listed, Speaker Profile relabeled to Speakers)
-Status: Phase 3 complete
-Last activity: 2026-03-02 — Plan 07 complete: Speekr top-level admin menu (dashicons-microphone), show_in_menu => 'speekr' on all three CPTs, Speaker Profile labels renamed to Speakers
+Phase: 3 of 5 (Editor Blocks) — COMPLETE
+Plan: 8 of 8 in phase 03 (Plan 08 complete — Editor panel UI polish: icons, filled/empty states, headshot grid, social/media link lists)
+Status: Phase 3 complete — ready for Phase 4
+Last activity: 2026-03-02 — Plan 08 complete: SCSS panel styles compiled via webpack, enqueue_block_editor_assets hook, @wordpress/icons on all 11 panels, is-filled classNames for visual state
 
-Progress: [█████████░] 86%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -29,7 +29,7 @@ Progress: [█████████░] 86%
 |-------|-------|-------|----------|
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
-| 03-editor-blocks | 7 | ~18 min | ~2.6 min |
+| 03-editor-blocks | 8 | ~26 min | ~3.3 min |
 
 **Recent Trend:**
 - Last 5 plans: 03-01 (~2 min), 03-03 (~1 min), 03-04 (~4 min), 03-02 (~2 min)
@@ -80,6 +80,11 @@ Recent decisions affecting current work:
 - [Phase 03-editor-blocks Plan 06]: decodeEntities from @wordpress/html-entities applied at every title.rendered reference in conference-meta (storage + display) — first-party WP package, no install needed
 - [Phase 03-editor-blocks Plan 07]: Talks CPT registered in inc/common/custom-posts.php (not a separate talks.php) — show_in_menu added there; admin-menu.php loaded first in includes_admin() so menu slug 'speekr' is available before CPT submenu resolution
 - [Phase 03-editor-blocks Plan 07]: All plugin CPTs use show_in_menu => 'speekr' pattern; new admin pages go in inc/admin/admin-menu.php loaded via Speekr::includes_admin()
+- [Phase 03-editor-blocks Plan 08]: build/editor/ output filename is speekr-panels.css (not style-speekr-panels.css) — style- prefix only applies to CSS side-effects of JS entry files, not direct SCSS entries
+- [Phase 03-editor-blocks Plan 08]: @wordpress/icons installed as devDependency for local build — runtime WP ships it globally but webpack needs it locally to resolve imports during compilation
+- [Phase 03-editor-blocks Plan 08]: formatQuote not exported by @wordpress/icons — use quote instead; always verify icon export names from the package's exports list before importing
+- [Phase 03-editor-blocks Plan 08]: Editor-only styles use webpack entry + enqueue_block_editor_assets pattern — do not add to block.json editorStyle (that would limit scope to individual blocks only)
+- [Phase 03-editor-blocks Plan 08]: Panel visual state pattern: speekr-panel-{name} CSS class + is-filled conditional suffix; CSS sets icon color (muted grey → WP blue #007cba)
 
 ### Pending Todos
 
@@ -93,5 +98,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 03-editor-blocks Plan 07 — Admin menu reorganization: Speekr top-level menu, show_in_menu => 'speekr' on Talks/Conferences/Speakers CPTs, Speaker Profile relabeled to Speakers.
+Stopped at: Completed 03-editor-blocks Plan 08 — Editor panel UI polish: SCSS stylesheet compiled via webpack, enqueue_block_editor_assets hook, @wordpress/icons on all 11 panels, is-filled classNames for visual state.
 Resume file: None
