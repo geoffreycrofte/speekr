@@ -1,53 +1,41 @@
 ---
 phase: 02-data-layer
-verified: 2026-03-02T12:00:00Z
-status: gaps_found
-score: 7/9 must-haves verified
-re_verification: false
-gaps:
-  - truth: "Topics are queryable via the REST API at /wp-json/wp/v2/speekr_topic"
-    status: failed
-    reason: "speekr_register_topics_taxonomy() is defined in inc/admin/custom-meta-boxes.php, which is loaded only inside Speekr::includes_admin(). WordPress REST API requests go through the front-end bootstrap (is_admin() returns false for /wp-json/ requests), so the taxonomy is never registered on REST requests. The /wp-json/wp/v2/speekr_topic endpoint will return 404."
-    artifacts:
-      - path: "inc/admin/custom-meta-boxes.php"
-        issue: "speekr_register_topics_taxonomy() is substantively correct but loaded in the wrong bootstrap path (includes_admin only)"
-      - path: "inc/classes/Speekr.php"
-        issue: "custom-meta-boxes.php is require_once'd only inside includes_admin() at line 117, not inside includes() where it would run on all requests including REST"
-    missing:
-      - "Move speekr_register_topics_taxonomy() registration to a file loaded in Speekr::includes() (not includes_admin()), so the taxonomy is registered on REST API requests. Options: (a) move the function to inc/admin/custom-meta-boxes.php but add a separate require_once in includes() for a new taxonomy-only file, or (b) add the taxonomy registration to an existing file already in includes() (e.g. inc/common/custom-posts.php), or (c) move the taxonomy function to a new inc/common/taxonomies.php file loaded in includes()"
-
-  - truth: "Topics taxonomy appears in the Talks block editor sidebar as a standard tag-like panel"
-    status: partial
-    reason: "The taxonomy IS registered on admin page loads (block editor runs on a wp-admin page, so includes_admin() fires and the taxonomy is registered). The block editor sidebar panel will appear when editing a Talk post. However, the block editor makes subsequent REST API calls to /wp-json/wp/v2/speekr_topic to fetch/save terms — those calls will fail with 404 because the taxonomy is not registered on REST requests. The panel appears but term saving via the sidebar will be broken."
-    artifacts:
-      - path: "inc/admin/custom-meta-boxes.php"
-        issue: "Taxonomy registration correct but admin-only load path prevents REST API term operations from working"
-    missing:
-      - "Same fix as the truth above: move taxonomy registration to a file loaded in includes() so it fires on both admin page loads AND REST API requests"
+verified: 2026-03-02T10:30:00Z
+status: passed
+score: 9/9 must-haves verified
+re_verification: true
+  previous_status: gaps_found
+  previous_score: 7/9
+  gaps_closed:
+    - "Topics taxonomy registered on all bootstrap paths including REST API — /wp-json/wp/v2/speekr_topic will return 200"
+    - "Topics taxonomy block editor sidebar panel can fetch and save terms via REST (REST path now registers taxonomy)"
+    - "_speekr_conf_speakers array meta registered on speekr_conference with type=array, single=true, show_in_rest integer-items schema"
+  gaps_remaining: []
+  regressions: []
 human_verification:
-  - test: "Confirm block editor Topics panel renders on Talk edit screen"
-    expected: "Topics panel appears in the right sidebar when editing any Talk post in the block editor"
-    why_human: "Admin page load (not REST), so taxonomy IS registered — this likely works already; needs visual confirmation"
-  - test: "Confirm /wp-json/wp/v2/speekr_topic returns taxonomy data (not 404)"
-    expected: "REST endpoint returns JSON with taxonomy terms list"
+  - test: "Confirm /wp-json/wp/v2/speekr_topic returns 200 with taxonomy data"
+    expected: "REST endpoint returns JSON with taxonomy terms list, not 404"
     why_human: "Requires live WordPress environment to make REST request"
+  - test: "Confirm block editor Topics panel renders and saves terms on Talk edit screen"
+    expected: "Topics panel appears in the right sidebar; adding/removing a term and saving the post persists the change"
+    why_human: "Requires browser and live WordPress — panel appearance and REST term-save can only be observed in browser"
   - test: "Confirm saving a Talk via block editor does not wipe existing meta values"
     expected: "After saving a Talk in the block editor, speekr-media-links, speekr-conf, and speekr-summary meta retain their previous values"
-    why_human: "Requires live WordPress environment and actual post save operation"
+    why_human: "Requires live WordPress environment and an existing Talk post with meta data"
   - test: "Confirm Speaker Profile block editor loads (not classic editor)"
     expected: "Editing a speekr_speaker post loads Gutenberg block editor"
-    why_human: "Requires browser/WordPress environment"
+    why_human: "Requires browser and live WordPress"
   - test: "Confirm Conference block editor loads (not classic editor)"
     expected: "Editing a speekr_conference post loads Gutenberg block editor"
-    why_human: "Requires browser/WordPress environment"
+    why_human: "Requires browser and live WordPress"
 ---
 
 # Phase 2: Data Layer Verification Report
 
 **Phase Goal:** All CPTs are visible to the block editor and REST API; every post meta field is registered and accessible via useEntityProp() in JavaScript; the Topics taxonomy is in place; no legacy save_post callback can silently wipe data
-**Verified:** 2026-03-02T12:00:00Z
-**Status:** gaps_found
-**Re-verification:** No — initial verification
+**Verified:** 2026-03-02T10:30:00Z
+**Status:** passed
+**Re-verification:** Yes — after gap closure plans 02-04 and 02-05
 
 ## Goal Achievement
 
@@ -55,65 +43,71 @@ human_verification:
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | Speaker Profile CPT visible to block editor and REST API | VERIFIED | `inc/cpt/speaker-profile.php` line 35: `'show_in_rest' => true`; supports includes `'editor'` (line 39) and `'custom-fields'` (line 39); loaded in `includes()` at Speekr.php line 84 |
+| 1 | Speaker Profile CPT visible to block editor and REST API | VERIFIED | `inc/cpt/speaker-profile.php` line 35: `show_in_rest: true`; supports array includes `'editor'` and `'custom-fields'` (line 39); loaded in `includes()` at Speekr.php line 85 |
 | 2 | All five Speaker Profile meta fields registered with show_in_rest and auth_callback | VERIFIED | `inc/cpt/speaker-profile.php` contains 5 `register_post_meta()` calls (lines 135, 156, 165, 174, 196); all have `show_in_rest`, `sanitize_callback`, and `auth_callback`; structured fields use expanded JSON schema |
-| 3 | Conference CPT visible to block editor and REST API | VERIFIED | `inc/cpt/conferences.php` line 34: `'show_in_rest' => true`; supports array includes `'editor'` and `'custom-fields'` (line 39); loaded in `includes()` at Speekr.php line 85 |
-| 4 | All five Conference meta fields registered with show_in_rest | VERIFIED | `inc/cpt/conferences.php` contains 5 `register_post_meta()` calls (lines 60, 69, 78, 87, 96); all have `show_in_rest: true`, `sanitize_callback`, `auth_callback` |
-| 5 | Talks CPT updated to support block editor and REST API | VERIFIED | `inc/common/custom-posts.php` line 47: `'show_in_rest' => true`; line 57: `'editor'` active (uncommented); line 60: `'custom-fields'` active (uncommented) |
-| 6 | Topics taxonomy appears in Talks block editor sidebar | PARTIAL | `speekr_register_topics_taxonomy()` defined in `inc/admin/custom-meta-boxes.php` with `show_in_rest: true` and `hierarchical: false` — correct. But file loaded in `includes_admin()` only. Sidebar panel appears on admin page load but REST term operations fail. |
-| 7 | Topics queryable via REST API at /wp-json/wp/v2/speekr_topic | FAILED | `custom-meta-boxes.php` is only loaded via `includes_admin()` (Speekr.php line 117). REST API requests use front-end bootstrap — `is_admin()` returns false, `includes_admin()` never runs, taxonomy never registered, endpoint returns 404. |
-| 8 | Block editor saves do NOT trigger speekr_save_mb and wipe meta | VERIFIED | `speekr_save_mb()` in `inc/admin/custom-meta-boxes.php` lines 377-379: `if ( empty( $_POST ) ) { return; }` as first guard. Guard order confirmed: `empty($_POST)` (377) → `wp_is_post_autosave` (382) → `wp_is_post_revision` (387) → `_wpnonce` (391) → `DOING_AUTOSAVE` (395) |
+| 3 | Conference CPT visible to block editor and REST API | VERIFIED | `inc/cpt/conferences.php` line 34: `show_in_rest: true`; supports array includes `'editor'` and `'custom-fields'` (line 39); loaded in `includes()` at Speekr.php line 86 |
+| 4 | All six Conference meta fields registered with show_in_rest | VERIFIED | `inc/cpt/conferences.php` contains 6 `register_post_meta()` calls (5 original + Field 6 `_speekr_conf_speakers`); all have `show_in_rest`, `auth_callback`; field 6 uses type=array schema with integer items and `default=array()` |
+| 5 | Talks CPT updated to support block editor and REST API | VERIFIED | `inc/common/custom-posts.php` line 47: `show_in_rest: true`; line 57: `'editor'` active; line 60: `'custom-fields'` active |
+| 6 | Topics taxonomy appears in Talks block editor sidebar as a tag-like panel | VERIFIED | `inc/common/taxonomies.php` registers `speekr_topic` with `hierarchical: false`, `show_ui: true`, `show_in_rest: true`; loaded in `includes()` (line 84 of Speekr.php) — fires on all request paths including admin page loads where block editor runs |
+| 7 | Topics queryable via REST API at /wp-json/wp/v2/speekr_topic | VERIFIED | `speekr_register_topics_taxonomy()` now lives in `inc/common/taxonomies.php` which is loaded via `Speekr::includes()` at line 84 — executes on every WordPress request including REST API (previously admin-only; gap now closed) |
+| 8 | Block editor saves do NOT trigger speekr_save_mb and wipe meta | VERIFIED | `speekr_save_mb()` in `inc/admin/custom-meta-boxes.php` line 337: `if ( empty( $_POST ) ) { return; }` as first guard; guard order confirmed: `empty($_POST)` (337) -> `wp_is_post_autosave` (342) -> `wp_is_post_revision` (347) -> `_wpnonce` (351) -> `DOING_AUTOSAVE` (355) |
 | 9 | Classic editor saves still save all meta correctly | VERIFIED | All 5 `update_post_meta()` calls present and unchanged (speekr-media-links, speekr-conf, speekr-summary, speekr-as-article, speekr-is-featured); existing guards retain `_wpnonce` and `DOING_AUTOSAVE` checks |
 
-**Score:** 7/9 truths verified (1 FAILED, 1 PARTIAL)
+**Score:** 9/9 truths verified
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `inc/cpt/speaker-profile.php` | Speaker Profile CPT + 5 meta registrations | VERIFIED | Exists; 216 lines; `register_post_type('speekr_speaker')` with `show_in_rest: true`; 5 `register_post_meta()` calls; 3 sanitize functions; no PHP syntax errors |
-| `inc/cpt/conferences.php` | Conferences CPT + 5 meta registrations | VERIFIED | Exists; 105 lines; `register_post_type('speekr_conference')` with `show_in_rest: true`; 5 `register_post_meta()` calls; no PHP syntax errors |
-| `inc/classes/Speekr.php` | Bootstrap loading of both CPT files in includes() | VERIFIED | Lines 84-85: `require_once` for speaker-profile.php and conferences.php inside `includes()` method (not `includes_admin()`); no PHP syntax errors |
-| `inc/common/custom-posts.php` | Talks CPT with show_in_rest + editor + custom-fields | VERIFIED | Line 47: `show_in_rest: true`; lines 57, 60: `'editor'` and `'custom-fields'` active (uncommented); no PHP syntax errors |
-| `inc/admin/custom-meta-boxes.php` | Topics taxonomy + gated speekr_save_mb | PARTIAL | Topics taxonomy function is correct and substantive (lines 12-44); save gate is correct (lines 375-397). Critical issue: file loaded in `includes_admin()` only — taxonomy not registered on REST requests |
+| `inc/common/taxonomies.php` | speekr_register_topics_taxonomy() on common bootstrap path | VERIFIED | Exists; 44 lines; ABSPATH guard; complete function with `hierarchical: false`, `show_in_rest: true`, `apply_filters` hook, `speekr_get_cpt_slug()` call; `add_action('init', ...)` present; PHP lint clean |
+| `inc/classes/Speekr.php` | require_once for taxonomies.php inside includes() | VERIFIED | Line 84: `require_once( SPEEKR_DIRNAME . '/inc/common/taxonomies.php' )` inside `includes()` method, between custom-posts.php (line 83) and speaker-profile.php (line 85); PHP lint clean |
+| `inc/admin/custom-meta-boxes.php` | No speekr_register_topics_taxonomy() definition (moved out) | VERIFIED | Zero occurrences of `speekr_register_topics_taxonomy` in file (grep exits 1); PHP lint clean; speekr_save_mb() guards intact |
+| `inc/cpt/conferences.php` | 6 register_post_meta() calls; _speekr_conf_speakers as type=array | VERIFIED | 6 `register_post_meta()` calls confirmed (grep -c = 6); `_speekr_conf_speakers` at line 105: `type=array`, `single=true`, `show_in_rest` with schema.items.type=integer, `default=array()`; exactly 1 `add_action` for `speekr_register_conference_meta`; PHP lint clean |
+| `inc/cpt/speaker-profile.php` | Speaker Profile CPT + 5 meta registrations | VERIFIED | Unchanged from initial verification; 5 `register_post_meta()` calls with `show_in_rest`, `sanitize_callback`, `auth_callback` |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
-| `inc/classes/Speekr.php` | `inc/cpt/speaker-profile.php` | `require_once` in `includes()` | WIRED | Line 84 in `includes()` method |
-| `inc/classes/Speekr.php` | `inc/cpt/conferences.php` | `require_once` in `includes()` | WIRED | Line 85 in `includes()` method |
-| `inc/cpt/speaker-profile.php` | WordPress REST API | `show_in_rest: true` + meta schemas | WIRED | Line 35: CPT `show_in_rest: true`; all 5 meta fields have `show_in_rest` with appropriate schemas |
-| `inc/cpt/conferences.php` | WordPress REST API | `show_in_rest: true` + meta schemas | WIRED | Line 34: CPT `show_in_rest: true`; all 5 meta fields have `show_in_rest: true` |
-| `inc/common/custom-posts.php` | WordPress REST API | `show_in_rest: true` added to Talks CPT | WIRED | Line 47 confirms `show_in_rest: true` is active |
-| `inc/admin/custom-meta-boxes.php` | WordPress block editor | `register_taxonomy` with `show_in_rest: true` | PARTIAL | Taxonomy registration is correct but admin-only load means REST API cannot see the taxonomy |
-| `speekr_save_mb` | REST API save path | `empty($_POST)` early return guard | WIRED | Line 377: guard is first check in function, confirmed by grep showing correct order |
+| `inc/classes/Speekr.php` | `inc/common/taxonomies.php` | `require_once` in `includes()` | WIRED | Line 84 in `includes()` method (not `includes_admin()`) — confirmed by grep output showing surrounding lines are other `includes()` entries |
+| `inc/common/taxonomies.php` | WordPress REST API | `register_taxonomy('speekr_topic')` with `show_in_rest: true` on `init` hook | WIRED | Function definition at line 12, `add_action('init', ...)` at line 44; `show_in_rest: true` confirmed at line 35 of taxonomies.php |
+| `inc/classes/Speekr.php` | `inc/cpt/conferences.php` | `require_once` in `includes()` | WIRED | Line 86 in `includes()` method |
+| `inc/cpt/conferences.php` | WordPress REST API | `register_post_meta('speekr_conference', '_speekr_conf_speakers')` with show_in_rest array schema | WIRED | Line 105: full registration with type=array, single=true, show_in_rest schema present; `add_action('init', 'speekr_register_conference_meta')` at line 120 |
+| `inc/classes/Speekr.php` | `inc/cpt/speaker-profile.php` | `require_once` in `includes()` | WIRED | Line 85 in `includes()` method |
+| `inc/classes/Speekr.php` | `inc/admin/custom-meta-boxes.php` | `require_once` in `includes_admin()` | WIRED | Line 118 in `includes_admin()` — meta box UI correctly remains admin-only |
+| `speekr_save_mb` | REST API save path | `empty($_POST)` early return guard | WIRED | Line 337: guard is first check in function; confirmed by grep showing correct order |
+
+### Requirements Coverage
+
+No REQUIREMENTS.md entries mapped to phase 02 were identified. All observable truths map directly to the phase goal statement.
 
 ### Anti-Patterns Found
 
+None. No blockers, warnings, or notable issues found in any modified file.
+
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| `inc/admin/custom-meta-boxes.php` | 117 in Speekr.php | Taxonomy registration in admin-only load path | Blocker | `/wp-json/wp/v2/speekr_topic` returns 404; block editor cannot save/read Topics terms via REST |
+| — | — | None found | — | — |
 
 ### Human Verification Required
 
-#### 1. Block Editor Topics Sidebar Panel
-
-**Test:** Open a Talk post in the WordPress block editor. Check the right sidebar for a "Topics" panel.
-**Expected:** A tag-style panel labelled "Topics" appears in the document sidebar, allowing terms to be added/removed.
-**Why human:** Admin page load (where `WP_ADMIN=true`) registers the taxonomy, so the panel may appear even with the REST gap. Needs visual confirmation.
-
-#### 2. REST API Taxonomy Endpoint
+#### 1. REST API Taxonomy Endpoint
 
 **Test:** With the plugin active, make a GET request to `/wp-json/wp/v2/speekr_topic`.
-**Expected:** Currently expected to return 404 (not 200) due to the identified gap. After gap is fixed, should return 200 with taxonomy data.
+**Expected:** Returns 200 with JSON taxonomy data (not 404).
 **Why human:** Requires a live WordPress environment.
+
+#### 2. Block Editor Topics Panel — Render and Save
+
+**Test:** Open a Talk post in the WordPress block editor. Check the right sidebar for a "Topics" panel. Add a topic term and save the post.
+**Expected:** A tag-style panel labelled "Topics" appears in the document sidebar; after save, the term is persisted.
+**Why human:** REST term-save operations require a live browser and WordPress environment.
 
 #### 3. Block Editor Save Does Not Wipe Meta
 
-**Test:** Open a Talk post that has existing values for speekr-media-links, speekr-conf, or speekr-summary. Save the post via the block editor (Gutenberg). Then check those meta values.
+**Test:** Open a Talk post that has existing values for speekr-media-links, speekr-conf, or speekr-summary. Save the post via the block editor. Then check those meta values.
 **Expected:** All existing meta values are preserved after the block editor save.
-**Why human:** Requires live WordPress environment and an existing Talk post with meta data.
+**Why human:** Requires a live WordPress environment and an existing Talk post with meta data.
 
 #### 4. Speaker Profile Block Editor
 
@@ -127,23 +121,21 @@ human_verification:
 **Expected:** Gutenberg block editor loads.
 **Why human:** Requires browser and live WordPress.
 
-### Gaps Summary
+### Re-Verification: Gap Closure Summary
 
-**One blocker gap was found:**
+**Both gaps from the initial verification are closed.**
 
-The Topics taxonomy (`speekr_topic`) is registered inside `speekr_register_topics_taxonomy()` which lives in `inc/admin/custom-meta-boxes.php`. This file is loaded exclusively via `Speekr::includes_admin()` (Speekr.php line 117). WordPress REST API requests (`/wp-json/*`) use the front-end bootstrap path, where `is_admin()` returns false and `includes_admin()` never runs. As a result, the taxonomy is never registered during REST API requests, meaning:
+**Gap 1 (plan 02-04): Topics taxonomy admin-only bootstrap path**
 
-- `/wp-json/wp/v2/speekr_topic` returns 404
-- Block editor REST calls to fetch/save Topics terms fail
-- Phase 3 blocks cannot use `useEntityProp()` for Topics terms
+The `speekr_register_topics_taxonomy()` function was extracted from `inc/admin/custom-meta-boxes.php` into a new `inc/common/taxonomies.php` file. `Speekr::includes()` now loads `taxonomies.php` at line 84 (between `custom-posts.php` and `speaker-profile.php`). The function is defined exactly once in the codebase — confirmed by grep finding zero occurrences in `custom-meta-boxes.php` and two occurrences (definition + add_action) in `taxonomies.php` only. The taxonomy now registers on every WordPress request path, including REST API requests where `is_admin()` returns false. Truth #6 (block editor sidebar) upgrades from PARTIAL to VERIFIED. Truth #7 (REST endpoint) upgrades from FAILED to VERIFIED.
 
-The taxonomy function itself is correctly written (`hierarchical: false`, `show_in_rest: true`, uses `speekr_get_cpt_slug()` not hardcoded 'talks'). The only fix needed is loading it via `includes()` instead of `includes_admin()`. The simplest remediation is extracting the `speekr_register_topics_taxonomy()` function into a file that is already loaded in `includes()` (e.g. `inc/common/custom-posts.php`) or a new `inc/common/taxonomies.php` file added to `includes()`.
+**Gap 2 (plan 02-05): Missing _speekr_conf_speakers meta field on Conference CPT**
 
-The sidebar panel visibility (truth #6) is marked PARTIAL rather than FAILED because the block editor itself runs on a wp-admin page (where `includes_admin()` fires), so the taxonomy is registered at that point and the sidebar panel will appear. However, subsequent REST API calls from the block editor to list/save terms against `/wp-json/wp/v2/speekr_topic` will fail.
+This gap was not in the original VERIFICATION.md `gaps:` section — it was introduced as an additional gap-closure plan. The field `_speekr_conf_speakers` is now registered in `speekr_register_conference_meta()` as Field 6 with `type=array`, `single=true`, `show_in_rest` schema specifying `items.type=integer`, and `default=array()`. The Conference CPT now has 6 registered meta fields (grep -c = 6). The original 5 fields are unmodified. This enables Phase 3 block editor code to call `useEntityProp('postType', 'speekr_conference', 'meta')` and access `_speekr_conf_speakers` as a readable/writable integer array. Truth #4 updated to reflect 6 fields.
 
-All other phase deliverables are fully implemented and wired correctly.
+**No regressions detected.** All 7 originally-verified truths remain intact: CPT registrations unchanged, meta field registrations unchanged, save guards in `speekr_save_mb()` unchanged, bootstrap wiring unchanged.
 
 ---
 
-_Verified: 2026-03-02T12:00:00Z_
+_Verified: 2026-03-02T10:30:00Z_
 _Verifier: Claude (gsd-verifier)_
