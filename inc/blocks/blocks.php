@@ -150,6 +150,15 @@ function speekr_register_talk_meta() {
 		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
 	) );
 
+	// Speaker link — integer ID of linked speekr_speaker post.
+	register_post_meta( speekr_get_cpt_slug(), '_speekr_talk_speaker', array(
+		'single'            => true,
+		'type'              => 'integer',
+		'show_in_rest'      => true,
+		'sanitize_callback' => 'absint',
+		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+	) );
+
 	// Other links — repeatable array of { label, url } objects.
 	register_post_meta( speekr_get_cpt_slug(), '_speekr_media_other', array(
 		'single'       => true,

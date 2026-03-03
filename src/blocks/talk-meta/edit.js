@@ -1,11 +1,12 @@
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { TextControl, TextareaControl, Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { decodeEntities } from '@wordpress/html-entities';
 // Panel icons use dashicon strings (native WP, consistent with admin UI)
 
 const TalkMetaPanels = () => {
@@ -20,6 +21,13 @@ const TalkMetaPanels = () => {
 	);
 
 	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
+
+	// Panel 5 — Speaker picker state
+	const [ speakerSearch, setSpeakerSearch ] = useState( '' );
+	const [ speakerResults, setSpeakerResults ] = useState( [] );
+	const speakerDebounceRef = useRef( null );
+	const selectedSpeakerId = meta ? ( meta._speekr_talk_speaker ?? 0 ) : 0;
+	const [ selectedSpeakerTitle, setSelectedSpeakerTitle ] = useState( '' );
 
 	// Panel 2 — Other links local add-form state.
 	const [ otherLabel, setOtherLabel ] = useState( '' );
@@ -49,6 +57,35 @@ const TalkMetaPanels = () => {
 			} )
 			.catch( () => setLoading( false ) );
 	}, [ postId ] );
+
+	// Fetch title of currently selected speaker on mount / when id changes
+	useEffect( () => {
+		if ( ! selectedSpeakerId ) { setSelectedSpeakerTitle( '' ); return; }
+		apiFetch( { path: `/wp/v2/speekr_speaker/${ selectedSpeakerId }?_fields=id,title` } )
+			.then( ( post ) => setSelectedSpeakerTitle( decodeEntities( post.title.rendered ) ) )
+			.catch( () => {} );
+	}, [ selectedSpeakerId ] );
+
+	// Debounced speaker search
+	useEffect( () => {
+		if ( speakerSearch.length < 2 ) {
+			setSpeakerResults( [] );
+			return;
+		}
+		clearTimeout( speakerDebounceRef.current );
+		speakerDebounceRef.current = setTimeout( () => {
+			apiFetch( {
+				path: addQueryArgs( '/wp/v2/speekr_speaker', {
+					search: speakerSearch,
+					per_page: 10,
+					status: 'publish',
+					_fields: 'id,title',
+				} ),
+			} )
+				.then( setSpeakerResults )
+				.catch( () => {} );
+		}, 300 );
+	}, [ speakerSearch ] );
 
 	if ( ! meta ) return null;
 
@@ -215,6 +252,48 @@ const TalkMetaPanels = () => {
 						) ) }
 					</ul>
 				) }
+			</PluginDocumentSettingPanel>
+
+			{ /* Panel 5 — Speaker */ }
+			<PluginDocumentSettingPanel
+				name="speekr-talk-speaker"
+				title={ __( 'Speaker', 'speekr' ) }
+				icon="admin-users"
+				className={ `speekr-panel-talk-speaker${ selectedSpeakerId > 0 ? ' is-filled' : '' }` }
+			>
+				{ selectedSpeakerId > 0 && (
+					<p>
+						<strong>{ selectedSpeakerTitle || `#${ selectedSpeakerId }` }</strong>{ ' ' }
+						<Button
+							variant="link"
+							isDestructive
+							onClick={ () => {
+								setMeta( { ...meta, _speekr_talk_speaker: 0 } );
+								setSelectedSpeakerTitle( '' );
+							} }
+						>
+							{ __( 'Clear', 'speekr' ) }
+						</Button>
+					</p>
+				) }
+				<TextControl
+					label={ __( 'Search Speakers', 'speekr' ) }
+					value={ speakerSearch }
+					onChange={ setSpeakerSearch }
+				/>
+				{ speakerResults.map( ( post ) => (
+					<Button
+						key={ post.id }
+						variant="tertiary"
+						onClick={ () => {
+							setMeta( { ...meta, _speekr_talk_speaker: post.id } );
+							setSpeakerSearch( '' );
+							setSpeakerResults( [] );
+						} }
+					>
+						{ decodeEntities( post.title.rendered ) }
+					</Button>
+				) ) }
 			</PluginDocumentSettingPanel>
 		</>
 	);

@@ -12,12 +12,11 @@ $conferences = get_posts( array(
 ) );
 
 if ( empty( $conferences ) ) {
-    return '<p class="speekr-conference-archive--empty">'
+    echo '<p class="speekr-conference-archive--empty">'
         . esc_html__( 'No conference appearances yet.', 'speekr' )
         . '</p>';
+    return;
 }
-
-ob_start();
 ?>
 <div class="wp-block-speekr-conference-archive">
     <table class="speekr-conference-table">
@@ -82,5 +81,3 @@ ob_start();
         </tbody>
     </table>
 </div>
-<?php
-return ob_get_clean();

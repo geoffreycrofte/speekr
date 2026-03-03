@@ -6,7 +6,12 @@
   "title": "Single Talk",
   "category": "speekr",
   "description": "Renders the full detail view of a single talk: media embed, description, conference reference, and resource links.",
-  "attributes": {},
+  "attributes": {
+    "talkId": {
+      "type": "integer",
+      "default": 0
+    }
+  },
   "editorScript": "file:./index.js",
   "render": "file:./render.php",
   "style": "file:./style-index.css"

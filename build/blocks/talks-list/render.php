@@ -16,7 +16,6 @@ $talks_query = new WP_Query( array(
 
 // Empty state
 if ( ! $talks_query->have_posts() ) {
-    ob_start();
     echo '<div class="wp-block-speekr-talks-list speekr-talks-list--empty">';
     if ( current_user_can( 'edit_posts' ) ) {
         $new_talk_url = admin_url( 'post-new.php?post_type=' . speekr_get_cpt_slug() );
@@ -25,7 +24,7 @@ if ( ! $talks_query->have_posts() ) {
         echo '<p>' . esc_html__( 'No talks to display yet — check back soon.', 'speekr' ) . '</p>';
     }
     echo '</div>';
-    return ob_get_clean();
+    return;
 }
 
 // Collect all unique topics from query results for filter tabs.
@@ -54,10 +53,13 @@ wp_reset_postdata();
  * Priority: YouTube thumb > Vimeo thumb (via oEmbed, cached) > slide player embed >
  *           post featured image > generic placeholder.
  *
+ * Stored as a static closure (not a named function) so re-rendering the block in the
+ * same request (editor preview, etc.) does not trigger a "Cannot redeclare" fatal.
+ *
  * @param int $post_id Talk post ID.
  * @return array { type: string, url: string }
  */
-function speekr_resolve_card_media( $post_id ) {
+$resolve_card_media = static function( $post_id ) {
     $yt  = get_post_meta( $post_id, '_speekr_media_youtube', true );
     $vim = get_post_meta( $post_id, '_speekr_media_vimeo', true );
     $spd = get_post_meta( $post_id, '_speekr_media_speakerdeck', true );
@@ -88,9 +90,8 @@ function speekr_resolve_card_media( $post_id ) {
         return array( 'type' => 'featured_image', 'url' => get_the_post_thumbnail_url( $post_id, 'medium' ) );
     }
     return array( 'type' => 'placeholder', 'url' => SPEEKR_PLUGIN_URL . 'assets/img/placeholder-talk.svg' );
-}
+};
 
-ob_start();
 ?>
 <div class="wp-block-speekr-talks-list <?php echo esc_attr( $layout_class ); ?>">
 
@@ -151,7 +152,7 @@ ob_start();
             }
         }
 
-        $media       = speekr_resolve_card_media( $pid );
+        $media       = $resolve_card_media( $pid );
         $topic_slugs = $talk_topic_map[ $pid ] ?? array();
         $topics_attr = esc_attr( implode( ',', $topic_slugs ) );
     ?>
@@ -226,5 +227,3 @@ ob_start();
 
     </div><!-- .speekr-talks-cards -->
 </div><!-- .wp-block-speekr-talks-list -->
-<?php
-return ob_get_clean();

@@ -4,14 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Register Speekr post type.
+ * Register Talks CPT.
  *
  * @return void
  * @since  1.0
  * @author Geoffrey Crofte
  */
 function speekr_register_post_types() {
-	
+
 	$labels = array(
 		'name'                  => __( 'Talks', 'speekr' ),
 		'menu_name'             => SPEEKR_PLUGIN_NAME,
@@ -25,7 +25,6 @@ function speekr_register_post_types() {
 		'search_items'          => __( 'Search talks', 'speekr' ),
 		'not_found'             => __( 'No talks found', 'speekr' ),
 		'all_items'             => __( 'All talks', 'speekr' ),
-		'attributes'            => __( 'Talks Attributes', 'speekr' ),
 		'attributes'            => __( 'Talks Attributes', 'speekr' ),
 		'insert_into_item'      => __( 'Insert into talk', 'speekr' ),
 		'set_featured_image'    => __( 'Set Cover Image', 'speekr' ),
@@ -42,7 +41,7 @@ function speekr_register_post_types() {
 		'publicly_queryable'   => true,
 		'show_ui'              => true,
 		'show_in_nav_menus'    => true,
-		'show_in_menu'         => 'speekr', // sub-item under the Speekr top-level menu
+		'show_in_menu'         => 'speekr',
 		'show_in_admin_bar'    => false,
 		'show_in_rest'         => true,
 		'menu_position'        => 6,
@@ -51,28 +50,25 @@ function speekr_register_post_types() {
 		'register_meta_box_cb' => 'speekr_custom_meta_boxes',
 		'query_var'            => 'talks',
 		'can_export'           => true,
-		//'taxonomies'           => 'speekr_categories' TODO?
 		'supports'             => array(
 			'title',
 			'editor',
 			'author',
 			'thumbnail',
 			'custom-fields',
-			//'comments',
 			'revisions',
-			'page-attributes'
+			'page-attributes',
 		),
 		'rewrite'              => array(
-			'slug'       => apply_filters( 'speekr_talks_rewrite_slug', __( 'talks', 'speekr' ) ), 
-			'with_front' => false, // more '/talks/something' than '/blog/talks/something' 
+			'slug'       => apply_filters( 'speekr_talks_rewrite_slug', __( 'talks', 'speekr' ) ),
+			'with_front' => false,
 			'feeds'      => false,
-			'pages'      => false, // no pagination ('page/2' no longer provided)
+			'pages'      => false,
 		),
 	);
 
 	$args = apply_filters( 'speekr_talk_cpt_args', $args );
 
 	register_post_type( speekr_get_cpt_slug(), $args );
-
 }
 add_action( 'init', 'speekr_register_post_types' );

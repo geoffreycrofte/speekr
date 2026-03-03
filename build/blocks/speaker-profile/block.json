@@ -18,6 +18,10 @@
     "allowDownload": {
       "type": "boolean",
       "default": false
+    },
+    "speakerId": {
+      "type": "integer",
+      "default": 0
     }
   },
   "editorScript": "file:./index.js",

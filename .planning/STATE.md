@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 
 ## Current Position
 
-Phase: 4 of 5 (Frontend Display Blocks) — IN PROGRESS
-Plan: 5 of 6 in phase 04 (Plan 05 complete — Conference Archive + Conference Map blocks: Leaflet world map with markercluster via viewScript, server-rendered conference table)
-Status: Phase 4 in progress — Plans 01–05 complete, Plan 06 next
-Last activity: 2026-03-02 — Plan 05 complete: speekr/conference-archive (table block) + speekr/conference-map (Leaflet + markercluster map, viewScript only, webpack icon fix, data-speekr-map JSON bridge)
+Phase: 4 of 5 (Frontend Display Blocks) — COMPLETE
+Plan: 6 of 6 in phase 04 (Plan 06 complete — verification + gap fixes: ob_start nesting root cause fixed in all 4 server-rendered blocks, speakerId/talkId attribute pickers, rewrite flush, null guards, YouTube URL regex)
+Status: Phase 4 complete — all 6 plans done, all 5 blocks verified on frontend
+Last activity: 2026-03-03 — Plan 06 complete: all Phase 4 display blocks verified working on frontend; ob_start/render.php incompatibility fixed across talks-list, speaker-profile, single-talk, conference-archive
 
 Progress: [█████████░] 95%
 
@@ -30,10 +30,10 @@ Progress: [█████████░] 95%
 | 01-build-foundation | 4 | ~12 min | ~3 min |
 | 02-data-layer | 5 | ~9 min | ~1.8 min |
 | 03-editor-blocks | 8 | ~26 min | ~3.3 min |
-| 04-display-blocks | 5 | ~12 min | ~2.4 min |
+| 04-display-blocks | 6 | ~15 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-01 (~2 min), 04-02 (~3 min), 04-03 (~3 min), 04-04 (~2 min), 04-05 (~2 min)
+- Last 5 plans: 04-02 (~3 min), 04-03 (~3 min), 04-04 (~2 min), 04-05 (~2 min), 04-06 (~3 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -96,6 +96,10 @@ Recent decisions affecting current work:
 - [Phase 04-display-blocks Plan 05]: CSS imports inside view.js (leaflet.css, MarkerCluster.css) compile to view.css via @wordpress/scripts 31.5.0 webpack config — no separate css-loader config needed
 - [Phase 04-display-blocks Plan 05]: data-speekr-map JSON attribute on block container is the data bridge from PHP render to JS map init — avoids REST API call on page load
 - [Phase 04-display-blocks Plan 05]: Leaflet webpack icon path fix (delete _getIconUrl + mergeOptions) is mandatory — webpack hashes image filenames, breaking Leaflet's relative icon path resolution without this fix
+- [Phase 04-display-blocks Plan 06]: ob_start() inside render.php is incompatible with WordPress block rendering — WordPress wraps render.php in its own outer ob_start(); inner ob_start()+return ob_get_clean() leaves the outer buffer empty → block renders as "". All render.php must echo directly (or use ?>...html...<?php interleaving); never wrap in ob_start/ob_get_clean
+- [Phase 04-display-blocks Plan 06]: Named functions declared inside render.php redeclare on every block render in the same request → "Cannot redeclare" fatal. Use static closures ($fn = static function(){}) instead
+- [Phase 04-display-blocks Plan 06]: Version-based rewrite flush (speekr_rewrite_version option vs SPEEKR_VERSION, at init priority 999) solves CPT 404s after adding new CPTs without deactivation/reactivation
+- [Phase 04-display-blocks Plan 06]: Talks CPT file moved to inc/cpt/talks.php (consistent with inc/cpt/conferences.php and inc/cpt/speaker-profile.php)
 
 ### Pending Todos
 
@@ -110,6 +114,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-02
-Stopped at: Completed 04-display-blocks Plan 05 — speekr/conference-archive (server-rendered table of past conferences ordered by date DESC, name/URL/date/city/talk title columns) + speekr/conference-map (Leaflet 1.9.4 + markercluster interactive world map loaded exclusively via viewScript, data-speekr-map JSON bridge from PHP render, webpack icon path fix applied, build/images/ Leaflet marker assets emitted).
+Last session: 2026-03-03
+Stopped at: Phase 4 complete. Plan 06 verified: all 5 display blocks render on frontend. Key gaps fixed: ob_start nesting incompatibility in render.php (blocks were blank), speakerId/talkId attribute pickers, rewrite flush for CPT 404s, null $post guards in Templates Loader, YouTube URL regex. Phase 5 (Templates and Compatibility) is next.
 Resume file: None

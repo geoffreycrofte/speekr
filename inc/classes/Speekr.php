@@ -7,7 +7,7 @@ class Speekr {
 
 	public function __construct() {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
-		
+
 		$this->is_network();
 
 		$this->includes();
@@ -19,6 +19,11 @@ class Speekr {
 		}
 
 		register_activation_hook( SPEEKR_FILE, array( $this, 'install' ) );
+
+		// Flush rewrite rules once whenever the plugin version changes.
+		// This ensures CPT slugs are always registered with WordPress,
+		// even when CPTs are added/changed between versions without deactivation.
+		add_action( 'init', array( $this, 'maybe_flush_rewrite_rules' ), 999 );
 	}
 
 
@@ -67,6 +72,26 @@ class Speekr {
 				speekr_update_option( 'list_page', (int) $talks_page );
 			}
 		}
+
+		// Force a rewrite rules flush on activation so all CPT slugs are registered.
+		flush_rewrite_rules( false );
+		delete_option( 'speekr_rewrite_version' );
+	}
+
+	/**
+	 * Flush rewrite rules once after each plugin version change.
+	 *
+	 * Registered at init priority 999 (after all CPTs/taxonomies are registered).
+	 * Cost: one cheap option lookup per request until the version is stamped;
+	 *       one flush_rewrite_rules() call on the very first request of each version.
+	 *
+	 * @return void
+	 */
+	public function maybe_flush_rewrite_rules() {
+		if ( get_option( 'speekr_rewrite_version' ) !== SPEEKR_VERSION ) {
+			flush_rewrite_rules( false );
+			update_option( 'speekr_rewrite_version', SPEEKR_VERSION, false );
+		}
 	}
 
 	/**
@@ -80,7 +105,7 @@ class Speekr {
 		do_action( 'speekr_before_includes' );
 
 		require_once( SPEEKR_DIRNAME . '/inc/functions/debug.php' );
-		require_once( SPEEKR_DIRNAME . '/inc/common/custom-posts.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/cpt/talks.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/common/taxonomies.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/blocks/blocks.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/cpt/speaker-profile.php' );

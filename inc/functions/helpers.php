@@ -12,8 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since  1.0
  */
 function speekr_get_youtube_id( $url ) {
-	$url = explode( '?v=', $url );
-	return $url[1];
+	// Handles: youtu.be/ID, youtube.com/watch?v=ID, youtube.com/shorts/ID, youtube.com/embed/ID
+	if ( preg_match( '/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|v)\/)([A-Za-z0-9_-]{11})/', $url, $matches ) ) {
+		return $matches[1];
+	}
+	return false;
 }
 
 /**

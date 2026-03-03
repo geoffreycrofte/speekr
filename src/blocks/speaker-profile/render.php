@@ -5,14 +5,46 @@ $layout         = isset( $attributes['layout'] ) ? $attributes['layout'] : 'side
 $allow_download = ! empty( $attributes['allowDownload'] );
 $layout_class   = ( 'stacked' === $layout ) ? 'speekr-speaker-profile--stacked' : 'speekr-speaker-profile--side-by-side';
 
-$speakers = get_posts( array(
-    'post_type'      => 'speekr_speaker',
-    'posts_per_page' => 1,
-    'post_status'    => 'publish',
-) );
-if ( empty( $speakers ) ) { return ''; }
+// Smart speaker resolution (priority order):
+// 1. Explicit speakerId attribute set in editor
+// 2. On a talks CPT singular with _speekr_talk_speaker meta set
+// 3. Only one speekr_speaker post exists → auto-select
+// 4. Nothing found → return empty
+$speaker_id = isset( $attributes['speakerId'] ) ? (int) $attributes['speakerId'] : 0;
 
-$post_id      = $speakers[0]->ID;
+if ( ! $speaker_id ) {
+    $current_id = get_the_ID();
+    if ( $current_id && 'talks' === get_post_type( $current_id ) ) {
+        $talk_speaker = (int) get_post_meta( $current_id, '_speekr_talk_speaker', true );
+        if ( $talk_speaker ) {
+            $speaker_id = $talk_speaker;
+        }
+    }
+}
+
+if ( ! $speaker_id ) {
+    $all_speakers = get_posts( array(
+        'post_type'      => 'speekr_speaker',
+        'posts_per_page' => 2,
+        'post_status'    => 'publish',
+        'fields'         => 'ids',
+        'no_found_rows'  => true,
+    ) );
+    if ( 1 === count( $all_speakers ) ) {
+        $speaker_id = $all_speakers[0];
+    }
+}
+
+if ( ! $speaker_id ) {
+    if ( current_user_can( 'edit_posts' ) ) {
+        echo '<p class="speekr-speaker-profile--no-context" style="color:#757575;font-style:italic;padding:1em;border:1px dashed #ccc;">'
+            . esc_html__( 'Speaker Profile: select a speaker in the block settings sidebar, or link a speaker to this talk.', 'speekr' )
+            . '</p>';
+    }
+    return;
+}
+
+$post_id      = $speaker_id;
 $headshots    = get_post_meta( $post_id, '_speekr_headshots', true ) ?: array();
 $bio_short    = get_post_meta( $post_id, '_speekr_bio_short', true ) ?: '';
 $social_links = get_post_meta( $post_id, '_speekr_social_links', true ) ?: array();
@@ -34,7 +66,6 @@ $platform_icons = array(
 );
 $generic_link_icon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>';
 
-ob_start();
 ?>
 <div class="wp-block-speekr-speaker-profile <?php echo esc_attr( $layout_class ); ?>">
 
@@ -119,5 +150,3 @@ ob_start();
     </div>
 
 </div>
-<?php
-return ob_get_clean();

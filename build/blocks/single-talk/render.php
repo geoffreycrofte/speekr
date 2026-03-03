@@ -1,13 +1,24 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { die( 'Cheatin\' uh?' ); }
 
-$post_id = get_the_ID();
+// Smart talk resolution (priority order):
+// 1. Explicit talkId attribute set in editor
+// 2. Current post is a talks CPT → use get_the_ID()
+// 3. Neither → prompt to select in sidebar
+$post_id = isset( $attributes['talkId'] ) ? (int) $attributes['talkId'] : 0;
 
-// Guard: only render on a talks CPT singular post.
-if ( ! $post_id || speekr_get_cpt_slug() !== get_post_type( $post_id ) ) {
-	return '<p class="speekr-single-talk--no-context">'
-		. esc_html__( 'This block is intended for single talk pages.', 'speekr' )
+if ( ! $post_id ) {
+	$current_id = get_the_ID();
+	if ( $current_id && speekr_get_cpt_slug() === get_post_type( $current_id ) ) {
+		$post_id = $current_id;
+	}
+}
+
+if ( ! $post_id ) {
+	echo '<p class="speekr-single-talk--no-context">'
+		. esc_html__( 'Select a talk in the block settings sidebar.', 'speekr' )
 		. '</p>';
+	return;
 }
 
 // Meta reads — new per-key fields (Phase 3 refactor)
@@ -80,7 +91,6 @@ foreach ( $other_links as $link ) {
 	}
 }
 
-ob_start();
 ?>
 <div class="wp-block-speekr-single-talk">
 
@@ -162,5 +172,3 @@ ob_start();
 
 	</div><!-- .speekr-talk__body -->
 </div><!-- .wp-block-speekr-single-talk -->
-<?php
-return ob_get_clean();

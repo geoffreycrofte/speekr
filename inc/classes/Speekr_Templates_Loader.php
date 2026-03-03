@@ -63,12 +63,16 @@ class Speekr_Templates_Loader {
 	 */
 	public function register_plugin_templates ( $theme_templates ) {
 		global $post;
-		
+
+		// $post can be null during REST API requests and on 404 pages.
+		if ( ! $post ) {
+			return $theme_templates;
+		}
+
 		// only available for Speekr Pages
-		if ( speekr_get_pages_id( 'list_page' ) === $post->ID || defined('REST_REQUEST') ) {        
+		if ( speekr_get_pages_id( 'list_page' ) === $post->ID || defined('REST_REQUEST') ) {
 			// Merging the WP templates with this plugin's active templates
-			$theme_templates = array_merge( $theme_templates, $this->
-			templates );
+			$theme_templates = array_merge( $theme_templates, $this->templates );
 		}
 
 		return $theme_templates;
@@ -84,7 +88,12 @@ class Speekr_Templates_Loader {
 	 */
 	 public function add_template_filter ( $template ) {
 		global $post;
-		
+
+		// $post is null on 404 pages and some REST/AJAX contexts — bail gracefully.
+		if ( ! $post ) {
+			return $template;
+		}
+
 		$user_selected_template = get_page_template_slug( $post->ID );
 
 		// We need to check if the selected template is inside the plugin folder
