@@ -4,31 +4,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Serve the speaker press-kit ZIP download via template_redirect.
+ * Register the press-kit download REST endpoint.
  *
- * URL: /?speekr_kit={post_id}
- * Public — URL is only rendered in render.php when allowDownload is true.
- *
- * Using template_redirect instead of the REST API avoids the JSON pipeline
- * setting Content-Type: application/json before our callback runs, which
- * prevented binary file downloads from completing correctly.
+ * Endpoint: GET /wp-json/speekr/v1/press-kit/{id}
+ * Public (no auth required) — URL is only rendered in render.php when
+ * the block's allowDownload attribute is true.
  *
  * @since 4.0
  */
-add_action( 'template_redirect', 'speekr_maybe_serve_press_kit' );
+add_action( 'rest_api_init', function() {
+	register_rest_route( 'speekr/v1', '/press-kit/(?P<id>\d+)', array(
+		'methods'             => 'GET',
+		'callback'            => 'speekr_press_kit_download',
+		'permission_callback' => '__return_true',
+		'args'                => array(
+			'id' => array( 'sanitize_callback' => 'absint' ),
+		),
+	) );
+} );
 
-function speekr_maybe_serve_press_kit() {
-	$post_id = absint( get_query_var( 'speekr_kit', 0 ) );
-	if ( ! $post_id ) {
-		return;
-	}
-
-	if ( 'speekr_speaker' !== get_post_type( $post_id ) ) {
-		wp_die( esc_html__( 'Speaker not found.', 'speekr' ), 404 );
-	}
-
+/**
+ * Generate and stream the speaker press-kit ZIP.
+ *
+ * @param WP_REST_Request $request
+ * @return WP_Error|void
+ * @since 4.0
+ */
+function speekr_press_kit_download( WP_REST_Request $request ) {
 	if ( ! class_exists( 'ZipArchive' ) ) {
-		wp_die( esc_html__( 'ZIP support not available on this server.', 'speekr' ), 501 );
+		return new WP_Error(
+			'zip_unavailable',
+			__( 'ZIP support not available on this server.', 'speekr' ),
+			array( 'status' => 501 )
+		);
+	}
+
+	$post_id = $request->get_param( 'id' );
+	if ( 'speekr_speaker' !== get_post_type( $post_id ) ) {
+		return new WP_Error( 'not_found', __( 'Speaker not found.', 'speekr' ), array( 'status' => 404 ) );
 	}
 
 	$headshots    = get_post_meta( $post_id, '_speekr_headshots', true ) ?: array();
@@ -69,7 +82,7 @@ function speekr_maybe_serve_press_kit() {
 	$zip_path = sys_get_temp_dir() . '/speekr-press-kit-' . $post_id . '-' . time() . '.zip';
 	$zip      = new ZipArchive();
 	if ( true !== $zip->open( $zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE ) ) {
-		wp_die( esc_html__( 'Could not create archive.', 'speekr' ), 500 );
+		return new WP_Error( 'zip_failed', __( 'Could not create archive.', 'speekr' ), array( 'status' => 500 ) );
 	}
 
 	foreach ( $headshots as $hs ) {
@@ -83,7 +96,12 @@ function speekr_maybe_serve_press_kit() {
 	$zip->close();
 
 	if ( ! file_exists( $zip_path ) ) {
-		wp_die( esc_html__( 'Archive could not be generated.', 'speekr' ), 500 );
+		return new WP_Error( 'zip_missing', __( 'Archive could not be generated.', 'speekr' ), array( 'status' => 500 ) );
+	}
+
+	// Drain all WordPress/PHP output buffers so readfile() writes directly to the socket.
+	while ( ob_get_level() ) {
+		ob_end_clean();
 	}
 
 	header( 'Content-Type: application/zip' );
@@ -94,11 +112,3 @@ function speekr_maybe_serve_press_kit() {
 	unlink( $zip_path );
 	exit;
 }
-
-/**
- * Register speekr_kit as a recognised query var so get_query_var() picks it up.
- */
-add_filter( 'query_vars', function( $vars ) {
-	$vars[] = 'speekr_kit';
-	return $vars;
-} );
