@@ -1,3 +1,16 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-03-03T09:36:28.376Z"
+progress:
+  total_phases: 5
+  completed_phases: 4
+  total_plans: 27
+  completed_plans: 25
+---
+
 # Project State
 
 ## Project Reference
@@ -5,16 +18,16 @@
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** A speaker shares one URL; a conference organizer finds everything they need — profile, assets, talks, past conferences — without the speaker maintaining a separate doc or PDF.
-**Current focus:** Phase 4 — Frontend Display Blocks
+**Current focus:** Phase 5 — Templates + Compatibility
 
 ## Current Position
 
-Phase: 4 of 5 (Frontend Display Blocks) — COMPLETE
-Plan: 6 of 6 in phase 04 (Plan 06 complete — verification + gap fixes: ob_start nesting root cause fixed in all 4 server-rendered blocks, speakerId/talkId attribute pickers, rewrite flush, null guards, YouTube URL regex)
-Status: Phase 4 complete — all 6 plans done, all 5 blocks verified on frontend
-Last activity: 2026-03-03 — Plan 06 complete: all Phase 4 display blocks verified working on frontend; ob_start/render.php incompatibility fixed across talks-list, speaker-profile, single-talk, conference-archive
+Phase: 5 of 5 (Templates + Compatibility) — IN PROGRESS
+Plan: 1 of 4 in phase 05 (Plan 01 complete — 10 developer action hooks + 1 speekr_talk_output filter added across all 5 display block render.php files)
+Status: Phase 5 in progress — Plan 01 complete
+Last activity: 2026-03-03 — Plan 01 complete: developer hooks (speekr_before/after_profile, speekr_before/after_single_talk, speekr_before/after_map, speekr_before/after_conference_archive, speekr_before/after_talks_list) + speekr_talk_output filter
 
-Progress: [█████████░] 95%
+Progress: [█████████░] 96%
 
 ## Performance Metrics
 
@@ -37,6 +50,7 @@ Progress: [█████████░] 95%
 - Trend: consistent
 
 *Updated after each plan completion*
+| Phase 05-templates-and-compatibility P01 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -100,6 +114,8 @@ Recent decisions affecting current work:
 - [Phase 04-display-blocks Plan 06]: Named functions declared inside render.php redeclare on every block render in the same request → "Cannot redeclare" fatal. Use static closures ($fn = static function(){}) instead
 - [Phase 04-display-blocks Plan 06]: Version-based rewrite flush (speekr_rewrite_version option vs SPEEKR_VERSION, at init priority 999) solves CPT 404s after adding new CPTs without deactivation/reactivation
 - [Phase 04-display-blocks Plan 06]: Talks CPT file moved to inc/cpt/talks.php (consistent with inc/cpt/conferences.php and inc/cpt/speaker-profile.php)
+- [Phase 05-templates-and-compatibility]: Developer hooks use speekr_before/after_{block}(post_id_or_0, attributes) pattern; blocks without post context pass 0 as post_id
+- [Phase 05-templates-and-compatibility]: speekr_talk_output filter uses local ob_start() inside foreach loop only — safe nested buffer pattern compatible with WP outer block render buffer
 
 ### Pending Todos
 
