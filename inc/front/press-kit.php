@@ -99,6 +99,11 @@ function speekr_press_kit_download( WP_REST_Request $request ) {
 		return new WP_Error( 'zip_missing', __( 'Archive could not be generated.', 'speekr' ), array( 'status' => 500 ) );
 	}
 
+	// Drain all WordPress/PHP output buffers so readfile() writes directly to the socket.
+	while ( ob_get_level() ) {
+		ob_end_clean();
+	}
+
 	header( 'Content-Type: application/zip' );
 	header( 'Content-Disposition: attachment; filename="speaker-kit.zip"' );
 	header( 'Content-Length: ' . filesize( $zip_path ) );
