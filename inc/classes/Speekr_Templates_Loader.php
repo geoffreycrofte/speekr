@@ -5,7 +5,7 @@
 class Speekr_Templates_Loader {
 	
 	// The Template directory
-	private $templates_dir;
+	private $template_dir;
 
 	// The template(s) we are going to add.
 	private $templates;
