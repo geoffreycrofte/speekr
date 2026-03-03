@@ -104,12 +104,13 @@ Plans:
   2. A classic theme (non-FSE) correctly loads Speekr PHP template files for `archive-talk.php`, `single-talk.php`, `speaker-profile.php`, `archive-conference.php`, and `single-conference.php`; child themes can override these by placing a file of the same name in the child theme directory
   3. `[speekr_profile]`, `[speekr_talks]`, and `[speekr_map]` shortcodes output the same content as their block equivalents when placed in any post or page editor
   4. A developer can hook `speekr_before_profile`, `speekr_after_profile`, `speekr_before_talks_list`, `speekr_after_talks_list`, `speekr_before_map`, `speekr_after_map`, and `speekr_talk_output` to modify output without editing plugin files
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 05-01: Write FSE `templates/single-talk.html`, `templates/archive-talk.html`, `templates/single-conference.html`, `templates/archive-conference.html` using existing blocks; register templates via a `speekr_register_block_templates()` function in `inc/front/templates.php` hooked to `init`; verify CPT slugs use hyphens (not underscores) before registering templates
-- [ ] 05-02: Write classic PHP template files in `templates/classic/`: `archive-talk.php`, `single-talk.php`, `speaker-profile.php`, `archive-conference.php`, `single-conference.php`; implement a `speekr_template_include()` function in `inc/front/templates.php` hooked to `template_include` with child theme override support
-- [ ] 05-03: Add shortcode functions (`speekr_shortcode_profile()`, `speekr_shortcode_talks()`, `speekr_shortcode_map()`) in `inc/front/shortcodes.php`, each calling the corresponding block `render.php` directly; add all action/filter hooks at major output points throughout `render.php` files; load both files via `require_once` in `inc/classes/Speekr.php`
+- [ ] 05-01-PLAN.md — Add developer before/after do_action hooks + speekr_talk_output filter to all 5 display block render.php files
+- [ ] 05-02-PLAN.md — Create 4 FSE block template .html files + inc/front/templates.php (register_block_template + speekr_template_include)
+- [ ] 05-03-PLAN.md — Create 5 classic PHP template files in inc/front/templates/classic/ + inc/front/shortcodes.php with 3 shortcode registrations
+- [ ] 05-04-PLAN.md — Wire templates.php + shortcodes.php into Speekr.php, enable has_archive on Talks CPT, human verify all compatibility layers
 
 ## Progress
 
@@ -122,4 +123,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Data Layer | 0/4 | In progress | - |
 | 3. Editor Blocks | 0/5 | Not started | - |
 | 4. Display Blocks | 0/6 | Not started | - |
-| 5. Templates and Compatibility | 0/3 | Not started | - |
+| 5. Templates and Compatibility | 0/4 | Not started | - |
