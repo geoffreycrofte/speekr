@@ -120,7 +120,6 @@ class Speekr {
 		require_once( SPEEKR_DIRNAME . '/inc/classes/Speekr_Templates_Loader.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/press-kit.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/templates.php' );
-		require_once( SPEEKR_DIRNAME . '/inc/front/shortcodes.php' );
 
 		$templates = new Speekr_Templates_Loader();
 
@@ -164,6 +163,7 @@ class Speekr {
 		require_once( SPEEKR_DIRNAME . '/inc/front/enqueues.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/lists.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/single.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/front/shortcodes.php' );
 
 		do_action( 'speekr_after_includes_front' );
 	}
