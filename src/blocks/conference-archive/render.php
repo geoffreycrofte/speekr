@@ -17,6 +17,7 @@ if ( empty( $conferences ) ) {
         . '</p>';
     return;
 }
+do_action( 'speekr_before_conference_archive', 0, $attributes );
 ?>
 <div class="wp-block-speekr-conference-archive">
     <table class="speekr-conference-table">
@@ -81,3 +82,5 @@ if ( empty( $conferences ) ) {
         </tbody>
     </table>
 </div>
+<?php
+do_action( 'speekr_after_conference_archive', 0, $attributes );

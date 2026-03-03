@@ -92,6 +92,7 @@ $resolve_card_media = static function( $post_id ) {
     return array( 'type' => 'placeholder', 'url' => SPEEKR_PLUGIN_URL . 'assets/img/placeholder-talk.svg' );
 };
 
+do_action( 'speekr_before_talks_list', 0, $attributes );
 ?>
 <div class="wp-block-speekr-talks-list <?php echo esc_attr( $layout_class ); ?>">
 
@@ -155,6 +156,7 @@ $resolve_card_media = static function( $post_id ) {
         $media       = $resolve_card_media( $pid );
         $topic_slugs = $talk_topic_map[ $pid ] ?? array();
         $topics_attr = esc_attr( implode( ',', $topic_slugs ) );
+    ob_start();
     ?>
         <article class="speekr-talk-card"
                  data-topics="<?php echo $topics_attr; ?>">
@@ -221,9 +223,14 @@ $resolve_card_media = static function( $post_id ) {
 
         </article>
     <?php
+    $talk_html = ob_get_clean();
+    $talk_post = get_post( $pid );
+    echo apply_filters( 'speekr_talk_output', $talk_html, $talk_post, $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput
     endwhile;
     wp_reset_postdata();
     ?>
 
     </div><!-- .speekr-talks-cards -->
 </div><!-- .wp-block-speekr-talks-list -->
+<?php
+do_action( 'speekr_after_talks_list', 0, $attributes );
