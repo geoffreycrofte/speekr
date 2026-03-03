@@ -67,6 +67,11 @@ add_action( 'init', 'speekr_register_block_templates' );
  * @since  1.1
  */
 function speekr_template_include( $template ) {
+	// Block themes use the registered FSE block templates — don't override with classic PHP templates.
+	if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
+		return $template;
+	}
+
 	$classic_dir  = SPEEKR_DIRNAME . '/inc/front/templates/classic/';
 	$child_dir    = trailingslashit( get_stylesheet_directory() ) . 'speekr/';
 	$parent_dir   = trailingslashit( get_template_directory() ) . 'speekr/';

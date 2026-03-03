@@ -192,7 +192,7 @@ function speekr_enqueue_editor_panel_styles() {
 	wp_enqueue_style(
 		'speekr-editor-panels',
 		SPEEKR_PLUGIN_URL . 'build/editor/speekr-panels.css',
-		array( 'wp-edit-post' ),
+		array(),
 		SPEEKR_VERSION
 	);
 }
