@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-03T09:38:53.254Z"
+last_updated: "2026-03-03T09:40:54.146Z"
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 27
-  completed_plans: 25
+  completed_plans: 26
 ---
 
 # Project State
@@ -52,6 +52,7 @@ Progress: [█████████░] 96%
 *Updated after each plan completion*
 | Phase 05-templates-and-compatibility P01 | 2 | 2 tasks | 5 files |
 | Phase 05 P02 | 3 | 2 tasks | 5 files |
+| Phase 05 P03 | 3 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -119,6 +120,8 @@ Recent decisions affecting current work:
 - [Phase 05-templates-and-compatibility]: speekr_talk_output filter uses local ob_start() inside foreach loop only — safe nested buffer pattern compatible with WP outer block render buffer
 - [Phase 05-02]: register_block_template() API used (WP 6.7+); underscores in slugs valid in WP 6.9.1
 - [Phase 05-02]: Classic template 3-path lookup: child theme > parent theme > plugin fallback
+- [Phase 05-03]: talks-list block.json has no limit attribute — [speekr_talks] shortcode omits limit from attributes
+- [Phase 05-03]: single-conference.php reuses conference-archive/render.php (no dedicated single-conference block for MVP)
 
 ### Pending Todos
 
