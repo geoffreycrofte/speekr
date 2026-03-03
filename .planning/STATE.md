@@ -115,5 +115,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-03
-Stopped at: Phase 4 complete. Plan 06 verified: all 5 display blocks render on frontend. Key gaps fixed: ob_start nesting incompatibility in render.php (blocks were blank), speakerId/talkId attribute pickers, rewrite flush for CPT 404s, null $post guards in Templates Loader, YouTube URL regex. Phase 5 (Templates and Compatibility) is next.
-Resume file: None
+Stopped at: Phase 5 context gathered — FSE templates, classic template overrides, shortcodes, and developer hooks all decided. Ready to plan Phase 5.
+Resume file: .planning/phases/05-templates-and-compatibility/05-CONTEXT.md
