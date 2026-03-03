@@ -65,6 +65,7 @@ function speekr_register_post_types() {
 			'feeds'      => false,
 			'pages'      => false,
 		),
+		'has_archive'          => apply_filters( 'speekr_talks_has_archive', true ),
 	);
 
 	$args = apply_filters( 'speekr_talk_cpt_args', $args );

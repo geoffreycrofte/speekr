@@ -119,6 +119,8 @@ class Speekr {
 		require_once( SPEEKR_DIRNAME . '/inc/common/default-types.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/classes/Speekr_Templates_Loader.php' );
 		require_once( SPEEKR_DIRNAME . '/inc/front/press-kit.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/front/templates.php' );
+		require_once( SPEEKR_DIRNAME . '/inc/front/shortcodes.php' );
 
 		$templates = new Speekr_Templates_Loader();
 
