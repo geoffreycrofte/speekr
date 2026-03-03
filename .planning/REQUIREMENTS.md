@@ -35,8 +35,8 @@
 
 ### Templates & Developer Tools (DEV)
 
-- [ ] **DEV-01**: Plugin provides FSE block templates for block themes: speaker profile page, talk archive, single talk, conference archive
-- [ ] **DEV-02**: Plugin provides classic PHP template files overridable in child themes: `speaker-profile.php`, `archive-talk.php`, `single-talk.php`, `archive-conference.php`, `single-conference.php`
+- [x] **DEV-01**: Plugin provides FSE block templates for block themes: speaker profile page, talk archive, single talk, conference archive
+- [x] **DEV-02**: Plugin provides classic PHP template files overridable in child themes: `speaker-profile.php`, `archive-talk.php`, `single-talk.php`, `archive-conference.php`, `single-conference.php`
 - [x] **DEV-03**: Plugin exposes action and filter hooks at all major output points (before/after speaker profile, before/after talks list, before/after map, per-talk output)
 - [ ] **DEV-04**: Plugin provides shortcodes wrapping block render functions: `[speekr_profile]`, `[speekr_talks]`, `[speekr_map]` for classic theme compatibility
 
@@ -90,8 +90,8 @@
 | CONF-02 | Phase 3 | Pending |
 | CONF-03 | Phase 4 | Pending |
 | CONF-04 | Phase 4 | Pending |
-| DEV-01 | Phase 5 | Pending |
-| DEV-02 | Phase 5 | Pending |
+| DEV-01 | Phase 5 | Complete |
+| DEV-02 | Phase 5 | Complete |
 | DEV-03 | Phase 5 | Complete |
 | DEV-04 | Phase 5 | Pending |
 
