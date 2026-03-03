@@ -91,6 +91,7 @@ foreach ( $other_links as $link ) {
 	}
 }
 
+do_action( 'speekr_before_single_talk', $post_id, $attributes );
 ?>
 <div class="wp-block-speekr-single-talk">
 
@@ -172,3 +173,5 @@ foreach ( $other_links as $link ) {
 
 	</div><!-- .speekr-talk__body -->
 </div><!-- .wp-block-speekr-single-talk -->
+<?php
+do_action( 'speekr_after_single_talk', $post_id, $attributes );

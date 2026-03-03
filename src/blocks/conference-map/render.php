@@ -48,6 +48,7 @@ foreach ( $conferences as $conf ) {
 }
 
 $json_data = wp_json_encode( $map_data );
+do_action( 'speekr_before_map', 0, $attributes );
 ?>
 <div class="wp-block-speekr-conference-map"
      data-speekr-map="<?php echo esc_attr( $json_data ); ?>"
@@ -59,3 +60,4 @@ $json_data = wp_json_encode( $map_data );
     <?php endif; ?>
 </div>
 <?php
+do_action( 'speekr_after_map', 0, $attributes );
