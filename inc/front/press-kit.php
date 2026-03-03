@@ -18,7 +18,8 @@ add_action( 'rest_api_init', function() {
 		'callback'            => 'speekr_press_kit_download',
 		'permission_callback' => '__return_true',
 		'args'                => array(
-			'id' => array( 'sanitize_callback' => 'absint' ),
+			'id'    => array( 'sanitize_callback' => 'absint' ),
+			'token' => array( 'sanitize_callback' => 'sanitize_text_field' ),
 		),
 	) );
 } );
@@ -40,6 +41,13 @@ function speekr_press_kit_download( WP_REST_Request $request ) {
 	}
 
 	$post_id = $request->get_param( 'id' );
+
+	$token    = (string) $request->get_param( 'token' );
+	$expected = hash_hmac( 'sha256', 'speekr-kit|' . $post_id, AUTH_KEY );
+	if ( ! hash_equals( $expected, $token ) ) {
+		return new WP_Error( 'forbidden', __( 'Invalid or missing token.', 'speekr' ), array( 'status' => 403 ) );
+	}
+
 	if ( 'speekr_speaker' !== get_post_type( $post_id ) ) {
 		return new WP_Error( 'not_found', __( 'Speaker not found.', 'speekr' ), array( 'status' => 404 ) );
 	}

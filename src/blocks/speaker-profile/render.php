@@ -158,7 +158,10 @@ $generic_link_icon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.9 
 
         <?php if ( $allow_download ) : ?>
         <div class="speekr-profile__press-kit">
-            <a href="<?php echo esc_url( rest_url( 'speekr/v1/press-kit/' . $post_id ) ); ?>"
+            <a href="<?php
+                $token = hash_hmac( 'sha256', 'speekr-kit|' . $post_id, AUTH_KEY );
+                echo esc_url( add_query_arg( 'token', $token, rest_url( 'speekr/v1/press-kit/' . $post_id ) ) );
+            ?>"
                class="speekr-press-kit-download wp-block-button__link">
                 <?php esc_html_e( 'Download press kit', 'speekr' ); ?>
             </a>
