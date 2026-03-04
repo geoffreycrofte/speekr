@@ -60,22 +60,23 @@ wp_reset_postdata();
  * @return array { type: string, url: string }
  */
 $resolve_card_media = static function( $post_id ) {
-    $yt  = get_post_meta( $post_id, '_speekr_media_youtube', true );
-    $vim = get_post_meta( $post_id, '_speekr_media_vimeo', true );
-    $spd = get_post_meta( $post_id, '_speekr_media_speakerdeck', true );
-    $sli = get_post_meta( $post_id, '_speekr_media_slides', true );
-    $sls = get_post_meta( $post_id, '_speekr_media_slideshare', true );
-
+    // 1. Post featured image (cover) — highest priority.
+    if ( has_post_thumbnail( $post_id ) ) {
+        return array( 'type' => 'featured_image', 'url' => get_the_post_thumbnail_url( $post_id, 'medium' ) );
+    }
+    // 2. YouTube thumbnail.
+    $yt = get_post_meta( $post_id, '_speekr_media_youtube', true );
     if ( $yt ) {
         $vid_id = speekr_get_youtube_id( $yt );
         if ( $vid_id ) {
             return array( 'type' => 'thumbnail', 'url' => 'https://img.youtube.com/vi/' . $vid_id . '/hqdefault.jpg' );
         }
     }
+    // 3. Vimeo thumbnail (via oEmbed, WordPress caches result as transient).
+    $vim = get_post_meta( $post_id, '_speekr_media_vimeo', true );
     if ( $vim ) {
         $oembed_url = 'https://vimeo.com/api/oembed.json?url=' . urlencode( $vim );
-        // wp_oembed_get caches via transients; direct fetch here for thumbnail.
-        $response = wp_remote_get( $oembed_url, array( 'timeout' => 5 ) );
+        $response   = wp_remote_get( $oembed_url, array( 'timeout' => 5 ) );
         if ( ! is_wp_error( $response ) ) {
             $data = json_decode( wp_remote_retrieve_body( $response ), true );
             if ( ! empty( $data['thumbnail_url'] ) ) {
@@ -83,12 +84,12 @@ $resolve_card_media = static function( $post_id ) {
             }
         }
     }
-    if ( $spd || $sli || $sls ) {
-        return array( 'type' => 'slide_link', 'url' => $spd ?: $sli ?: $sls );
+    // 4. SpeakerDeck — embed via WordPress oEmbed (result cached as transient).
+    $spd = get_post_meta( $post_id, '_speekr_media_speakerdeck', true );
+    if ( $spd ) {
+        return array( 'type' => 'speakerdeck_embed', 'url' => $spd );
     }
-    if ( has_post_thumbnail( $post_id ) ) {
-        return array( 'type' => 'featured_image', 'url' => get_the_post_thumbnail_url( $post_id, 'medium' ) );
-    }
+    // 5. Generic placeholder.
     return array( 'type' => 'placeholder', 'url' => SPEEKR_PLUGIN_URL . 'assets/img/placeholder-talk.svg' );
 };
 
@@ -162,37 +163,33 @@ do_action( 'speekr_before_talks_list', 0, $attributes );
                  data-topics="<?php echo $topics_attr; ?>">
 
             <div class="speekr-talk-card__media">
-                <?php if ( 'thumbnail' === $media['type'] ) : ?>
-                    <img src="<?php echo esc_url( $media['url'] ); ?>"
-                         alt="<?php echo esc_attr( $title ); ?>"
-                         loading="lazy" />
-                <?php elseif ( 'featured_image' === $media['type'] ) : ?>
-                    <img src="<?php echo esc_url( $media['url'] ); ?>"
-                         alt="<?php echo esc_attr( $title ); ?>"
-                         loading="lazy" />
-                <?php elseif ( 'slide_link' === $media['type'] ) : ?>
-                    <a href="<?php echo esc_url( $media['url'] ); ?>"
-                       rel="noopener noreferrer" target="_blank"
-                       class="speekr-slide-preview">
-                        <img src="<?php echo esc_url( SPEEKR_PLUGIN_URL . 'assets/img/placeholder-talk.svg' ); ?>"
-                             alt="<?php esc_attr_e( 'View slides', 'speekr' ); ?>"
+                <?php if ( 'thumbnail' === $media['type'] || 'featured_image' === $media['type'] ) : ?>
+                    <a href="<?php echo esc_url( $permalink ); ?>">
+                        <img src="<?php echo esc_url( $media['url'] ); ?>"
+                             alt="<?php echo esc_attr( $title ); ?>"
                              loading="lazy" />
                     </a>
+                <?php elseif ( 'speakerdeck_embed' === $media['type'] ) : ?>
+                    <?php $embed_html = wp_oembed_get( $media['url'], array( 'maxwidth' => 400 ) ); ?>
+                    <?php if ( $embed_html ) : ?>
+                        <div class="speekr-slides-embed"><?php echo $embed_html; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+                    <?php else : ?>
+                        <a href="<?php echo esc_url( $permalink ); ?>">
+                            <img src="<?php echo esc_url( SPEEKR_PLUGIN_URL . 'assets/img/placeholder-talk.svg' ); ?>"
+                                 alt="" aria-hidden="true" loading="lazy" />
+                        </a>
+                    <?php endif; ?>
                 <?php else : // placeholder ?>
-                    <img src="<?php echo esc_url( $media['url'] ); ?>"
-                         alt=""
-                         aria-hidden="true"
-                         loading="lazy" />
+                    <a href="<?php echo esc_url( $permalink ); ?>">
+                        <img src="<?php echo esc_url( $media['url'] ); ?>"
+                             alt="" aria-hidden="true" loading="lazy" />
+                    </a>
                 <?php endif; ?>
             </div>
 
             <div class="speekr-talk-card__body">
                 <h3 class="speekr-talk-card__title">
-                    <?php if ( $is_blog ) : ?>
-                        <a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a>
-                    <?php else : ?>
-                        <?php echo esc_html( $title ); ?>
-                    <?php endif; ?>
+                    <a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a>
                 </h3>
 
                 <?php if ( $summary ) : ?>
