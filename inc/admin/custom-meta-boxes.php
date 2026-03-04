@@ -227,7 +227,7 @@ function speekr_conference_mb( $post ) {
 
 	$speekr_conf = get_post_meta( $post->ID, 'speekr-conf', true );
 	
-	$output = '<p class="speekr-mb-description">' . __( 'What's its name and where did it take place?', 'speekr' ) . '</p>
+	$output = '<p class="speekr-mb-description">' . __( 'What’s its name and where did it take place?', 'speekr' ) . '</p>
 			<div class="speekr-mb-block">
 
 				' . apply_filters( 'speekr_conference_mb_begin', '', $post ) . '
