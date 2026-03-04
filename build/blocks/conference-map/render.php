@@ -30,7 +30,7 @@ foreach ( $conferences as $conf ) {
     if ( $talk_ref_id ) {
         $talk_title = get_the_title( $talk_ref_id );
         $talk_as_article = get_post_meta( $talk_ref_id, 'speekr-as-article', true );
-        if ( 'on' === $talk_as_article ) {
+        if ( 'on' !== $talk_as_article ) {
             $talk_url = get_permalink( $talk_ref_id );
         }
     }
@@ -48,6 +48,7 @@ foreach ( $conferences as $conf ) {
 }
 
 $json_data = wp_json_encode( $map_data );
+do_action( 'speekr_before_map', 0, $attributes );
 ?>
 <div class="wp-block-speekr-conference-map"
      data-speekr-map="<?php echo esc_attr( $json_data ); ?>"
@@ -59,3 +60,4 @@ $json_data = wp_json_encode( $map_data );
     <?php endif; ?>
 </div>
 <?php
+do_action( 'speekr_after_map', 0, $attributes );

@@ -19,11 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 ?>
-<main id="primary" class="site-main speekr-classic-template">
+<div class="speekr-classic-template speekr-conference-single">
+	<div class="container wide-max-width">
 	<?php
 	$attributes = array();
 	require SPEEKR_DIRNAME . '/src/blocks/conference-archive/render.php';
 	?>
-</main>
+	</div>
+</div>
 <?php
 get_footer();

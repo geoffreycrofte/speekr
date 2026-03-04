@@ -227,7 +227,7 @@ function speekr_conference_mb( $post ) {
 
 	$speekr_conf = get_post_meta( $post->ID, 'speekr-conf', true );
 	
-	$output = '<p class="speekr-mb-description">' . __( 'What’s its name and where did it take place?', 'speekr' ) . '</p>
+	$output = '<p class="speekr-mb-description">' . __( 'What's its name and where did it take place?', 'speekr' ) . '</p>
 			<div class="speekr-mb-block">
 
 				' . apply_filters( 'speekr_conference_mb_begin', '', $post ) . '
@@ -267,9 +267,9 @@ function speekr_the_content_mb( $post ) {
 	$height     = apply_filters( 'speekr_editor_height', 400 );
 
 	// Checkbox before content.
-	$output = ‘<p class="speekr-mb-line speekr-checkbox-line"><input type="checkbox" name="speekr-as-article" id="speekr-show-content"’ . ( ‘on’ === $as_article ? ‘ checked="checked"’ : ‘’ ) . ‘ data-editorheight="’ . (int) $height . ‘">
-		<label for="speekr-show-content">’ . __( ‘Reference only — hide post content and permalink.’, ‘speekr’ ) . ‘</label><br>
-		<span class="speekr-description" aria-hidden="true">’ . __( ‘When checked, this talk is treated as a reference entry only, with no blog post content or permalink link.’, ‘speekr’ ) . ‘</span></p>’;
+	$output = '<p class="speekr-mb-line speekr-checkbox-line"><input type="checkbox" name="speekr-as-article" id="speekr-show-content"' . ( 'on' === $as_article ? ' checked="checked"' : '' ) . ' data-editorheight="' . (int) $height . '">
+		<label for="speekr-show-content">' . __( 'Reference only &mdash; hide post content and permalink.', 'speekr' ) . '</label><br>
+		<span class="speekr-description" aria-hidden="true">' . __( 'When checked, this talk is treated as a reference entry only, with no blog post content or permalink link.', 'speekr' ) . '</span></p>';
 
 	echo apply_filters( 'speekr_the_content_mb', $output, $post );
 

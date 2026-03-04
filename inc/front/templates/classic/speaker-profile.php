@@ -15,11 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 ?>
-<main id="primary" class="site-main speekr-classic-template">
-	<?php
-	$attributes = array();
-	require SPEEKR_DIRNAME . '/src/blocks/speaker-profile/render.php';
-	?>
-</main>
+<section class="speekr-classic-template speekr-speaker-profile">
+	<div class="container wide-max-width">
+		<?php
+		$attributes = array();
+		require SPEEKR_DIRNAME . '/src/blocks/speaker-profile/render.php';
+		?>
+	</div>
+</section>
 <?php
 get_footer();

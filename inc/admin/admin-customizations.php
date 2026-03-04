@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function speekr_add_display_post_states( $post_states, $post ) {
     
     if ( speekr_get_pages_id( 'list_page' ) === $post->ID ) {
-        $post_states['speekr_list_page'] = '<abbr title="List of Talks (Speekr Plugin)">' . __( 'List of Talks', 'woocommerce' ) . '</abbr>';
+        $post_states['speekr_list_page'] = '<abbr title="List of Talks (Speekr Plugin)">' . __( 'List of Talks', 'speekr' ) . '</abbr>';
     }
 
     return $post_states;

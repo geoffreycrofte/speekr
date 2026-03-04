@@ -39,11 +39,11 @@ function speekr_admin_menu_page() {
 		<h1><?php esc_html_e( 'Speekr', 'speekr' ); ?></h1>
 		<p><?php esc_html_e( 'Manage your speaker profile, talks, and conference appearances.', 'speekr' ); ?></p>
 		<p>
-			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=talks' ) ); ?>" class="button button-primary">
-				<?php esc_html_e( 'View Talks', 'speekr' ); ?>
-			</a>
 			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=speekr_conference' ) ); ?>" class="button">
 				<?php esc_html_e( 'View Conferences', 'speekr' ); ?>
+			</a>
+			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=talks' ) ); ?>" class="button button-primary">
+				<?php esc_html_e( 'View Talks', 'speekr' ); ?>
 			</a>
 			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=speekr_speaker' ) ); ?>" class="button">
 				<?php esc_html_e( 'View Speakers', 'speekr' ); ?>

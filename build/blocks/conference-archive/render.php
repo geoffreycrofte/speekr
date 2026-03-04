@@ -17,6 +17,7 @@ if ( empty( $conferences ) ) {
         . '</p>';
     return;
 }
+do_action( 'speekr_before_conference_archive', 0, $attributes );
 ?>
 <div class="wp-block-speekr-conference-archive">
     <table class="speekr-conference-table">
@@ -43,7 +44,7 @@ if ( empty( $conferences ) ) {
             if ( $talk_ref_id ) {
                 $talk_title = get_the_title( $talk_ref_id );
                 $talk_as_article = get_post_meta( $talk_ref_id, 'speekr-as-article', true );
-                if ( 'on' === $talk_as_article ) {
+                if ( 'on' !== $talk_as_article ) {
                     $talk_url = get_permalink( $talk_ref_id );
                 }
             }
@@ -81,3 +82,5 @@ if ( empty( $conferences ) ) {
         </tbody>
     </table>
 </div>
+<?php
+do_action( 'speekr_after_conference_archive', 0, $attributes );

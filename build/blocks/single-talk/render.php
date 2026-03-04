@@ -31,7 +31,7 @@ $slideshare  = get_post_meta( $post_id, '_speekr_media_slideshare', true );
 $other_links = get_post_meta( $post_id, '_speekr_media_other', true ) ?: array();
 $summary     = get_post_meta( $post_id, 'speekr-summary', true ) ?: '';
 $as_article  = get_post_meta( $post_id, 'speekr-as-article', true );
-$is_blog     = ( 'on' === $as_article );
+$is_blog     = ( 'on' !== $as_article );
 $post_content = get_post_field( 'post_content', $post_id );
 $title       = get_the_title( $post_id );
 
@@ -91,6 +91,7 @@ foreach ( $other_links as $link ) {
 	}
 }
 
+do_action( 'speekr_before_single_talk', $post_id, $attributes );
 ?>
 <div class="wp-block-speekr-single-talk">
 
@@ -172,3 +173,5 @@ foreach ( $other_links as $link ) {
 
 	</div><!-- .speekr-talk__body -->
 </div><!-- .wp-block-speekr-single-talk -->
+<?php
+do_action( 'speekr_after_single_talk', $post_id, $attributes );
