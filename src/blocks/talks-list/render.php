@@ -125,7 +125,7 @@ do_action( 'speekr_before_talks_list', 0, $attributes );
         $title      = get_the_title();
         $summary    = get_post_meta( $pid, 'speekr-summary', true ) ?: '';
         $as_article = get_post_meta( $pid, 'speekr-as-article', true );
-        $is_blog    = ( 'on' === $as_article );
+        $is_blog    = ( 'on' !== $as_article );
         $permalink  = get_permalink();
 
         // Date + location: prefer linked Conference CPT, fall back to speekr-conf object.

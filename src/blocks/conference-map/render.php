@@ -30,7 +30,7 @@ foreach ( $conferences as $conf ) {
     if ( $talk_ref_id ) {
         $talk_title = get_the_title( $talk_ref_id );
         $talk_as_article = get_post_meta( $talk_ref_id, 'speekr-as-article', true );
-        if ( 'on' === $talk_as_article ) {
+        if ( 'on' !== $talk_as_article ) {
             $talk_url = get_permalink( $talk_ref_id );
         }
     }

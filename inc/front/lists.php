@@ -47,7 +47,7 @@ function speekr_get_list_content( $options ) {
 
 			// METAS
 			$conf       = isset( $metas['speekr-conf'] ) && isset( $metas['speekr-conf'][0] ) ? unserialize( $metas['speekr-conf'][0] ) : null;
-			$is_article = isset( $metas['speekr-as-article'] ) && isset( $metas['speekr-as-article'][0] ) ? ( $metas['speekr-as-article'][0] === 'on' ? true : false ) : null;
+			$is_article = isset( $metas['speekr-as-article'] ) && isset( $metas['speekr-as-article'][0] ) ? ( $metas['speekr-as-article'][0] === 'on' ? false : true ) : null;
 			$is_linked  = apply_filters( 'speekr_talk_is_linked', $is_article, $id );
 			$medialinks = isset( $metas['speekr-media-links'] ) && isset( $metas['speekr-media-links'][0] ) ? unserialize( $metas['speekr-media-links'][0] ) : null;
 			$is_feat    = isset( $metas['speekr-is-featured'] ) && isset( $metas['speekr-is-featured'][0] ) ? $metas['speekr-is-featured'][0] : false;
