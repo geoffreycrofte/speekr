@@ -136,6 +136,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-03
-Stopped at: Phase 5 context gathered — FSE templates, classic template overrides, shortcodes, and developer hooks all decided. Ready to plan Phase 5.
-Resume file: .planning/phases/05-templates-and-compatibility/05-CONTEXT.md
+Last session: 2026-03-06
+Stopped at: v1.0 milestone complete — Phase 5 approved, all 27 plans done, 05-04-SUMMARY.md written.
+Resume file: none

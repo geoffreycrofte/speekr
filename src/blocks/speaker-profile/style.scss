@@ -111,6 +111,10 @@ $speekr-accent: #9768a7;
         list-style: none;
         margin: 1em 0;
         padding: 0;
+
+        .speekr-social-link {
+            margin: 0!important;
+        }
     }
 
     .speekr-social-link__anchor {

@@ -1,1 +1,158 @@
-.wp-block-speekr-speaker-profile{container-type:inline-size}.wp-block-speekr-speaker-profile.speekr-speaker-profile--side-by-side{align-items:start;display:grid;gap:2em;grid-template-columns:200px 1fr}@container (max-width: 600px){.wp-block-speekr-speaker-profile.speekr-speaker-profile--side-by-side{grid-template-columns:1fr}}.wp-block-speekr-speaker-profile.speekr-speaker-profile--stacked{display:flex;flex-direction:column;gap:1.5em}.wp-block-speekr-speaker-profile.speekr-speaker-profile--stacked .speekr-profile__headshots{text-align:center}.wp-block-speekr-speaker-profile.speekr-speaker-profile--stacked .speekr-profile__headshots .speekr-slideshow__thumbs{justify-content:center}.wp-block-speekr-speaker-profile .speekr-profile__headshots{display:flex;flex-direction:column;gap:.5em}.wp-block-speekr-speaker-profile .speekr-headshot{border-radius:4px;height:auto;width:100%}.wp-block-speekr-speaker-profile .speekr-slideshow{display:flex;flex-direction:column;gap:.5em}.wp-block-speekr-speaker-profile .speekr-slideshow__stage{border-radius:4px;overflow:hidden;position:relative}.wp-block-speekr-speaker-profile .speekr-slideshow__photo{display:none;height:auto;width:100%}.wp-block-speekr-speaker-profile .speekr-slideshow__photo.is-active{display:block}.wp-block-speekr-speaker-profile .speekr-slideshow__thumbs{display:flex;flex-wrap:wrap;gap:.375em}.wp-block-speekr-speaker-profile .speekr-slideshow__thumb{background:none;border:2px solid transparent;border-radius:4px;cursor:pointer;padding:0;transition:border-color .15s}.wp-block-speekr-speaker-profile .speekr-slideshow__thumb.is-active,.wp-block-speekr-speaker-profile .speekr-slideshow__thumb:hover{border-color:#9768a7}.wp-block-speekr-speaker-profile .speekr-slideshow__thumb img{border-radius:2px;display:block;height:60px;-o-object-fit:cover;object-fit:cover;width:60px}.wp-block-speekr-speaker-profile .speekr-profile__name{margin-top:0}.wp-block-speekr-speaker-profile .speekr-profile__bio-short{font-style:italic;opacity:.85}.wp-block-speekr-speaker-profile .speekr-profile__social-links{display:flex;flex-wrap:wrap;gap:.75em;list-style:none;margin:1em 0;padding:0}.wp-block-speekr-speaker-profile .speekr-social-link__anchor{align-items:center;background-color:currentColor;border-radius:50%;color:inherit;display:inline-flex;height:2em;justify-content:center;transition:opacity .2s ease;width:2em}.wp-block-speekr-speaker-profile .speekr-social-link__anchor:hover{opacity:.75}.wp-block-speekr-speaker-profile .speekr-social-link__anchor svg{fill:#fff;flex-shrink:0;height:1.1em;width:1.1em}.wp-block-speekr-speaker-profile .screen-reader-text{height:1px;overflow:hidden;padding:0;position:absolute;width:1px;clip:rect(0,0,0,0);border:0;white-space:nowrap}.wp-block-speekr-speaker-profile .speekr-profile__rider{border-top:1px solid;margin-top:1.5em;opacity:.9;padding-top:1.5em}.wp-block-speekr-speaker-profile .speekr-rider-section{margin-bottom:1em}.wp-block-speekr-speaker-profile .speekr-rider-section h4{font-size:.9em;letter-spacing:.05em;margin:0 0 .25em;text-transform:uppercase}.wp-block-speekr-speaker-profile .speekr-press-kit-download{background-color:#9768a7;border-radius:4px;color:#fff;display:inline-block;font-weight:600;margin-top:1em;padding:.6em 1.2em;text-decoration:none}.wp-block-speekr-speaker-profile .speekr-press-kit-download:hover{background-color:#7c518b}
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/speaker-profile/style.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-speekr-speaker-profile {
+  container-type: inline-size;
+}
+.wp-block-speekr-speaker-profile.speekr-speaker-profile--side-by-side {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2em;
+  align-items: start;
+}
+@container (max-width: 600px) {
+  .wp-block-speekr-speaker-profile.speekr-speaker-profile--side-by-side {
+    grid-template-columns: 1fr;
+  }
+}
+.wp-block-speekr-speaker-profile.speekr-speaker-profile--stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.wp-block-speekr-speaker-profile.speekr-speaker-profile--stacked .speekr-profile__headshots {
+  text-align: center;
+}
+.wp-block-speekr-speaker-profile.speekr-speaker-profile--stacked .speekr-profile__headshots .speekr-slideshow__thumbs {
+  justify-content: center;
+}
+.wp-block-speekr-speaker-profile .speekr-profile__headshots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.wp-block-speekr-speaker-profile .speekr-headshot {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__photo {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__photo.is-active {
+  display: block;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375em;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__thumb {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__thumb:hover, .wp-block-speekr-speaker-profile .speekr-slideshow__thumb.is-active {
+  border-color: #9768a7;
+}
+.wp-block-speekr-speaker-profile .speekr-slideshow__thumb img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 2px;
+}
+.wp-block-speekr-speaker-profile .speekr-profile__name {
+  margin-top: 0;
+}
+.wp-block-speekr-speaker-profile .speekr-profile__bio-short {
+  font-style: italic;
+  opacity: 0.85;
+}
+.wp-block-speekr-speaker-profile .speekr-profile__social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75em;
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+}
+.wp-block-speekr-speaker-profile .speekr-profile__social-links .speekr-social-link {
+  margin: 0 !important;
+}
+.wp-block-speekr-speaker-profile .speekr-social-link__anchor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background-color: currentColor;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+.wp-block-speekr-speaker-profile .speekr-social-link__anchor:hover {
+  opacity: 0.75;
+}
+.wp-block-speekr-speaker-profile .speekr-social-link__anchor svg {
+  width: 1.1em;
+  height: 1.1em;
+  fill: #fff;
+  flex-shrink: 0;
+}
+.wp-block-speekr-speaker-profile .screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.wp-block-speekr-speaker-profile .speekr-profile__rider {
+  border-top: 1px solid currentColor;
+  margin-top: 1.5em;
+  padding-top: 1.5em;
+  opacity: 0.9;
+}
+.wp-block-speekr-speaker-profile .speekr-rider-section {
+  margin-bottom: 1em;
+}
+.wp-block-speekr-speaker-profile .speekr-rider-section h4 {
+  margin: 0 0 0.25em;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.wp-block-speekr-speaker-profile .speekr-press-kit-download {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.6em 1.2em;
+  background-color: #9768a7;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.wp-block-speekr-speaker-profile .speekr-press-kit-download:hover {
+  background-color: rgb(124.2677824268, 81.0041841004, 138.9958158996);
+}
+
+/*# sourceMappingURL=style-index.css.map*/
