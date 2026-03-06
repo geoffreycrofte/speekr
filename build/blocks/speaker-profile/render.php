@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) { die( 'Cheatin\' uh?' ); }
 
 $layout         = isset( $attributes['layout'] ) ? $attributes['layout'] : 'side-by-side';
 $allow_download = ! empty( $attributes['allowDownload'] );
+$show_rider     = ! empty( $attributes['showRider'] );
 $layout_class   = ( 'stacked' === $layout ) ? 'speekr-speaker-profile--stacked' : 'speekr-speaker-profile--side-by-side';
 
 // Smart speaker resolution (priority order):
@@ -11,6 +12,10 @@ $layout_class   = ( 'stacked' === $layout ) ? 'speekr-speaker-profile--stacked' 
 // 3. Only one speekr_speaker post exists → auto-select
 // 4. Nothing found → return empty
 $speaker_id = isset( $attributes['speakerId'] ) ? (int) $attributes['speakerId'] : 0;
+
+if ( ! $speaker_id && is_singular( 'speekr_speaker' ) ) {
+    $speaker_id = get_the_ID();
+}
 
 if ( ! $speaker_id ) {
     $current_id = get_the_ID();
@@ -81,21 +86,80 @@ $platform_icons = array(
 );
 $generic_link_icon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>';
 
+// Inline slideshow JS (output once per page; CSS is in the compiled stylesheet).
+static $speekr_slideshow_registered = false;
+if ( ! $speekr_slideshow_registered && count( $headshots ) > 1 ) {
+    $speekr_slideshow_registered = true;
+    ?>
+    <script id="speekr-slideshow-js">
+    document.addEventListener('DOMContentLoaded',function(){
+        document.querySelectorAll('[data-speekr-slideshow]').forEach(function(sl){
+            var photos=sl.querySelectorAll('.speekr-slideshow__photo');
+            var thumbs=sl.querySelectorAll('.speekr-slideshow__thumb');
+            thumbs.forEach(function(btn,i){
+                btn.addEventListener('click',function(){
+                    photos.forEach(function(p){p.classList.remove('is-active');});
+                    thumbs.forEach(function(t){t.classList.remove('is-active');});
+                    photos[i].classList.add('is-active');
+                    btn.classList.add('is-active');
+                });
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
 do_action( 'speekr_before_profile', $speaker_id, $attributes );
 ?>
 <div class="wp-block-speekr-speaker-profile <?php echo esc_attr( $layout_class ); ?>">
 
-    <?php if ( ! empty( $headshots ) ) : ?>
-    <div class="speekr-profile__headshots">
-        <?php foreach ( $headshots as $hs ) :
-            $img_id    = isset( $hs['id'] ) ? (int) $hs['id'] : 0;
+    <?php
+    // Resolve headshot images (filter out empty IDs once).
+    $valid_headshots = array_filter( $headshots, function( $hs ) {
+        return ! empty( $hs['id'] );
+    } );
+
+    if ( ! empty( $valid_headshots ) ) :
+        $use_slideshow = count( $valid_headshots ) > 1;
+    ?>
+    <div class="speekr-profile__headshots<?php echo $use_slideshow ? ' speekr-slideshow' : ''; ?>"<?php echo $use_slideshow ? ' data-speekr-slideshow' : ''; ?>>
+        <?php if ( $use_slideshow ) : ?>
+        <div class="speekr-slideshow__stage">
+            <?php $is_first = true; foreach ( $valid_headshots as $hs ) :
+                $img_id    = (int) $hs['id'];
+                $img_label = isset( $hs['label'] ) ? esc_attr( $hs['label'] ) : esc_attr( $speaker_name );
+                echo wp_get_attachment_image( $img_id, 'medium', false, array(
+                    'class' => 'speekr-slideshow__photo' . ( $is_first ? ' is-active' : '' ),
+                    'alt'   => $img_label,
+                ) );
+                $is_first = false;
+            endforeach; ?>
+        </div>
+        <div class="speekr-slideshow__thumbs">
+            <?php $is_first = true; foreach ( $valid_headshots as $hs ) :
+                $img_id    = (int) $hs['id'];
+                $img_label = isset( $hs['label'] ) ? esc_attr( $hs['label'] ) : esc_attr( $speaker_name );
+            ?>
+            <button class="speekr-slideshow__thumb<?php echo $is_first ? ' is-active' : ''; ?>"
+                    aria-label="<?php echo esc_attr( $img_label ); ?>"
+                    type="button">
+                <?php echo wp_get_attachment_image( $img_id, 'thumbnail', false, array(
+                    'alt' => '',
+                    'aria-hidden' => 'true',
+                ) ); ?>
+            </button>
+            <?php $is_first = false; endforeach; ?>
+        </div>
+        <?php else :
+            $hs        = reset( $valid_headshots );
+            $img_id    = (int) $hs['id'];
             $img_label = isset( $hs['label'] ) ? esc_attr( $hs['label'] ) : esc_attr( $speaker_name );
-            if ( ! $img_id ) continue;
             echo wp_get_attachment_image( $img_id, 'medium', false, array(
                 'class' => 'speekr-headshot',
                 'alt'   => $img_label,
             ) );
-        endforeach; ?>
+        endif; ?>
     </div>
     <?php endif; ?>
 
@@ -133,7 +197,7 @@ do_action( 'speekr_before_profile', $speaker_id, $attributes );
         </ul>
         <?php endif; ?>
 
-        <?php
+        <?php if ( $show_rider ) :
         $rider_fields = array(
             'av'            => __( 'A/V Requirements', 'speekr' ),
             'travel'        => __( 'Travel', 'speekr' ),
@@ -155,7 +219,8 @@ do_action( 'speekr_before_profile', $speaker_id, $attributes );
             </div>
             <?php endforeach; ?>
         </div>
-        <?php endif; ?>
+        <?php endif; // $has_rider
+        endif; // $show_rider ?>
 
         <?php if ( $allow_download ) : ?>
         <div class="speekr-profile__press-kit">

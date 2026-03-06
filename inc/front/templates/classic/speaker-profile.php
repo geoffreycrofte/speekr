@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 <section class="speekr-classic-template speekr-speaker-profile">
-	<div class="container wide-max-width">
+	<div class="container wide-max-width entry-content">
 		<?php
 		$attributes = array();
 		require SPEEKR_DIRNAME . '/src/blocks/speaker-profile/render.php';

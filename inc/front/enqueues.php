@@ -26,5 +26,20 @@ function speekr_enqueues_infront() {
 	if ( $is_speekr ) {
 		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'build/frontend/style-style.css', array(), SPEEKR_VERSION, 'all' );
 	}
+
+	// Enqueue block CSS for classic theme CPT pages (bypassed when render.php is
+	// included directly in a template rather than via render_block()).
+	if ( is_singular( 'speekr_speaker' ) ) {
+		wp_enqueue_style( 'speekr-speaker-profile-style', SPEEKR_PLUGIN_URL . 'build/blocks/speaker-profile/style-index.css', array(), SPEEKR_VERSION );
+	}
+	if ( is_post_type_archive( 'talks' ) || is_singular( 'talks' ) ) {
+		wp_enqueue_style( 'speekr-talks-list-style', SPEEKR_PLUGIN_URL . 'build/blocks/talks-list/style-index.css', array(), SPEEKR_VERSION );
+	}
+	if ( is_singular( 'talks' ) ) {
+		wp_enqueue_style( 'speekr-single-talk-style', SPEEKR_PLUGIN_URL . 'build/blocks/single-talk/style-index.css', array(), SPEEKR_VERSION );
+	}
+	if ( is_post_type_archive( 'speekr_conference' ) || is_singular( 'speekr_conference' ) ) {
+		wp_enqueue_style( 'speekr-conference-archive-style', SPEEKR_PLUGIN_URL . 'build/blocks/conference-archive/style-index.css', array(), SPEEKR_VERSION );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'speekr_enqueues_infront' );

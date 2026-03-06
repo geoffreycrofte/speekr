@@ -22,6 +22,10 @@
     "speakerId": {
       "type": "integer",
       "default": 0
+    },
+    "showRider": {
+      "type": "boolean",
+      "default": false
     }
   },
   "editorScript": "file:./index.js",

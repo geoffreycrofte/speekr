@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 <div class="speekr-classic-template speekr-single-talk">
-	<div class="container wide-max-width">
+	<div class="container wide-max-width entry-content">
 		<?php
 		$attributes = array();
 		require SPEEKR_DIRNAME . '/src/blocks/single-talk/render.php';

@@ -243,3 +243,252 @@
 	vertical-align: -.125em;
 	margin-left: 6px;
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Single Conference Template
+// ─────────────────────────────────────────────────────────────────────────────
+
+$speekr-accent: #9768a7;
+
+.speekr-conf-single {
+
+    .speekr-conf-single__banner {
+        img {
+            display: block;
+            width: 100%;
+            max-height: 360px;
+            object-fit: cover;
+        }
+    }
+
+    .speekr-conf-single__header {
+        padding: 2em 0;
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        margin-bottom: 2.5em;
+    }
+
+    .speekr-conf-single__title {
+        margin: 0 0 0.75em;
+        font-size: 2em;
+        line-height: 1.2;
+
+        a {
+            text-decoration: none;
+            color: inherit;
+
+            &:hover { text-decoration: underline; }
+        }
+    }
+
+    .speekr-conf-single__ext-icon {
+        font-size: 0.6em;
+        vertical-align: super;
+        margin-left: 0.25em;
+        opacity: 0.6;
+    }
+
+    .speekr-conf-single__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25em 2em;
+        margin: 0;
+        padding: 0;
+
+        div { display: contents; }
+
+        dt {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            opacity: 0.55;
+            font-weight: 600;
+            margin-right: 0.4em;
+        }
+
+        dd {
+            margin: 0;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        // Pair each dt+dd on one line
+        div {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4em;
+        }
+    }
+
+    .speekr-conf-single__description {
+        margin-bottom: 3em;
+        max-width: 72ch;
+    }
+
+    .speekr-conf-single__section-title {
+        margin: 0 0 1.25em;
+        font-size: 1.1em;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        opacity: 0.55;
+        font-weight: 700;
+    }
+
+    // ── Talk cards ────────────────────────────────────────────────
+    .speekr-conf-single__talks {
+        margin-bottom: 3.5em;
+    }
+
+    .speekr-conf-talk-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25em;
+    }
+
+    .speekr-talk-card {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 1.5em;
+        align-items: start;
+        padding: 1.25em;
+        border-radius: 6px;
+        border: 1px solid rgba(0,0,0,.08);
+        transition: box-shadow 0.2s;
+
+        &:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,.08);
+        }
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+
+        &__media {
+            a { display: block; }
+
+            img {
+                display: block;
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                object-fit: cover;
+                border-radius: 4px;
+            }
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+
+        &__title {
+            margin: 0;
+            font-size: 1.1em;
+            line-height: 1.3;
+
+            a {
+                text-decoration: none;
+                color: inherit;
+                &:hover { text-decoration: underline; }
+            }
+        }
+
+        &__summary {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.8;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        &__speaker {
+            display: flex;
+            align-items: center;
+            gap: 0.6em;
+            margin-top: auto;
+            padding-top: 0.75em;
+        }
+
+        &__speaker-avatar {
+            flex-shrink: 0;
+
+            a { display: block; }
+
+            img {
+                display: block;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+
+        &__speaker-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            text-decoration: none;
+            color: inherit;
+            &:hover { text-decoration: underline; }
+        }
+    }
+
+    // ── Speaker wall ──────────────────────────────────────────────
+    .speekr-conf-single__speakers {
+        margin-bottom: 3em;
+    }
+
+    .speekr-speaker-wall {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1.5em;
+    }
+
+    .speekr-speaker-wall__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.5em;
+    }
+
+    .speekr-speaker-wall__photo {
+        display: block;
+
+        img {
+            display: block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: opacity 0.2s;
+        }
+
+        &:hover img { opacity: 0.85; }
+    }
+
+    .speekr-speaker-wall__name {
+        font-weight: 600;
+        font-size: 0.9em;
+        text-decoration: none;
+        color: inherit;
+        line-height: 1.3;
+        &:hover { text-decoration: underline; }
+    }
+
+    .speekr-speaker-wall__bio {
+        font-size: 0.8em;
+        opacity: 0.7;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}

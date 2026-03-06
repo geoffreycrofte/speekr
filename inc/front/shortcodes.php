@@ -26,6 +26,8 @@ function speekr_shortcode_profile( $atts ) {
 		array(
 			'layout'        => 'side-by-side',
 			'show_download' => 0,
+			'show_rider'    => 0,
+			'speaker'       => 0,
 		),
 		$atts,
 		'speekr_profile'
@@ -34,6 +36,8 @@ function speekr_shortcode_profile( $atts ) {
 	$attributes = array(
 		'layout'        => sanitize_key( $atts['layout'] ),
 		'allowDownload' => (bool) $atts['show_download'],
+		'showRider'     => (bool) $atts['show_rider'],
+		'speakerId'     => (int) $atts['speaker'],
 	);
 
 	wp_enqueue_style(

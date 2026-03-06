@@ -35,6 +35,28 @@ $is_blog     = ( 'on' !== $as_article );
 $post_content = get_post_field( 'post_content', $post_id );
 $title       = get_the_title( $post_id );
 
+// Speaker reference.
+$speaker_ref_id   = (int) get_post_meta( $post_id, '_speekr_talk_speaker', true );
+$speaker_name_ref = '';
+$speaker_bio_ref  = '';
+$speaker_img_ref  = '';
+$speaker_url_ref  = '';
+if ( $speaker_ref_id && 'speekr_speaker' === get_post_type( $speaker_ref_id ) ) {
+	$speaker_name_ref = get_the_title( $speaker_ref_id );
+	$speaker_bio_ref  = get_post_meta( $speaker_ref_id, '_speekr_bio_short', true );
+	$speaker_url_ref  = get_permalink( $speaker_ref_id );
+	$headshots_ref    = get_post_meta( $speaker_ref_id, '_speekr_headshots', true ) ?: array();
+	if ( ! empty( $headshots_ref ) ) {
+		$first_hs       = reset( $headshots_ref );
+		$hs_id          = isset( $first_hs['id'] ) ? (int) $first_hs['id'] : 0;
+		$hs_label       = isset( $first_hs['label'] ) ? $first_hs['label'] : $speaker_name_ref;
+		$speaker_img_ref = $hs_id ? wp_get_attachment_image( $hs_id, 'thumbnail', false, array(
+			'class' => 'speekr-speaker-card__img',
+			'alt'   => esc_attr( $hs_label ),
+		) ) : '';
+	}
+}
+
 // Conference reference — the talk stores _speekr_conf_talk_ref as a Conference post ID.
 $conf_ref_id  = (int) get_post_meta( $post_id, '_speekr_conf_talk_ref', true );
 $conf_name    = '';
@@ -143,6 +165,33 @@ do_action( 'speekr_before_single_talk', $post_id, $attributes );
 				<?php endif; ?>
 			</p>
 			<?php endif; ?>
+		</div>
+		<?php endif; ?>
+
+		<?php if ( $speaker_name_ref ) : ?>
+		<div class="speekr-talk__speaker-card">
+			<h3 class="speekr-talk__speaker-heading"><?php esc_html_e( 'Speaker', 'speekr' ); ?></h3>
+			<div class="speekr-speaker-card">
+				<?php if ( $speaker_img_ref ) : ?>
+				<div class="speekr-speaker-card__avatar">
+					<?php if ( $speaker_url_ref ) : ?>
+					<a href="<?php echo esc_url( $speaker_url_ref ); ?>"><?php echo $speaker_img_ref; // phpcs:ignore WordPress.Security.EscapeOutput -- wp_get_attachment_image output ?></a>
+					<?php else : ?>
+					<?php echo $speaker_img_ref; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+				<div class="speekr-speaker-card__info">
+					<?php if ( $speaker_url_ref ) : ?>
+					<a href="<?php echo esc_url( $speaker_url_ref ); ?>" class="speekr-speaker-card__name"><?php echo esc_html( $speaker_name_ref ); ?></a>
+					<?php else : ?>
+					<span class="speekr-speaker-card__name"><?php echo esc_html( $speaker_name_ref ); ?></span>
+					<?php endif; ?>
+					<?php if ( $speaker_bio_ref ) : ?>
+					<p class="speekr-speaker-card__bio"><?php echo esc_html( $speaker_bio_ref ); ?></p>
+					<?php endif; ?>
+				</div>
+			</div>
 		</div>
 		<?php endif; ?>
 
