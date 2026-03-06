@@ -211,7 +211,7 @@ do_action( 'speekr_before_single_talk', $post_id, $attributes );
 		</div>
 		<?php endif; ?>
 
-		<?php if ( $is_blog ) : ?>
+		<?php if ( $is_blog && get_the_ID() !== $post_id ) : ?>
 		<p class="speekr-talk__permalink">
 			<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"
 			   class="speekr-talk__blog-link wp-block-button__link">
