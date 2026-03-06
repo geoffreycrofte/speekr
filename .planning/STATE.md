@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
+status: complete
 last_updated: "2026-03-03T09:40:54.146Z"
 progress:
   total_phases: 5
@@ -22,10 +22,10 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 
 ## Current Position
 
-Phase: 5 of 5 (Templates + Compatibility) — IN PROGRESS
-Plan: 1 of 4 in phase 05 (Plan 01 complete — 10 developer action hooks + 1 speekr_talk_output filter added across all 5 display block render.php files)
-Status: Phase 5 in progress — Plan 01 complete
-Last activity: 2026-03-03 — Plan 01 complete: developer hooks (speekr_before/after_profile, speekr_before/after_single_talk, speekr_before/after_map, speekr_before/after_conference_archive, speekr_before/after_talks_list) + speekr_talk_output filter
+Phase: 5 of 5 (Templates + Compatibility) — COMPLETE
+Plan: 4 of 4 — all plans complete, human verification passed
+Status: v1.0 milestone COMPLETE — all 5 phases done
+Last activity: 2026-03-06 — Phase 5 approved; all tests passed (FSE, classic theme, shortcodes, developer hooks)
 
 Progress: [█████████░] 96%
 

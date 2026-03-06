@@ -14,11 +14,11 @@ This is a brownfield plugin. The existing `inc/` structure and `Speekr` class in
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Build Foundation** - Migrate build toolchain from node-sass/gulp to `@wordpress/scripts`; no PHP changes in this phase
-- [ ] **Phase 2: Data Layer** - Register all CPTs (Speaker Profile, Conferences, Talks enhancements) with `show_in_rest: true`; register every post meta via `register_post_meta()`; add Topics taxonomy; audit and gate all `save_post` callbacks
-- [ ] **Phase 3: Editor Blocks** - Build block editor sidebar panels for all three CPTs, replacing legacy meta boxes; register blocks via a plain PHP function using `register_block_type()`
-- [ ] **Phase 4: Display Blocks** - Build all public-facing dynamic blocks: Speaker Profile, Talks List, Single Talk, Conference Archive, and Conference Map (Leaflet.js)
-- [ ] **Phase 5: Templates and Compatibility** - Assemble FSE block templates from existing blocks; add classic PHP template files; add shortcodes wrapping block render functions; add developer action/filter hooks
+- [x] **Phase 1: Build Foundation** - Migrate build toolchain from node-sass/gulp to `@wordpress/scripts`; no PHP changes in this phase
+- [x] **Phase 2: Data Layer** - Register all CPTs (Speaker Profile, Conferences, Talks enhancements) with `show_in_rest: true`; register every post meta via `register_post_meta()`; add Topics taxonomy; audit and gate all `save_post` callbacks
+- [x] **Phase 3: Editor Blocks** - Build block editor sidebar panels for all three CPTs, replacing legacy meta boxes; register blocks via a plain PHP function using `register_block_type()`
+- [x] **Phase 4: Display Blocks** - Build all public-facing dynamic blocks: Speaker Profile, Talks List, Single Talk, Conference Archive, and Conference Map (Leaflet.js)
+- [x] **Phase 5: Templates and Compatibility** - Assemble FSE block templates from existing blocks; add classic PHP template files; add shortcodes wrapping block render functions; add developer action/filter hooks
 
 ## Phase Details
 
