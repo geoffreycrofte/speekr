@@ -19,9 +19,11 @@ function speekr_enqueues_infront() {
 	// If the current object is a listed page for Speekr, or if it's the current CPT page/archive.
 	// get_queried_object() returns WP_Post on singular/page, WP_Post_Type on CPT archives.
 	$cpt = speekr_get_cpt_slug();
+	$speekr_post_types = array( $cpt, 'speekr_conference', 'speekr_speaker' );
+
 	$is_speekr = ( $current instanceof WP_Post && isset( $options['list_page'] ) && $options['list_page'] == $current->ID )
-		|| ( $current instanceof WP_Post && $current->post_type === $cpt )
-		|| ( $current instanceof WP_Post_Type && $current->name === $cpt );
+		|| ( $current instanceof WP_Post && in_array( $current->post_type, $speekr_post_types, true ) )
+		|| ( $current instanceof WP_Post_Type && in_array( $current->name, $speekr_post_types, true ) );
 
 	if ( $is_speekr ) {
 		wp_enqueue_style( 'speekr-main', SPEEKR_PLUGIN_URL . 'build/frontend/style-style.css', array(), SPEEKR_VERSION, 'all' );
